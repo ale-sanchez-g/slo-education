@@ -205,6 +205,63 @@
 
         // Check consent on page load
         checkConsent();
+
+        // Event tracking for CTAs and navigation
+        function trackEvent(category, action, label) {
+            if (typeof gtag === 'function') {
+                gtag('event', action, {
+                    'event_category': category,
+                    'event_label': label
+                });
+            }
+        }
+
+        // Track main CTA button
+        document.addEventListener('DOMContentLoaded', function() {
+            // Main hero CTA
+            const ctaButton = document.querySelector('.cta-button');
+            if (ctaButton) {
+                ctaButton.addEventListener('click', function() {
+                    trackEvent('CTA', 'click', 'Start Learning Button');
+                });
+            }
+
+            // Track navigation links
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    const linkText = this.textContent.trim();
+                    trackEvent('Navigation', 'click', linkText);
+                });
+            });
+
+            // Track section internal links
+            const sectionLinks = document.querySelectorAll('a[href^="#"]');
+            sectionLinks.forEach(function(link) {
+                if (!link.closest('.nav-links')) { // Avoid double-tracking nav links
+                    link.addEventListener('click', function() {
+                        const linkText = this.textContent.trim() || this.getAttribute('href');
+                        trackEvent('Internal Link', 'click', linkText);
+                    });
+                }
+            });
+
+            // Track external agent link
+            const agentLink = document.querySelector('a[href*="agent37.com"]');
+            if (agentLink) {
+                agentLink.addEventListener('click', function() {
+                    trackEvent('External Link', 'click', 'SLO Agent Direct Link');
+                });
+            }
+
+            // Track privacy link in cookie consent
+            const privacyLink = document.querySelector('#cookie-consent-banner a[href="#privacy"]');
+            if (privacyLink) {
+                privacyLink.addEventListener('click', function() {
+                    trackEvent('Cookie Consent', 'click', 'Learn More');
+                });
+            }
+        });
     </script>
 </body>
 </html>
