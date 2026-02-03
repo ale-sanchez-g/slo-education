@@ -183,9 +183,9 @@
 
             // Initialize gtag
             window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-0XTFS0T3Y0', {
+            window.gtag = function(){dataLayer.push(arguments);}
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', {
                 'anonymize_ip': true  // IP anonymization for GDPR compliance
             });
         }
