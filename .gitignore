@@ -137,3 +137,12 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Playwright
+playwright-report/
+test-results/
+.playwright-mcp/
+
+# OS files
+.DS_Store
+Thumbs.db

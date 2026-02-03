@@ -1,0 +1,28 @@
+{
+  "name": "slo-education",
+  "version": "1.0.0",
+  "description": "SLO Education Hub - Testing suite",
+  "scripts": {
+    "start": "http-server . -p 5500 -s",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report",
+    "test:ci": "start-server-and-test start http://127.0.0.1:5500/index.html test"
+  },
+  "keywords": [
+    "slo",
+    "education",
+    "testing",
+    "playwright"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "http-server": "^14.1.1",
+    "start-server-and-test": "^2.0.3",
+    "wait-on": "^7.2.0"
+  }
+}
