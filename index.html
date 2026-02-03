@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-0XTFS0T3Y0');
-    </script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A central hub for teams to join the SLO education journey">
@@ -18,6 +8,21 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site. 
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="#privacy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
     <header>
         <nav class="navbar">
             <div class="container">
@@ -99,10 +104,31 @@
                     <iframe
                         src="https://www.agent37.com/g/slo-onboarding-journey"
                         title="SLO onboarding journey"
+                        sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox"
                         allow="microphone; autoplay; screen-wake-lock; clipboard-write; clipboard-read;"
                         width="100%"
                         height="600"
                         style="border: none;">
+                        <div style="padding: 2rem; text-align: center; background-color: #f8f9fa; border-radius: 8px;">
+                            <h3 style="color: #2c3e50; margin-bottom: 1rem;">Interactive SLO Agent</h3>
+                            <p style="color: #555; margin-bottom: 1rem;">
+                                Your browser doesn't support iframes or has blocked this content. 
+                                Our interactive SLO onboarding agent helps guide you through your journey with personalized assistance.
+                            </p>
+                            <p style="color: #555; margin-bottom: 1rem;">
+                                <strong>Alternative access:</strong><br>
+                                Visit the agent directly at: 
+                                <a href="https://www.agent37.com/g/slo-onboarding-journey" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer"
+                                   style="color: #3498db; text-decoration: underline;">
+                                    https://www.agent37.com/g/slo-onboarding-journey
+                                </a>
+                            </p>
+                            <p style="color: #777; font-size: 0.9rem;">
+                                You can also explore the resources section below for documentation and community support.
+                            </p>
+                        </div>
                     </iframe>
                 </div>
             </div>
@@ -125,5 +151,60 @@
             <p>&copy; 2026 SLO Education Hub. Licensed under MIT.</p>
         </div>
     </footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        // Cookie consent management
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        // Check if user has already made a choice
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                // No consent choice made, show banner
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                // User accepted, initialize analytics
+                initializeAnalytics();
+            }
+            // If declined, do nothing (no analytics)
+        }
+
+        // Initialize Google Analytics
+        function initializeAnalytics() {
+            // Create and append gtag script
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+
+            // Initialize gtag
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-0XTFS0T3Y0', {
+                'anonymize_ip': true  // IP anonymization for GDPR compliance
+            });
+        }
+
+        // Handle accept
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        // Handle decline
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        // Check consent on page load
+        checkConsent();
+    </script>
 </body>
 </html>
