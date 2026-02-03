@@ -246,13 +246,13 @@
                 }
             });
 
-            // Track external agent link
-            const agentLink = document.querySelector('a[href*="agent37.com"]');
-            if (agentLink) {
+            // Track external agent links
+            const agentLinks = document.querySelectorAll('a[href*="agent37.com"]');
+            agentLinks.forEach(function(agentLink) {
                 agentLink.addEventListener('click', function() {
                     trackEvent('External Link', 'click', 'SLO Agent Direct Link');
                 });
-            }
+            });
 
             // Track privacy link in cookie consent
             const privacyLink = document.querySelector('#cookie-consent-banner a[href="#privacy"]');
