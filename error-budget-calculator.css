@@ -202,6 +202,10 @@
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
+.calculate-btn:focus-visible {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
 .burn-rate-result {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     padding: 2rem;
