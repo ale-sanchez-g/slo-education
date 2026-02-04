@@ -1,16 +1,17 @@
 // SLO data with downtime calculations
+// Using formula: Minutes Per Month = (Error Rate / 100) × (365 × 24 × 60) / 12
 const sloData = {
     99: {
         percentage: 99,
         errorRate: 1.0,
-        minutesPerMonth: 432.0,
-        hoursPerMonth: 7.2
+        minutesPerMonth: 438.0,
+        hoursPerMonth: 7.3
     },
     99.5: {
         percentage: 99.5,
         errorRate: 0.5,
-        minutesPerMonth: 216.0,
-        hoursPerMonth: 3.6
+        minutesPerMonth: 219.0,
+        hoursPerMonth: 3.65
     },
     99.9: {
         percentage: 99.9,
@@ -69,6 +70,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update progress bar
         progressBar.style.width = data.percentage + '%';
         progressPercentage.textContent = data.percentage + '%';
+        
+        // Update ARIA attribute for accessibility
+        const progressBarWrapper = progressBar.parentElement;
+        if (progressBarWrapper.hasAttribute('aria-valuenow')) {
+            progressBarWrapper.setAttribute('aria-valuenow', data.percentage);
+        }
 
         // Update metrics
         downtimeMinutes.textContent = data.minutesPerMonth.toFixed(1);
@@ -85,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const data = sloData[selectedSLO];
         const actualDowntime = parseFloat(actualDowntimeInput.value);
 
-        if (isNaN(actualDowntime) || actualDowntime < 0) {
+        if (!actualDowntimeInput.value.trim() || isNaN(actualDowntime) || actualDowntime < 0) {
             alert('Please enter a valid downtime value (0 or greater)');
             return;
         }

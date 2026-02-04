@@ -206,6 +206,7 @@
     outline: 2px solid #667eea;
     outline-offset: 2px;
 }
+
 .burn-rate-result {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     padding: 2rem;

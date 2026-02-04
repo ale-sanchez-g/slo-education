@@ -52,7 +52,7 @@ test.describe('Error Budget Calculator Page', () => {
     
     // Check updated values
     const downtimeMinutes = page.locator('#downtime-minutes');
-    await expect(downtimeMinutes).toContainText('432');
+    await expect(downtimeMinutes).toContainText('438');
     
     const failureRate = page.locator('#failure-rate');
     await expect(failureRate).toContainText('1');
@@ -100,7 +100,13 @@ test.describe('Error Budget Calculator Page', () => {
     await page.waitForTimeout(500);
     await expect(burnRateStatus).toContainText('Medium Burn');
     
-    // Test critical burn (> 10%)
+    // Test fast burn (5-10%)
+    await actualDowntimeInput.fill('3');
+    await calculateBtn.click();
+    await page.waitForTimeout(500);
+    await expect(burnRateStatus).toContainText('Fast Burn');
+    
+    // Test critical burn (>= 10%)
     await actualDowntimeInput.fill('10');
     await calculateBtn.click();
     await page.waitForTimeout(500);
@@ -123,7 +129,6 @@ test.describe('Error Budget Calculator Page', () => {
   });
 
   test('should validate burn rate input', async ({ page }) => {
-    const actualDowntimeInput = page.locator('#actual-downtime');
     const calculateBtn = page.locator('#calculate-burn');
     
     // Try to calculate with empty input
