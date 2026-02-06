@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Error Budget Calculator - Calculate and understand your service's error budget and burn rate">
+    <title>Error Budget Calculator - SLO Education Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="error-budget-calculator.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="index.html" style="color: white; text-decoration: none;">SLO Education</a></h1>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#what-are-slos">What are SLOs?</a></li>
+                    <li><a href="index.html#get-started">Get Started</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero calculator-hero">
+            <div class="container">
+                <h2>Error Budget Calculator</h2>
+                <p class="hero-subtitle">Calculate and understand your service's error budget</p>
+            </div>
+        </section>
+
+        <!-- Calculator Section -->
+        <section class="section">
+            <div class="container">
+                <div class="calculator-card">
+                    <h3>🧮 Calculate Your Error Budget</h3>
+                    
+                    <div class="calculator-input">
+                        <label for="slo-target">Select SLO Target:</label>
+                        <select id="slo-target" class="slo-select">
+                            <option value="99">99%</option>
+                            <option value="99.5">99.5%</option>
+                            <option value="99.9" selected>99.9%</option>
+                            <option value="99.95">99.95%</option>
+                            <option value="99.99">99.99%</option>
+                        </select>
+                    </div>
+
+                    <div class="progress-container">
+                        <div class="progress-label">SLO Target Progress</div>
+                        <div class="progress-bar-wrapper" role="progressbar" aria-valuenow="99.9" aria-valuemin="0" aria-valuemax="100" aria-label="SLO Target">
+                            <div id="progress-bar" class="progress-bar"></div>
+                        </div>
+                        <div class="progress-percentage" id="progress-percentage">99.9%</div>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label">Allowed Downtime</div>
+                            <div class="metric-value" id="downtime-minutes">43.8</div>
+                            <div class="metric-unit">minutes/month</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">In Hours</div>
+                            <div class="metric-value" id="downtime-hours">0.73</div>
+                            <div class="metric-unit">hours/month</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Failure Rate</div>
+                            <div class="metric-value" id="failure-rate">0.1%</div>
+                            <div class="metric-unit">per month</div>
+                        </div>
+                    </div>
+
+                    <div class="burn-rate-section">
+                        <h4>Calculate Burn Rate</h4>
+                        <p class="burn-rate-description">Enter actual downtime this month to calculate your burn rate</p>
+                        <div class="burn-rate-input">
+                            <label for="actual-downtime">Actual Downtime (minutes):</label>
+                            <input type="number" id="actual-downtime" min="0" step="0.1" placeholder="0.0">
+                            <button id="calculate-burn" class="calculate-btn">Calculate Burn Rate</button>
+                        </div>
+                        <div id="burn-rate-result" class="burn-rate-result" style="display: none;" aria-live="polite" aria-atomic="true">
+                            <div class="burn-rate-value" id="burn-rate-value">0%</div>
+                            <div class="burn-rate-status" id="burn-rate-status"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What is Error Budget Section -->
+        <section class="section bg-light">
+            <div class="container">
+                <h2>🎯 What is an Error Budget?</h2>
+                <p class="section-intro">An <strong>error budget</strong> is the acceptable amount of downtime your service can have while still meeting your Service Level Objective (SLO). It answers the question: <strong>"How much failure can we afford?"</strong></p>
+                
+                <div class="key-concept">
+                    <h3>Key Concept</h3>
+                    <ul>
+                        <li><strong>SLO = 99.9%</strong> means you can afford <strong>43.8 minutes of downtime per month</strong></li>
+                        <li>This is your "budget" to spend on experiments, deployments, and maintenance</li>
+                        <li>When you've used up your budget, focus on stability instead of new features</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Understanding the Calculator Section -->
+        <section class="section">
+            <div class="container">
+                <h2>📊 Understanding the Calculator</h2>
+                
+                <h3>Main Components</h3>
+                
+                <div class="component-section">
+                    <h4>1. SLO Target Selection</h4>
+                    <p>Choose from preset SLO targets:</p>
+                    <ul>
+                        <li><strong>99%</strong> - Large consumer services (okay with ~7 hours downtime/month)</li>
+                        <li><strong>99.5%</strong> - Most enterprise services</li>
+                        <li><strong>99.9%</strong> - Critical business services</li>
+                        <li><strong>99.95%</strong> - Very critical services</li>
+                        <li><strong>99.99%</strong> - Ultra-critical infrastructure</li>
+                    </ul>
+                </div>
+
+                <div class="component-section">
+                    <h4>2. Key Metrics Displayed</h4>
+                    <table class="info-table">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>What It Means</th>
+                                <th>Use Case</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Allowed Downtime</strong></td>
+                                <td>Minutes you can be down per month</td>
+                                <td>Budget planning</td>
+                            </tr>
+                            <tr>
+                                <td><strong>In Hours</strong></td>
+                                <td>Same metric in hours</td>
+                                <td>Planning maintenance windows</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Failure Rate</strong></td>
+                                <td>Percentage tolerance per month</td>
+                                <td>Understanding error rate</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="component-section">
+                    <h4>3. Progress Bar</h4>
+                    <p>Visual representation of your SLO target (100% = perfect uptime)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Burn Rate Section -->
+        <section class="section bg-light">
+            <div class="container">
+                <h2>🔥 Burn Rate: The Critical Metric</h2>
+                <p class="section-intro"><strong>Burn Rate</strong> = How fast you're consuming your error budget</p>
+                
+                <h3>Burn Rate Categories</h3>
+                <table class="info-table burn-rate-table">
+                    <thead>
+                        <tr>
+                            <th>Burn Rate</th>
+                            <th>What It Means</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="burn-slow">
+                            <td><strong>&lt; 2%</strong></td>
+                            <td>Slow burn (healthy)</td>
+                            <td>✅ Safe to deploy and experiment</td>
+                        </tr>
+                        <tr class="burn-medium">
+                            <td><strong>2-5%</strong></td>
+                            <td>Medium burn (caution)</td>
+                            <td>⚠️ Be thoughtful about deployments</td>
+                        </tr>
+                        <tr class="burn-fast">
+                            <td><strong>5% to &lt; 10%</strong></td>
+                            <td>Fast burn (alert)</td>
+                            <td>🔴 Minimize risky changes</td>
+                        </tr>
+                        <tr class="burn-critical">
+                            <td><strong>&ge; 10%</strong></td>
+                            <td>Critical (emergency)</td>
+                            <td>🚨 Focus on stability only</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="formula-box">
+                    <h4>How to Calculate Burn Rate</h4>
+                    <div class="formula">
+                        Monthly Burn Rate = (Minutes Down This Month / Total Monthly Budget) × 100
+                    </div>
+                    <div class="example">
+                        <h5>Example:</h5>
+                        <ul>
+                            <li>Your SLO: 99.9% = 43.8 minutes/month budget</li>
+                            <li>Downtime this month: 5 minutes</li>
+                            <li>Burn Rate: (5 / 43.8) × 100 = <strong>11.4%</strong> (Critical Burn - focus on stability!)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deployment Decisions Section -->
+        <section class="section">
+            <div class="container">
+                <h2>💡 Using Error Budgets for Deployment Decisions</h2>
+                
+                <div class="decision-framework">
+                    <h3>Decision Framework</h3>
+                    <div class="framework-tree">
+                        <pre>Is Burn Rate Low? (&lt; 5%)
+├─ YES → Deploy frequently, experiment safely
+└─ NO → Hold off on risky changes, focus on stability</pre>
+                    </div>
+                </div>
+
+                <h3>Practical Examples</h3>
+                
+                <div class="scenario-cards">
+                    <div class="scenario-card healthy">
+                        <h4>Scenario 1: Healthy Budget</h4>
+                        <ul>
+                            <li><strong>SLO:</strong> 99.9% (43.8 min/month)</li>
+                            <li><strong>Downtime this month:</strong> 2 minutes</li>
+                            <li><strong>Burn Rate:</strong> 4.6% (Medium Burn)</li>
+                            <li><strong>Decision:</strong> ✅ Okay to deploy, but be careful</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="scenario-card exhausted">
+                        <h4>Scenario 2: Budget Exhausted</h4>
+                        <ul>
+                            <li><strong>SLO:</strong> 99.9% (43.8 min/month)</li>
+                            <li><strong>Downtime this month:</strong> 40 minutes</li>
+                            <li><strong>Burn Rate:</strong> 91% (Critical Burn)</li>
+                            <li><strong>Decision:</strong> 🚨 Stop deployments, focus on stability</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="scenario-card warning">
+                        <h4>Scenario 3: Budget Warning</h4>
+                        <ul>
+                            <li><strong>SLO:</strong> 99.99% (4.38 min/month)</li>
+                            <li><strong>Downtime this month:</strong> 0.5 minutes</li>
+                            <li><strong>Burn Rate:</strong> 11% (Critical Burn)</li>
+                            <li><strong>Decision:</strong> ⚠️ Reduce deployment frequency</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Math Behind It Section -->
+        <section class="section bg-light">
+            <div class="container">
+                <h2>🧮 The Math Behind It</h2>
+                
+                <div class="math-section">
+                    <h3>Calculate Downtime from SLO</h3>
+                    <div class="formula-box">
+                        <div class="formula">
+                            Error Rate = 100 - SLO<br>
+                            Minutes Per Month = (Error Rate / 100) × (365 × 24 × 60) / 12
+                        </div>
+                        <div class="example">
+                            <h5>Example: 99.9% SLO</h5>
+                            <ul>
+                                <li>Error Rate: 100 - 99.9 = 0.1%</li>
+                                <li>Minutes Per Month: (0.1 / 100) × 525600 / 12 = <strong>43.8 minutes</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Common SLO Reference Table</h3>
+                <table class="info-table reference-table">
+                    <thead>
+                        <tr>
+                            <th>SLO</th>
+                            <th>Per Year</th>
+                            <th>Per Month</th>
+                            <th>Per Week</th>
+                            <th>Per Day</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>99%</strong></td>
+                            <td>3.65 days</td>
+                            <td>7.3 hours</td>
+                            <td>1.7 hours</td>
+                            <td>1.44 min</td>
+                        </tr>
+                        <tr>
+                            <td><strong>99.5%</strong></td>
+                            <td>1.83 days</td>
+                            <td>3.65 hours</td>
+                            <td>51 min</td>
+                            <td>43 sec</td>
+                        </tr>
+                        <tr>
+                            <td><strong>99.9%</strong></td>
+                            <td>8.76 hours</td>
+                            <td>43.8 min</td>
+                            <td>10 min</td>
+                            <td>86 sec</td>
+                        </tr>
+                        <tr>
+                            <td><strong>99.95%</strong></td>
+                            <td>4.38 hours</td>
+                            <td>21.9 min</td>
+                            <td>5 min</td>
+                            <td>43 sec</td>
+                        </tr>
+                        <tr>
+                            <td><strong>99.99%</strong></td>
+                            <td>52.6 min</td>
+                            <td>4.38 min</td>
+                            <td>61 sec</td>
+                            <td>8.6 sec</td>
+                        </tr>
+                        <tr>
+                            <td><strong>99.999%</strong></td>
+                            <td>5.26 min</td>
+                            <td>26.3 sec</td>
+                            <td>6 sec</td>
+                            <td>0.86 sec</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Best Practices Section -->
+        <section class="section">
+            <div class="container">
+                <h2>🎓 Best Practices</h2>
+                
+                <div class="best-practices-grid">
+                    <div class="practices-column do-column">
+                        <h3>✅ DO</h3>
+                        <ul>
+                            <li><strong>Track burn rate daily</strong> - Make it visible to the team</li>
+                            <li><strong>Use budget wisely</strong> - Spend on meaningful improvements</li>
+                            <li><strong>Reset monthly</strong> - Start fresh each month</li>
+                            <li><strong>Communicate openly</strong> - Share burn rate status with stakeholders</li>
+                            <li><strong>Link to deployment decisions</strong> - Let burn rate guide your deployment cadence</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="practices-column dont-column">
+                        <h3>❌ DON'T</h3>
+                        <ul>
+                            <li><strong>Ignore your budget</strong> - It exists for a reason</li>
+                            <li><strong>Save the entire budget</strong> - You're leaving productivity on the table</li>
+                            <li><strong>Wait until 100% burned</strong> - Start focusing on stability at ~70%</li>
+                            <li><strong>Blame ops for missing SLO</strong> - It's a team responsibility</li>
+                            <li><strong>Set SLO too high</strong> - Be realistic about your infrastructure</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Usage Section -->
+        <section class="section bg-light">
+            <div class="container">
+                <h2>🚀 Advanced Usage</h2>
+                
+                <h3>Multi-Service Strategy</h3>
+                <p>If you have multiple services:</p>
+                <table class="info-table">
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>SLO</th>
+                            <th>Budget/Month</th>
+                            <th>Typical Burn Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>API</td>
+                            <td>99.99%</td>
+                            <td>4.38 min</td>
+                            <td>Slow (1-2%)</td>
+                        </tr>
+                        <tr>
+                            <td>Web UI</td>
+                            <td>99.9%</td>
+                            <td>43.8 min</td>
+                            <td>Medium (5%)</td>
+                        </tr>
+                        <tr>
+                            <td>Background Jobs</td>
+                            <td>99%</td>
+                            <td>7.2 hrs</td>
+                            <td>Fast (8-10%)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Monthly Planning</h3>
+                <div class="planning-grid">
+                    <div class="planning-card">
+                        <h4>Week 1: Review last month's burn</h4>
+                        <ul>
+                            <li>Did we miss SLO? Why?</li>
+                            <li>What caused outages?</li>
+                            <li>Start month fresh</li>
+                        </ul>
+                    </div>
+                    <div class="planning-card">
+                        <h4>Week 2-3: Aggressive deployment phase</h4>
+                        <ul>
+                            <li>Burn rate is low</li>
+                            <li>Deploy new features safely</li>
+                            <li>Run experiments</li>
+                        </ul>
+                    </div>
+                    <div class="planning-card">
+                        <h4>Week 4: Stability phase</h4>
+                        <ul>
+                            <li>Burn rate is rising</li>
+                            <li>Focus on bug fixes</li>
+                            <li>Stabilize system</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation Checklist Section -->
+        <section class="section">
+            <div class="container">
+                <h2>📋 Implementation Checklist</h2>
+                <div class="checklist">
+                    <label><input type="checkbox"> Choose appropriate SLO for each service</label>
+                    <label><input type="checkbox"> Calculate monthly error budget</label>
+                    <label><input type="checkbox"> Set up burn rate tracking/visibility</label>
+                    <label><input type="checkbox"> Educate team on burn rate thresholds</label>
+                    <label><input type="checkbox"> Link deployment decisions to burn rate</label>
+                    <label><input type="checkbox"> Review monthly performance</label>
+                    <label><input type="checkbox"> Adjust SLO based on reality</label>
+                    <label><input type="checkbox"> Build blameless incident culture</label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Concepts Section -->
+        <section class="section bg-light">
+            <div class="container">
+                <h2>🔗 Related Concepts</h2>
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <h4>SLO (Service Level Objective)</h4>
+                        <p>The target (e.g., 99.9%)</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>SLI (Service Level Indicator)</h4>
+                        <p>The measurement (e.g., request success rate)</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>SLA (Service Level Agreement)</h4>
+                        <p>The contract (e.g., refund if we miss SLO)</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>MTTD (Mean Time To Detection)</h4>
+                        <p>How fast we notice problems</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>MTTR (Mean Time To Recovery)</h4>
+                        <p>How fast we fix them</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section">
+            <div class="container">
+                <h2>💬 Common Questions</h2>
+                <div class="faq">
+                    <div class="faq-item">
+                        <h4>Q: Should we always target 99.99%?</h4>
+                        <p><strong>A:</strong> No. Higher SLO = more operational burden. Target what your customers need, not what's theoretically possible.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>Q: What if we never hit our SLO?</h4>
+                        <p><strong>A:</strong> Either your SLO is too strict, or you need more engineering effort. Consider lowering the SLO or investing in reliability.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>Q: Can we use error budget to skip incidents?</h4>
+                        <p><strong>A:</strong> No. Incidents still happen. Error budget lets you decide when to deploy risky changes, not when to ignore problems.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>Q: How do we track burn rate?</h4>
+                        <p><strong>A:</strong> Calculate: (Downtime This Month / Monthly Budget) × 100. Display it on dashboards, Slack, or status pages.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>Q: What's a "good" burn rate?</h4>
+                        <p><strong>A:</strong> Ideally 0-5% per month. This means you have room to experiment while maintaining reliability.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Further Reading Section -->
+        <section class="section bg-light">
+            <div class="container">
+                <h2>📖 Further Reading</h2>
+                <ul class="reading-list">
+                    <li><a href="https://sre.google/sre-book/embracing-risk/" target="_blank" rel="noopener noreferrer">Google SRE Book - Error Budgets chapter</a></li>
+                    <li><a href="https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html" target="_blank" rel="noopener noreferrer">AWS Well-Architected Framework - Reliability pillar</a></li>
+                    <li><a href="https://itrevolution.com/product/the-phoenix-project/" target="_blank" rel="noopener noreferrer">The Phoenix Project - Deployment strategies</a></li>
+                    <li><a href="https://itrevolution.com/product/accelerate/" target="_blank" rel="noopener noreferrer">Accelerate - Metrics that matter</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container" style="text-align: center;">
+                <p><strong>Last Updated:</strong> February 2026</p>
+                <p><strong>Created For:</strong> SRE Teams & Engineering Leaders</p>
+                <p><strong>Status:</strong> Ready to Use</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SLO Education Hub. Licensed under MIT.</p>
+        </div>
+    </footer>
+
+    <script src="error-budget-calculator.js"></script>
+</body>
+</html>
