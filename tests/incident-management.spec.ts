@@ -46,16 +46,14 @@ test.describe('Incident Management Page', () => {
     test('should require all inputs to calculate severity', async ({ page }) => {
       const calculateBtn = page.locator('#calculate-severity');
 
-      // Prepare to capture the alert dialog before triggering it
-      const dialogPromise = page.waitForEvent('dialog');
-
+      // Set up one-time dialog handler and click simultaneously
+      page.once('dialog', async dialog => {
+        expect(dialog.message()).toContain('Please select all three criteria');
+        await dialog.accept();
+      });
+      
       // Try to calculate without selecting anything
       await calculateBtn.click();
-
-      // Should show alert and assert its message
-      const dialog = await dialogPromise;
-      expect(dialog.message()).toContain('Please select all three criteria');
-      await dialog.accept();
     });
 
     test('should calculate P0 severity for critical inputs', async ({ page }) => {
@@ -308,10 +306,10 @@ test.describe('Incident Management Page', () => {
       const theoryGrid = page.locator('.theory-grid');
       await expect(theoryGrid).toBeVisible();
 
-      // Check theory cards are present
-      await expect(page.locator('text=What is an Incident?')).toBeVisible();
-      await expect(page.locator('text=Core Principles')).toBeVisible();
-      await expect(page.locator('text=Incident Lifecycle')).toBeVisible();
+      // Check theory cards are present - use more specific locators
+      await expect(theoryGrid.locator('h3:has-text("What is an Incident?")')).toBeVisible();
+      await expect(theoryGrid.locator('h3:has-text("Core Principles")')).toBeVisible();
+      await expect(theoryGrid.locator('h3:has-text("Incident Lifecycle")')).toBeVisible();
     });
 
     test('should display best practices section', async ({ page }) => {
@@ -335,9 +333,9 @@ test.describe('Incident Management Page', () => {
       const faqSection = page.locator('.faq');
       await expect(faqSection).toBeVisible();
 
-      // Check some FAQs are present
-      await expect(page.locator('text=difference between P0 and P1')).toBeVisible();
-      await expect(page.locator('text=post-mortem')).toBeVisible();
+      // Check some FAQs are present - use more specific locators scoped to FAQ
+      await expect(faqSection.locator('h4:text-is("Q: What\'s the difference between P0 and P1 incidents?")')).toBeVisible();
+      await expect(faqSection.locator('h4:text-is("Q: Should every incident have a post-mortem?")')).toBeVisible();
     });
 
     test('should display resources section', async ({ page }) => {
