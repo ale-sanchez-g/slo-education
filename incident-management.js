@@ -7,6 +7,13 @@ document.addEventListener('DOMContentLoaded', function() {
     initCUJMapper();
 });
 
+// Security: HTML escaping function to prevent XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
 // Severity Calculator
 function initSeverityCalculator() {
     const userImpactSelect = document.getElementById('user-impact');
@@ -244,12 +251,16 @@ function initCUJMapper() {
         const cujList = cujs.map(c => c.label).join(', ');
         const severity = determineCUJSeverity(cujs.length, impactPercent);
 
+        // Escape user input to prevent XSS
+        const escapedService = escapeHtml(service);
+        const escapedCujs = cujs.map(c => `<li>${escapeHtml(c.label)}</li>`).join('');
+
         let summaryHTML = `
             <h5 style="color: #667eea; margin-bottom: 1rem;">Incident Impact Summary</h5>
-            <p><strong>Affected Service:</strong> ${service}</p>
+            <p><strong>Affected Service:</strong> ${escapedService}</p>
             <p><strong>Impacted Critical User Journeys (${cujs.length}):</strong></p>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                ${cujs.map(c => `<li>${c.label}</li>`).join('')}
+                ${escapedCujs}
             </ul>
             <p><strong>User Impact:</strong> Approximately ${impactPercent}% of users affected</p>
             <p><strong>Recommended Severity:</strong> <span class="severity-badge ${severity.toLowerCase()}">${severity}</span></p>
