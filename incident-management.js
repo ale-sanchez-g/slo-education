@@ -248,7 +248,6 @@ function initCUJMapper() {
 
     function displayCUJReport(service, cujs, impactPercent) {
         // Generate summary
-        const cujList = cujs.map(c => c.label).join(', ');
         const severity = determineCUJSeverity(cujs.length, impactPercent);
 
         // Escape user input to prevent XSS
