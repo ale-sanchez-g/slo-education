@@ -202,14 +202,14 @@ test.describe('Incident Management Page', () => {
     test('should require service name to generate report', async ({ page }) => {
       const mapBtn = page.locator('#map-cuj');
 
-      // Try to map without entering service
-      await mapBtn.click();
-
-      // Should show alert
-      page.on('dialog', async dialog => {
+      // Set up one-time dialog handler and click simultaneously
+      page.once('dialog', async dialog => {
         expect(dialog.message()).toContain('affected service');
         await dialog.accept();
       });
+      
+      // Try to map without entering service
+      await mapBtn.click();
     });
 
     test('should require at least one CUJ to be selected', async ({ page }) => {
@@ -218,13 +218,13 @@ test.describe('Incident Management Page', () => {
 
       // Enter service but don't select any CUJs
       await serviceInput.fill('Payment API');
-      await mapBtn.click();
-
-      // Should show alert
-      page.on('dialog', async dialog => {
+      
+      // Set up one-time dialog handler and click simultaneously
+      page.once('dialog', async dialog => {
         expect(dialog.message()).toContain('select at least one');
         await dialog.accept();
       });
+      await mapBtn.click();
     });
 
     test('should require valid impact percentage', async ({ page }) => {
@@ -235,13 +235,13 @@ test.describe('Incident Management Page', () => {
       // Enter service and select CUJ but no percentage
       await serviceInput.fill('Payment API');
       await cujCheckbox.check();
-      await mapBtn.click();
-
-      // Should show alert
-      page.on('dialog', async dialog => {
+      
+      // Set up one-time dialog handler and click simultaneously
+      page.once('dialog', async dialog => {
         expect(dialog.message()).toContain('impact percentage');
         await dialog.accept();
       });
+      await mapBtn.click();
     });
 
     test('should generate impact report with valid inputs', async ({ page }) => {
