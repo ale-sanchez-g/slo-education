@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Incident Management Guide - Learn best practices, severity classification, tools, and Critical User Journey mapping">
+    <title>Incident Management - SLO Education Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="incident-management.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="index.html" style="color: white; text-decoration: none;">SLO Education</a></h1>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#what-are-slos">What are SLOs?</a></li>
+                    <li><a href="error-budget-calculator.html">Calculator</a></li>
+                    <li><a href="incident-management.html">Incident Management</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero incident-hero">
+            <div class="container">
+                <h2>Incident Management Guide</h2>
+                <p class="hero-subtitle">Master incident response, severity classification, and Critical User Journey mapping</p>
+            </div>
+        </section>
+
+        <!-- Theory & Best Practices Section -->
+        <section class="section">
+            <div class="container">
+                <h2>Incident Management Theory & Best Practices</h2>
+                <p class="section-intro">Effective incident management is crucial for maintaining service reliability and minimizing user impact. Learn the core principles that drive successful incident response.</p>
+
+                <div class="theory-grid">
+                    <div class="theory-card">
+                        <h3>What is an Incident?</h3>
+                        <p>An incident is an unplanned interruption or reduction in quality of a service. This includes outages, performance degradation, security breaches, or any event that impacts users negatively.</p>
+                    </div>
+
+                    <div class="theory-card">
+                        <h3>Core Principles</h3>
+                        <ul>
+                            <li><strong>Detect Fast:</strong> Mean Time To Detection (MTTD) matters</li>
+                            <li><strong>Respond Faster:</strong> Mean Time To Recovery (MTTR) is critical</li>
+                            <li><strong>Learn Always:</strong> Every incident is a learning opportunity</li>
+                            <li><strong>Blameless Culture:</strong> Focus on systems, not individuals</li>
+                        </ul>
+                    </div>
+
+                    <div class="theory-card">
+                        <h3>Incident Lifecycle</h3>
+                        <ol>
+                            <li><strong>Detection:</strong> Identify the incident</li>
+                            <li><strong>Response:</strong> Acknowledge and assemble the team</li>
+                            <li><strong>Mitigation:</strong> Restore service to normal</li>
+                            <li><strong>Resolution:</strong> Fix the root cause</li>
+                            <li><strong>Post-Mortem:</strong> Learn and improve</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="best-practices-section">
+                    <h3>Best Practices for Incident Response</h3>
+                    <div class="practices-list">
+                        <div class="practice-item">
+                            <h4>1. Establish Clear Roles</h4>
+                            <p><strong>Incident Commander:</strong> Leads the response, makes decisions<br>
+                            <strong>Communications Lead:</strong> Updates stakeholders and customers<br>
+                            <strong>Technical Lead:</strong> Coordinates technical investigation and remediation</p>
+                        </div>
+
+                        <div class="practice-item">
+                            <h4>2. Use Runbooks & Playbooks</h4>
+                            <p>Document common incident scenarios and response procedures. Runbooks reduce MTTR by providing step-by-step guidance for known issues.</p>
+                        </div>
+
+                        <div class="practice-item">
+                            <h4>3. Maintain Incident Timeline</h4>
+                            <p>Keep detailed timestamps of detection, actions taken, and resolution. This helps with post-mortems and identifying bottlenecks in your process.</p>
+                        </div>
+
+                        <div class="practice-item">
+                            <h4>4. Communicate Proactively</h4>
+                            <p>Regular updates to stakeholders and users, even when there's no new information. Silence creates uncertainty and erodes trust.</p>
+                        </div>
+
+                        <div class="practice-item">
+                            <h4>5. Focus on Mitigation First</h4>
+                            <p>Get the service back up before diving deep into root cause. Users care about service restoration, not the why (yet).</p>
+                        </div>
+
+                        <div class="practice-item">
+                            <h4>6. Conduct Blameless Post-Mortems</h4>
+                            <p>Review what happened, why it happened, and how to prevent recurrence. Focus on systems and processes, not people.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Severity Calculator Section -->
+        <section class="section bg-light">
+            <div class="container">
+                <h2>Interactive Incident Severity Calculator</h2>
+                <p class="section-intro">Not sure what severity level to assign? Use this interactive calculator to determine the appropriate incident severity based on impact and urgency.</p>
+
+                <div class="calculator-card">
+                    <h3>Calculate Incident Severity</h3>
+
+                    <div class="severity-inputs">
+                        <div class="input-group">
+                            <label for="user-impact">User Impact:</label>
+                            <select id="user-impact" class="severity-select">
+                                <option value="">Select impact level...</option>
+                                <option value="all">All users affected</option>
+                                <option value="major">Major subset of users affected</option>
+                                <option value="minor">Minor subset of users affected</option>
+                                <option value="single">Single user or internal only</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="service-state">Service State:</label>
+                            <select id="service-state" class="severity-select">
+                                <option value="">Select service state...</option>
+                                <option value="down">Complete service outage</option>
+                                <option value="degraded">Severe degradation</option>
+                                <option value="partial">Partial feature unavailability</option>
+                                <option value="minor">Minor degradation</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="business-impact">Business Impact:</label>
+                            <select id="business-impact" class="severity-select">
+                                <option value="">Select business impact...</option>
+                                <option value="critical">Revenue/reputation at risk</option>
+                                <option value="high">Significant business impact</option>
+                                <option value="medium">Moderate business impact</option>
+                                <option value="low">Minimal business impact</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button id="calculate-severity" class="calculate-btn">Calculate Severity</button>
+
+                    <div id="severity-result" class="severity-result" style="display: none;" aria-live="polite" aria-atomic="true">
+                        <div class="severity-badge-large" id="severity-badge">P0</div>
+                        <h4 id="severity-title">Critical Incident</h4>
+                        <p id="severity-description"></p>
+                        <div class="severity-actions">
+                            <h5>Recommended Actions:</h5>
+                            <ul id="severity-actions-list"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Severity Level Reference -->
+                <div class="severity-reference">
+                    <h3>Severity Level Reference</h3>
+                    <table class="severity-table">
+                        <thead>
+                            <tr>
+                                <th>Level</th>
+                                <th>Description</th>
+                                <th>User Impact</th>
+                                <th>Response Time</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="severity-badge p0">P0</span></td>
+                                <td><strong>Critical</strong></td>
+                                <td>All or most users cannot use core features</td>
+                                <td>Immediate (24/7)</td>
+                                <td>Complete site outage, data loss</td>
+                            </tr>
+                            <tr>
+                                <td><span class="severity-badge p1">P1</span></td>
+                                <td><strong>High</strong></td>
+                                <td>Significant user base affected</td>
+                                <td>&lt; 1 hour</td>
+                                <td>Payment processing down, login failures</td>
+                            </tr>
+                            <tr>
+                                <td><span class="severity-badge p2">P2</span></td>
+                                <td><strong>Medium</strong></td>
+                                <td>Some users affected, workaround exists</td>
+                                <td>&lt; 4 hours</td>
+                                <td>Feature degradation, slow performance</td>
+                            </tr>
+                            <tr>
+                                <td><span class="severity-badge p3">P3</span></td>
+                                <td><strong>Low</strong></td>
+                                <td>Minimal user impact</td>
+                                <td>&lt; 24 hours</td>
+                                <td>Minor UI issues, cosmetic bugs</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools in the Market Section -->
+        <section class="section">
+            <div class="container">
+                <h2>Incident Management Tools in the Market</h2>
+                <p class="section-intro">Choosing the right incident management tool is crucial for effective response. Here's a comprehensive comparison of leading platforms.</p>
+
+                <!-- Tool Comparison Filters -->
+                <div class="tool-filters">
+                    <label>
+                        <strong>Filter by features:</strong>
+                    </label>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">All Tools</button>
+                        <button class="filter-btn" data-filter="alerting">Alerting</button>
+                        <button class="filter-btn" data-filter="oncall">On-Call</button>
+                        <button class="filter-btn" data-filter="automation">Automation</button>
+                        <button class="filter-btn" data-filter="statuspage">Status Page</button>
+                    </div>
+                </div>
+
+                <!-- Tool Comparison Table -->
+                <div class="tool-comparison-table">
+                    <table class="tools-table" id="tools-table">
+                        <thead>
+                            <tr>
+                                <th>Tool</th>
+                                <th>Best For</th>
+                                <th>Key Features</th>
+                                <th>Pricing</th>
+                                <th>Integration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-features="alerting oncall automation">
+                                <td><strong>PagerDuty</strong></td>
+                                <td>Enterprise teams, complex on-call schedules</td>
+                                <td>Advanced alerting, on-call management, incident response, automation, AIOps</td>
+                                <td>$$$ (Starts at $21/user/mo)</td>
+                                <td>650+ integrations</td>
+                            </tr>
+                            <tr data-features="alerting oncall">
+                                <td><strong>Opsgenie</strong></td>
+                                <td>Atlassian users, mid-size teams</td>
+                                <td>Alert routing, on-call scheduling, integrates well with Jira</td>
+                                <td>$$ (Starts at $9/user/mo)</td>
+                                <td>200+ integrations</td>
+                            </tr>
+                            <tr data-features="alerting oncall statuspage">
+                                <td><strong>VictorOps (Splunk)</strong></td>
+                                <td>DevOps teams, observability focus</td>
+                                <td>Timeline view, on-call, ChatOps integration, post-incident review</td>
+                                <td>$$ (Starts at $9/user/mo)</td>
+                                <td>150+ integrations</td>
+                            </tr>
+                            <tr data-features="statuspage">
+                                <td><strong>Statuspage.io</strong></td>
+                                <td>Customer communication, transparency</td>
+                                <td>Status pages, incident communication, subscriber notifications</td>
+                                <td>$$ (Starts at $29/mo)</td>
+                                <td>Atlassian ecosystem</td>
+                            </tr>
+                            <tr data-features="alerting oncall automation">
+                                <td><strong>Incident.io</strong></td>
+                                <td>Modern teams, Slack-first workflows</td>
+                                <td>Slack-native, automated workflows, post-mortem automation</td>
+                                <td>$$$ (Custom pricing)</td>
+                                <td>Slack, Jira, GitHub</td>
+                            </tr>
+                            <tr data-features="alerting oncall">
+                                <td><strong>FireHydrant</strong></td>
+                                <td>SRE teams, incident learning</td>
+                                <td>Incident tracking, retrospectives, runbooks, analytics</td>
+                                <td>$$$ (Custom pricing)</td>
+                                <td>Slack, DataDog, etc</td>
+                            </tr>
+                            <tr data-features="alerting automation">
+                                <td><strong>Blameless</strong></td>
+                                <td>SRE maturity, reliability programs</td>
+                                <td>SLO tracking, incident management, postmortem automation, reliability insights</td>
+                                <td>$$$ (Custom pricing)</td>
+                                <td>Major monitoring tools</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Decision Framework -->
+                <div class="tool-decision-framework">
+                    <h3>How to Choose the Right Tool</h3>
+                    <div class="decision-cards">
+                        <div class="decision-card">
+                            <h4>Team Size Matters</h4>
+                            <ul>
+                                <li><strong>Small (&lt;10):</strong> Opsgenie, VictorOps</li>
+                                <li><strong>Medium (10-100):</strong> PagerDuty, FireHydrant</li>
+                                <li><strong>Large (100+):</strong> PagerDuty, Blameless</li>
+                            </ul>
+                        </div>
+
+                        <div class="decision-card">
+                            <h4>Budget Considerations</h4>
+                            <ul>
+                                <li><strong>Budget-conscious:</strong> Opsgenie, VictorOps</li>
+                                <li><strong>Mid-range:</strong> PagerDuty starter plans</li>
+                                <li><strong>Enterprise:</strong> PagerDuty, Blameless</li>
+                            </ul>
+                        </div>
+
+                        <div class="decision-card">
+                            <h4>Ecosystem Fit</h4>
+                            <ul>
+                                <li><strong>Atlassian stack:</strong> Opsgenie, Statuspage</li>
+                                <li><strong>Slack-first:</strong> Incident.io</li>
+                                <li><strong>Splunk users:</strong> VictorOps</li>
+                                <li><strong>SRE maturity:</strong> Blameless, FireHydrant</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CUJ Mapping Playbook Section -->
+        <section class="section bg-light">
+            <div class="container">
+                <h2>Critical User Journey (CUJ) Mapping Playbook</h2>
+                <p class="section-intro">Critical User Journeys (CUJs) are the most important paths users take through your application. Mapping incidents to CUJs helps prioritize response and understand true business impact.</p>
+
+                <div class="cuj-what">
+                    <h3>What are Critical User Journeys?</h3>
+                    <p>A Critical User Journey is a sequence of steps a user takes to accomplish a high-value task in your application. Examples include:</p>
+                    <ul class="cuj-examples">
+                        <li><strong>E-commerce:</strong> Browse → Add to Cart → Checkout → Payment → Order Confirmation</li>
+                        <li><strong>SaaS:</strong> Login → Access Dashboard → Perform Key Action → Save/Export</li>
+                        <li><strong>Social Media:</strong> Login → View Feed → Create Post → Publish</li>
+                        <li><strong>Banking:</strong> Login → View Balance → Transfer Money → Confirm Transaction</li>
+                    </ul>
+                </div>
+
+                <div class="cuj-why">
+                    <h3>Why Map Incidents to CUJs?</h3>
+                    <div class="benefits-grid">
+                        <div class="benefit-card">
+                            <h4>Better Prioritization</h4>
+                            <p>Understand which incidents actually impact users vs. which are internal-only</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h4>Clear Communication</h4>
+                            <p>Explain impact in business terms stakeholders understand</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h4>Resource Allocation</h4>
+                            <p>Focus engineering effort on protecting critical paths</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h4>SLO Alignment</h4>
+                            <p>Define SLOs based on real user journeys, not arbitrary metrics</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cuj-playbook">
+                    <h3>Step-by-Step CUJ Mapping Playbook</h3>
+
+                    <div class="playbook-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Identify Your CUJs</h4>
+                            <p>Work with product and business teams to list 3-7 most critical user journeys. Ask:</p>
+                            <ul>
+                                <li>What actions generate revenue?</li>
+                                <li>What features do users expect to always work?</li>
+                                <li>What failures would cause users to leave?</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="playbook-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Map System Dependencies</h4>
+                            <p>For each CUJ, document which services, APIs, and dependencies are involved:</p>
+                            <ul>
+                                <li>Frontend components</li>
+                                <li>Backend services and APIs</li>
+                                <li>Databases and data stores</li>
+                                <li>Third-party services</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="playbook-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Define Success Criteria</h4>
+                            <p>What does "working" mean for each step in the journey?</p>
+                            <ul>
+                                <li>Response time thresholds (e.g., page load &lt; 2s)</li>
+                                <li>Success rates (e.g., API success &gt; 99.9%)</li>
+                                <li>Data accuracy requirements</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="playbook-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Create CUJ Impact Matrix</h4>
+                            <p>Build a matrix showing which services impact which CUJs. This helps during incidents to quickly assess user impact.</p>
+                        </div>
+                    </div>
+
+                    <div class="playbook-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Instrument and Monitor</h4>
+                            <p>Set up synthetic monitoring or real user monitoring (RUM) to track each CUJ:</p>
+                            <ul>
+                                <li>End-to-end journey tests</li>
+                                <li>Key step completion rates</li>
+                                <li>Performance metrics per step</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="playbook-step">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <h4>Link to Incident Response</h4>
+                            <p>During incidents, always identify affected CUJs and include in status updates:</p>
+                            <ul>
+                                <li>Which journeys are impacted?</li>
+                                <li>What percentage of users affected?</li>
+                                <li>Are there workarounds available?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive CUJ Mapper Tool Section -->
+        <section class="section">
+            <div class="container">
+                <h2>Interactive CUJ Mapper Tool</h2>
+                <p class="section-intro">Use this tool to map your incident to affected Critical User Journeys and understand the real user impact.</p>
+
+                <div class="calculator-card">
+                    <h3>Map Your Incident to CUJs</h3>
+
+                    <div class="cuj-mapper-inputs">
+                        <div class="input-group">
+                            <label for="affected-service">Affected Service/Component:</label>
+                            <input type="text" id="affected-service" class="text-input" placeholder="e.g., Payment API, User Database">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Select Affected CUJs:</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="cuj-checkbox" data-cuj="signup">
+                                    User Signup / Registration
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="cuj-checkbox" data-cuj="login">
+                                    User Login / Authentication
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="cuj-checkbox" data-cuj="purchase">
+                                    Purchase / Checkout Flow
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="cuj-checkbox" data-cuj="content">
+                                    Content Access / Viewing
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="cuj-checkbox" data-cuj="search">
+                                    Search / Discovery
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="cuj-checkbox" data-cuj="profile">
+                                    Profile / Settings Management
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="impact-percentage">Estimated % of Users Affected:</label>
+                            <input type="number" id="impact-percentage" class="text-input" min="0" max="100" placeholder="0-100">
+                        </div>
+                    </div>
+
+                    <button id="map-cuj" class="calculate-btn">Generate Impact Report</button>
+
+                    <div id="cuj-result" class="cuj-result" style="display: none;" aria-live="polite" aria-atomic="true">
+                        <h4>Impact Analysis</h4>
+                        <div id="cuj-summary" class="cuj-summary"></div>
+                        <div id="cuj-recommendations" class="cuj-recommendations"></div>
+                    </div>
+                </div>
+
+                <!-- Example CUJ Mapping -->
+                <div class="cuj-example">
+                    <h3>Example: E-commerce Incident</h3>
+                    <table class="info-table">
+                        <thead>
+                            <tr>
+                                <th>Incident</th>
+                                <th>Affected Service</th>
+                                <th>Impacted CUJs</th>
+                                <th>User Impact</th>
+                                <th>Severity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Payment gateway timeout</td>
+                                <td>Payment API</td>
+                                <td>Purchase/Checkout</td>
+                                <td>100% of checkout attempts fail</td>
+                                <td><span class="severity-badge p0">P0</span></td>
+                            </tr>
+                            <tr>
+                                <td>Search index lag</td>
+                                <td>Search Service</td>
+                                <td>Search/Discovery</td>
+                                <td>Search results 1 hour stale</td>
+                                <td><span class="severity-badge p2">P2</span></td>
+                            </tr>
+                            <tr>
+                                <td>Profile image upload slow</td>
+                                <td>CDN</td>
+                                <td>Profile Management</td>
+                                <td>Upload takes 10s instead of 2s</td>
+                                <td><span class="severity-badge p3">P3</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section bg-light">
+            <div class="container">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq">
+                    <div class="faq-item">
+                        <h4>Q: What's the difference between P0 and P1 incidents?</h4>
+                        <p><strong>A:</strong> P0 incidents affect all or most users and require immediate 24/7 response (e.g., complete outage). P1 incidents affect a significant portion of users and require response within 1 hour (e.g., critical feature down but site accessible).</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Q: Should every incident have a post-mortem?</h4>
+                        <p><strong>A:</strong> Not necessarily. Focus post-mortems on P0/P1 incidents, recurring issues, or incidents that reveal systemic problems. P2/P3 might only need brief incident reports.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Q: How do we make post-mortems truly blameless?</h4>
+                        <p><strong>A:</strong> Focus language on systems: "the deployment process lacked safeguards" not "Bob deployed buggy code." Assume good intentions. Ask "how did the system allow this?" not "who did this?"</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Q: How many CUJs should we define?</h4>
+                        <p><strong>A:</strong> Start with 3-7 most critical journeys. Too many dilutes focus; too few misses important user flows. You can always add more as you mature.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Q: What if multiple services are down - how do we prioritize?</h4>
+                        <p><strong>A:</strong> Use CUJ mapping! Restore services that impact the most critical user journeys first. Revenue-generating paths typically take priority.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Q: Should we use multiple incident management tools?</h4>
+                        <p><strong>A:</strong> Generally no. Pick one primary platform to avoid confusion during incidents. You might supplement with a status page tool, but keep alerting/on-call in one system.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Q: How do we reduce MTTR?</h4>
+                        <p><strong>A:</strong> Focus on: better monitoring/alerting (faster detection), runbooks for common issues, automated rollback capabilities, clear escalation paths, and regular incident response practice/drills.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Q: What metrics should we track for incident management?</h4>
+                        <p><strong>A:</strong> Key metrics include: MTTD (Mean Time To Detection), MTTM (Mean Time To Mitigation), MTTR (Mean Time To Recovery), incident frequency by severity, and post-mortem action item completion rate.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section class="section">
+            <div class="container">
+                <h2>Additional Resources</h2>
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <h4>Books</h4>
+                        <ul>
+                            <li><a href="https://sre.google/sre-book/managing-incidents/" target="_blank" rel="noopener noreferrer">Google SRE Book - Managing Incidents</a></li>
+                            <li><a href="https://itrevolution.com/product/the-phoenix-project/" target="_blank" rel="noopener noreferrer">The Phoenix Project</a></li>
+                            <li><a href="https://www.oreilly.com/library/view/incident-management-for/9781492077800/" target="_blank" rel="noopener noreferrer">Incident Management for Operations</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="resource-card">
+                        <h4>Templates & Guides</h4>
+                        <ul>
+                            <li><a href="https://www.atlassian.com/incident-management/handbook" target="_blank" rel="noopener noreferrer">Atlassian Incident Management Handbook</a></li>
+                            <li><a href="https://www.pagerduty.com/resources/learn/post-mortem-incident-report/" target="_blank" rel="noopener noreferrer">Post-Mortem Templates (PagerDuty)</a></li>
+                            <li><a href="https://response.pagerduty.com/" target="_blank" rel="noopener noreferrer">PagerDuty Incident Response Docs</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="resource-card">
+                        <h4>Community</h4>
+                        <ul>
+                            <li><a href="https://www.reddit.com/r/sre/" target="_blank" rel="noopener noreferrer">r/SRE on Reddit</a></li>
+                            <li><a href="https://discord.gg/YdG26M8P" target="_blank" rel="noopener noreferrer">SRE Discord Community</a></li>
+                            <li><a href="https://www.meetup.com/topics/sre/" target="_blank" rel="noopener noreferrer">Local SRE Meetups</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="resource-card">
+                        <h4>Related Pages</h4>
+                        <ul>
+                            <li><a href="error-budget-calculator.html">Error Budget Calculator</a></li>
+                            <li><a href="index.html#what-are-slos">What are SLOs?</a></li>
+                            <li><a href="index.html#slo-agent">SLO Onboarding Agent</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section bg-light">
+            <div class="container" style="text-align: center;">
+                <p><strong>Last Updated:</strong> February 2026</p>
+                <p><strong>Created For:</strong> SRE Teams, DevOps Engineers & Incident Responders</p>
+                <p><strong>Status:</strong> Ready to Use</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SLO Education Hub. Licensed under MIT.</p>
+        </div>
+    </footer>
+
+    <script src="incident-management.js"></script>
+</body>
+</html>
