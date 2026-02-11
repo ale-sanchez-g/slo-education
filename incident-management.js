@@ -233,7 +233,7 @@ function initCUJMapper() {
             return;
         }
 
-        if (!impactPercentage || impactPercentage < 0 || impactPercentage > 100) {
+        if (isNaN(impactPercentage) || impactPercentage < 0 || impactPercentage > 100) {
             alert('Please enter a valid impact percentage (0-100)');
             return;
         }
