@@ -46,14 +46,16 @@ test.describe('Incident Management Page', () => {
     test('should require all inputs to calculate severity', async ({ page }) => {
       const calculateBtn = page.locator('#calculate-severity');
 
+      // Prepare to capture the alert dialog before triggering it
+      const dialogPromise = page.waitForEvent('dialog');
+
       // Try to calculate without selecting anything
       await calculateBtn.click();
 
-      // Should show alert (we can listen for dialog)
-      page.on('dialog', async dialog => {
-        expect(dialog.message()).toContain('Please select all three criteria');
-        await dialog.accept();
-      });
+      // Should show alert and assert its message
+      const dialog = await dialogPromise;
+      expect(dialog.message()).toContain('Please select all three criteria');
+      await dialog.accept();
     });
 
     test('should calculate P0 severity for critical inputs', async ({ page }) => {
