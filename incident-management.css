@@ -354,9 +354,17 @@
     outline-offset: 2px;
 }
 
+/* Table wrapper for horizontal scroll */
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 1rem 0;
+}
+
 /* Tools Table */
 .tool-comparison-table {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .tools-table {
