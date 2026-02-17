@@ -822,7 +822,7 @@
     .tools-table,
     .severity-table,
     .info-table {
-        font-size: 0.8rem;
+        font-size: 0.875rem;
         display: block;
         overflow-x: auto;
         white-space: nowrap;
@@ -850,7 +850,6 @@
     .info-table th,
     .info-table td {
         padding: 0.75rem 0.5rem;
-        font-size: 0.8rem;
     }
 
     .decision-cards {
