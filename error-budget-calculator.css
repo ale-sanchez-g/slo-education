@@ -337,6 +337,13 @@
     overflow: hidden;
 }
 
+/* Table wrapper for horizontal scroll on mobile */
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 2rem 0;
+}
+
 .info-table thead {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -675,8 +682,12 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .calculator-hero {
+        padding: 3rem 0;
+    }
+
     .calculator-hero h2 {
-        font-size: 2rem;
+        font-size: 1.75rem;
     }
 
     .calculator-card {
@@ -710,8 +721,21 @@
         grid-template-columns: 1fr;
     }
 
+    /* Make tables scrollable horizontally on mobile */
     .info-table {
-        font-size: 0.85rem;
+        font-size: 0.875rem;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .info-table thead,
+    .info-table tbody,
+    .info-table tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
     }
 
     .info-table th,
@@ -724,7 +748,21 @@
     }
 
     .formula {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         padding: 1rem;
+        overflow-x: auto;
+    }
+
+    .section h2 {
+        font-size: 1.75rem;
+    }
+
+    .section-intro {
+        font-size: 1rem;
+    }
+
+    .planning-grid,
+    .concepts-grid {
+        grid-template-columns: 1fr;
     }
 }

@@ -354,9 +354,17 @@
     outline-offset: 2px;
 }
 
+/* Table wrapper for horizontal scroll */
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 1rem 0;
+}
+
 /* Tools Table */
 .tool-comparison-table {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .tools-table {
@@ -782,8 +790,12 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .incident-hero {
+        padding: 3rem 0;
+    }
+
     .incident-hero h2 {
-        font-size: 2rem;
+        font-size: 1.75rem;
     }
 
     .theory-grid {
@@ -814,12 +826,37 @@
         width: 100%;
     }
 
-    .tools-table {
-        font-size: 0.85rem;
+    /* Make tables scrollable horizontally on mobile */
+    .tools-table,
+    .severity-table,
+    .info-table {
+        font-size: 0.875rem;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tools-table thead,
+    .tools-table tbody,
+    .tools-table tr,
+    .severity-table thead,
+    .severity-table tbody,
+    .severity-table tr,
+    .info-table thead,
+    .info-table tbody,
+    .info-table tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
     }
 
     .tools-table th,
-    .tools-table td {
+    .tools-table td,
+    .severity-table th,
+    .severity-table td,
+    .info-table th,
+    .info-table td {
         padding: 0.75rem 0.5rem;
     }
 
@@ -846,6 +883,14 @@
     .severity-badge-large {
         font-size: 2rem;
         padding: 0.75rem 2rem;
+    }
+
+    .section h2 {
+        font-size: 1.75rem;
+    }
+
+    .section-intro {
+        font-size: 1rem;
     }
 }
 
