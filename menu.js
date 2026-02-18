@@ -89,11 +89,8 @@
             <span class="hamburger-line"></span>
         `;
 
-        // Insert hamburger after logo
-        const logo = container.querySelector('.logo');
-        if (logo) {
-            logo.parentNode.insertBefore(hamburger, logo.nextSibling);
-        }
+        // Insert hamburger at the end of container (CSS order will position it correctly)
+        container.appendChild(hamburger);
     }
 
     /**
@@ -190,10 +187,16 @@
      */
     function highlightCurrentPage(currentPage) {
         const navLinks = document.querySelectorAll('.nav-links a');
-        const currentPath = window.location.pathname;
+        const currentPathname = window.location.pathname;
+        const currentFilename = currentPathname.split('/').pop() || 'index.html';
         
         navLinks.forEach(link => {
             const href = link.getAttribute('href');
+            
+            if (!href) return;
+            
+            // Extract filename from href
+            const hrefFilename = href.split('/').pop().split('#')[0];
             
             // Check if link matches current page
             if (currentPage === 'home' && href.startsWith('#')) {
@@ -201,7 +204,8 @@
                 if (window.location.hash === href) {
                     link.classList.add('active');
                 }
-            } else if (href && href.includes(currentPath.split('/').pop())) {
+            } else if (hrefFilename && hrefFilename === currentFilename) {
+                // Exact filename match
                 link.classList.add('active');
             }
         });

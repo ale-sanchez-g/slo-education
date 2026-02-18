@@ -151,9 +151,6 @@ test.describe('Responsive Menu Functionality', () => {
       const aboutLink = navLinks.locator('a:has-text("About")');
       await aboutLink.click();
       
-      // Wait a bit for the click handler to execute
-      await page.waitForTimeout(300);
-      
       // Menu should close
       await expect(navLinks).not.toHaveClass(/active/);
     });
@@ -263,11 +260,8 @@ test.describe('Responsive Menu Functionality', () => {
       // Resize to desktop
       await page.setViewportSize({ width: 1280, height: 720 });
       
-      // Wait for resize handler
-      await page.waitForTimeout(300);
-      
-      // Menu should be reset
-      await expect(navLinks).not.toHaveClass(/active/);
+      // Menu should be reset (wait for it to not have active class)
+      await expect(navLinks).not.toHaveClass(/active/, { timeout: 1000 });
     });
   });
 
