@@ -826,38 +826,103 @@
         width: 100%;
     }
 
-    /* Make tables scrollable horizontally on mobile */
+    /* Transform tables into mobile-friendly cards */
     .tools-table,
     .severity-table,
     .info-table {
-        font-size: 0.875rem;
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
+        border: none;
+        box-shadow: none;
+        background: transparent;
     }
 
     .tools-table thead,
-    .tools-table tbody,
-    .tools-table tr,
     .severity-table thead,
-    .severity-table tbody,
-    .severity-table tr,
-    .info-table thead,
-    .info-table tbody,
-    .info-table tr {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
+    .info-table thead {
+        display: none;
     }
 
-    .tools-table th,
+    .tools-table tbody,
+    .severity-table tbody,
+    .info-table tbody {
+        display: block;
+    }
+
+    .tools-table tr,
+    .severity-table tr,
+    .info-table tr {
+        display: block;
+        margin-bottom: 1.5rem;
+        background: white;
+        border-radius: 8px;
+        padding: 1.25rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        border: none;
+        border-left: 4px solid #667eea;
+    }
+
     .tools-table td,
-    .severity-table th,
     .severity-table td,
-    .info-table th,
     .info-table td {
-        padding: 0.75rem 0.5rem;
+        display: block;
+        text-align: left;
+        padding: 0.5rem 0;
+        border: none;
+    }
+
+    .tools-table td:before,
+    .severity-table td:before,
+    .info-table td:before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: #667eea;
+        display: block;
+        margin-bottom: 0.25rem;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Special styling for tool names - make them prominent */
+    .tools-table td:first-child {
+        font-size: 1.3rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #e0e0e0;
+        margin-bottom: 0.75rem;
+    }
+
+    .tools-table td:first-child:before {
+        display: none;
+    }
+
+    /* Severity badges in mobile cards */
+    .severity-table td:first-child {
+        text-align: center;
+        padding: 1rem 0;
+        border-bottom: 2px solid #e0e0e0;
+        margin-bottom: 0.75rem;
+    }
+
+    .severity-table td:first-child:before {
+        display: none;
+    }
+
+    .severity-table .severity-badge {
+        font-size: 1.2rem;
+        padding: 0.6rem 1.5rem;
+    }
+
+    /* CUJ example table - highlight incident name */
+    .info-table td:first-child {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #2c3e50;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid #e0e0e0;
+        margin-bottom: 0.75rem;
+    }
+
+    .info-table td:first-child:before {
+        display: none;
     }
 
     .decision-cards {

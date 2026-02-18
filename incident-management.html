@@ -179,32 +179,32 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><span class="severity-badge p0">P0</span></td>
-                                <td><strong>Critical</strong></td>
-                                <td>All or most users cannot use core features</td>
-                                <td>Immediate (24/7)</td>
-                                <td>Complete site outage, data loss</td>
+                                <td data-label="Level"><span class="severity-badge p0">P0</span></td>
+                                <td data-label="Description"><strong>Critical</strong></td>
+                                <td data-label="User Impact">All or most users cannot use core features</td>
+                                <td data-label="Response Time">Immediate (24/7)</td>
+                                <td data-label="Example">Complete site outage, data loss</td>
                             </tr>
                             <tr>
-                                <td><span class="severity-badge p1">P1</span></td>
-                                <td><strong>High</strong></td>
-                                <td>Significant user base affected</td>
-                                <td>&lt; 1 hour</td>
-                                <td>Payment processing down, login failures</td>
+                                <td data-label="Level"><span class="severity-badge p1">P1</span></td>
+                                <td data-label="Description"><strong>High</strong></td>
+                                <td data-label="User Impact">Significant user base affected</td>
+                                <td data-label="Response Time">&lt; 1 hour</td>
+                                <td data-label="Example">Payment processing down, login failures</td>
                             </tr>
                             <tr>
-                                <td><span class="severity-badge p2">P2</span></td>
-                                <td><strong>Medium</strong></td>
-                                <td>Some users affected, workaround exists</td>
-                                <td>&lt; 4 hours</td>
-                                <td>Feature degradation, slow performance</td>
+                                <td data-label="Level"><span class="severity-badge p2">P2</span></td>
+                                <td data-label="Description"><strong>Medium</strong></td>
+                                <td data-label="User Impact">Some users affected, workaround exists</td>
+                                <td data-label="Response Time">&lt; 4 hours</td>
+                                <td data-label="Example">Feature degradation, slow performance</td>
                             </tr>
                             <tr>
-                                <td><span class="severity-badge p3">P3</span></td>
-                                <td><strong>Low</strong></td>
-                                <td>Minimal user impact</td>
-                                <td>&lt; 24 hours</td>
-                                <td>Minor UI issues, cosmetic bugs</td>
+                                <td data-label="Level"><span class="severity-badge p3">P3</span></td>
+                                <td data-label="Description"><strong>Low</strong></td>
+                                <td data-label="User Impact">Minimal user impact</td>
+                                <td data-label="Response Time">&lt; 24 hours</td>
+                                <td data-label="Example">Minor UI issues, cosmetic bugs</td>
                             </tr>
                         </tbody>
                     </table>
@@ -247,53 +247,53 @@
                         </thead>
                         <tbody>
                             <tr data-features="alerting oncall automation">
-                                <td><strong>PagerDuty</strong></td>
-                                <td>Enterprise teams, complex on-call schedules</td>
-                                <td>Advanced alerting, on-call management, incident response, automation, AIOps</td>
-                                <td>$$$ (Starts at $21/user/mo)</td>
-                                <td>650+ integrations</td>
+                                <td data-label="Tool"><strong>PagerDuty</strong></td>
+                                <td data-label="Best For">Enterprise teams, complex on-call schedules</td>
+                                <td data-label="Key Features">Advanced alerting, on-call management, incident response, automation, AIOps</td>
+                                <td data-label="Pricing">$$$ (Starts at $21/user/mo)</td>
+                                <td data-label="Integration">650+ integrations</td>
                             </tr>
                             <tr data-features="alerting oncall">
-                                <td><strong>Opsgenie</strong></td>
-                                <td>Atlassian users, mid-size teams</td>
-                                <td>Alert routing, on-call scheduling, integrates well with Jira</td>
-                                <td>$$ (Starts at $9/user/mo)</td>
-                                <td>200+ integrations</td>
+                                <td data-label="Tool"><strong>Opsgenie</strong></td>
+                                <td data-label="Best For">Atlassian users, mid-size teams</td>
+                                <td data-label="Key Features">Alert routing, on-call scheduling, integrates well with Jira</td>
+                                <td data-label="Pricing">$$ (Starts at $9/user/mo)</td>
+                                <td data-label="Integration">200+ integrations</td>
                             </tr>
                             <tr data-features="alerting oncall statuspage">
-                                <td><strong>VictorOps (Splunk)</strong></td>
-                                <td>DevOps teams, observability focus</td>
-                                <td>Timeline view, on-call, ChatOps integration, post-incident review</td>
-                                <td>$$ (Starts at $9/user/mo)</td>
-                                <td>150+ integrations</td>
+                                <td data-label="Tool"><strong>VictorOps (Splunk)</strong></td>
+                                <td data-label="Best For">DevOps teams, observability focus</td>
+                                <td data-label="Key Features">Timeline view, on-call, ChatOps integration, post-incident review</td>
+                                <td data-label="Pricing">$$ (Starts at $9/user/mo)</td>
+                                <td data-label="Integration">150+ integrations</td>
                             </tr>
                             <tr data-features="statuspage">
-                                <td><strong>Statuspage.io</strong></td>
-                                <td>Customer communication, transparency</td>
-                                <td>Status pages, incident communication, subscriber notifications</td>
-                                <td>$$ (Starts at $29/mo)</td>
-                                <td>Atlassian ecosystem</td>
+                                <td data-label="Tool"><strong>Statuspage.io</strong></td>
+                                <td data-label="Best For">Customer communication, transparency</td>
+                                <td data-label="Key Features">Status pages, incident communication, subscriber notifications</td>
+                                <td data-label="Pricing">$$ (Starts at $29/mo)</td>
+                                <td data-label="Integration">Atlassian ecosystem</td>
                             </tr>
                             <tr data-features="alerting oncall automation">
-                                <td><strong>Incident.io</strong></td>
-                                <td>Modern teams, Slack-first workflows</td>
-                                <td>Slack-native, automated workflows, post-mortem automation</td>
-                                <td>$$$ (Custom pricing)</td>
-                                <td>Slack, Jira, GitHub</td>
+                                <td data-label="Tool"><strong>Incident.io</strong></td>
+                                <td data-label="Best For">Modern teams, Slack-first workflows</td>
+                                <td data-label="Key Features">Slack-native, automated workflows, post-mortem automation</td>
+                                <td data-label="Pricing">$$$ (Custom pricing)</td>
+                                <td data-label="Integration">Slack, Jira, GitHub</td>
                             </tr>
                             <tr data-features="alerting oncall">
-                                <td><strong>FireHydrant</strong></td>
-                                <td>SRE teams, incident learning</td>
-                                <td>Incident tracking, retrospectives, runbooks, analytics</td>
-                                <td>$$$ (Custom pricing)</td>
-                                <td>Slack, DataDog, etc</td>
+                                <td data-label="Tool"><strong>FireHydrant</strong></td>
+                                <td data-label="Best For">SRE teams, incident learning</td>
+                                <td data-label="Key Features">Incident tracking, retrospectives, runbooks, analytics</td>
+                                <td data-label="Pricing">$$$ (Custom pricing)</td>
+                                <td data-label="Integration">Slack, DataDog, etc</td>
                             </tr>
                             <tr data-features="alerting automation">
-                                <td><strong>Blameless</strong></td>
-                                <td>SRE maturity, reliability programs</td>
-                                <td>SLO tracking, incident management, postmortem automation, reliability insights</td>
-                                <td>$$$ (Custom pricing)</td>
-                                <td>Major monitoring tools</td>
+                                <td data-label="Tool"><strong>Blameless</strong></td>
+                                <td data-label="Best For">SRE maturity, reliability programs</td>
+                                <td data-label="Key Features">SLO tracking, incident management, postmortem automation, reliability insights</td>
+                                <td data-label="Pricing">$$$ (Custom pricing)</td>
+                                <td data-label="Integration">Major monitoring tools</td>
                             </tr>
                         </tbody>
                     </table>
@@ -530,25 +530,25 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Payment gateway timeout</td>
-                                <td>Payment API</td>
-                                <td>Purchase/Checkout</td>
-                                <td>100% of checkout attempts fail</td>
-                                <td><span class="severity-badge p0">P0</span></td>
+                                <td data-label="Incident">Payment gateway timeout</td>
+                                <td data-label="Affected Service">Payment API</td>
+                                <td data-label="Impacted CUJs">Purchase/Checkout</td>
+                                <td data-label="User Impact">100% of checkout attempts fail</td>
+                                <td data-label="Severity"><span class="severity-badge p0">P0</span></td>
                             </tr>
                             <tr>
-                                <td>Search index lag</td>
-                                <td>Search Service</td>
-                                <td>Search/Discovery</td>
-                                <td>Search results 1 hour stale</td>
-                                <td><span class="severity-badge p2">P2</span></td>
+                                <td data-label="Incident">Search index lag</td>
+                                <td data-label="Affected Service">Search Service</td>
+                                <td data-label="Impacted CUJs">Search/Discovery</td>
+                                <td data-label="User Impact">Search results 1 hour stale</td>
+                                <td data-label="Severity"><span class="severity-badge p2">P2</span></td>
                             </tr>
                             <tr>
-                                <td>Profile image upload slow</td>
-                                <td>CDN</td>
-                                <td>Profile Management</td>
-                                <td>Upload takes 10s instead of 2s</td>
-                                <td><span class="severity-badge p3">P3</span></td>
+                                <td data-label="Incident">Profile image upload slow</td>
+                                <td data-label="Affected Service">CDN</td>
+                                <td data-label="Impacted CUJs">Profile Management</td>
+                                <td data-label="User Impact">Upload takes 10s instead of 2s</td>
+                                <td data-label="Severity"><span class="severity-badge p3">P3</span></td>
                             </tr>
                         </tbody>
                     </table>
