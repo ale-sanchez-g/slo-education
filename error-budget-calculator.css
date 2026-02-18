@@ -786,17 +786,14 @@
         border-left-color: #dc3545;
     }
 
-    .burn-rate-table tr:hover {
-        background: inherit;
-    }
-
     /* Reference table - show SLO prominently */
     .reference-table tr {
         border-left: 4px solid #764ba2;
     }
 
+    /* Large title for reference table SLO values */
     .reference-table td:first-child {
-        font-size: 1.5rem;
+        font-size: 1.5rem; /* Larger to emphasize SLO percentage as primary identifier */
         font-weight: 700;
         color: #667eea;
         padding-bottom: 1rem;

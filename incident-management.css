@@ -884,7 +884,7 @@
 
     /* Special styling for tool names - make them prominent */
     .tools-table td:first-child {
-        font-size: 1.3rem;
+        font-size: 1.3rem; /* Moderate size for tool names as card titles */
         padding-bottom: 1rem;
         border-bottom: 2px solid #e0e0e0;
         margin-bottom: 0.75rem;
@@ -913,7 +913,7 @@
 
     /* CUJ example table - highlight incident name */
     .info-table td:first-child {
-        font-size: 1.1rem;
+        font-size: 1.1rem; /* Slightly larger for incident names as descriptive titles */
         font-weight: 600;
         color: #2c3e50;
         padding-bottom: 0.75rem;
