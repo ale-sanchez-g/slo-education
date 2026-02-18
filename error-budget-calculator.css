@@ -721,26 +721,88 @@
         grid-template-columns: 1fr;
     }
 
-    /* Make tables scrollable horizontally on mobile */
+    /* Transform tables into mobile-friendly cards */
     .info-table {
-        font-size: 0.875rem;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .info-table thead {
+        display: none;
+    }
+
+    .info-table tbody {
         display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
     }
 
-    .info-table thead,
-    .info-table tbody,
     .info-table tr {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
+        display: block;
+        margin-bottom: 1.5rem;
+        background: white;
+        border-radius: 8px;
+        padding: 1.25rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        border: none;
+        border-left: 4px solid #667eea;
     }
 
-    .info-table th,
     .info-table td {
-        padding: 0.75rem 0.5rem;
+        display: block;
+        text-align: left;
+        padding: 0.5rem 0;
+        border: none;
+    }
+
+    .info-table td:before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: #667eea;
+        display: block;
+        margin-bottom: 0.25rem;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Special styling for burn-rate-table rows */
+    .burn-rate-table tr.burn-slow {
+        background: #d4edda;
+        border-left-color: #28a745;
+    }
+
+    .burn-rate-table tr.burn-medium {
+        background: #fff3cd;
+        border-left-color: #ffc107;
+    }
+
+    .burn-rate-table tr.burn-fast {
+        background: #f8d7da;
+        border-left-color: #fd7e14;
+    }
+
+    .burn-rate-table tr.burn-critical {
+        background: #f8d7da;
+        border-left-color: #dc3545;
+    }
+
+    /* Reference table - show SLO prominently */
+    .reference-table tr {
+        border-left: 4px solid #764ba2;
+    }
+
+    /* Large title for reference table SLO values */
+    .reference-table td:first-child {
+        font-size: 1.5rem; /* Larger to emphasize SLO percentage as primary identifier */
+        font-weight: 700;
+        color: #667eea;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #e0e0e0;
+        margin-bottom: 0.75rem;
+    }
+
+    .reference-table td:first-child:before {
+        display: none;
     }
 
     .formula-box {

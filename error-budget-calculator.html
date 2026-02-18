@@ -140,19 +140,19 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>Allowed Downtime</strong></td>
-                                <td>Minutes you can be down per month</td>
-                                <td>Budget planning</td>
+                                <td data-label="Metric"><strong>Allowed Downtime</strong></td>
+                                <td data-label="What It Means">Minutes you can be down per month</td>
+                                <td data-label="Use Case">Budget planning</td>
                             </tr>
                             <tr>
-                                <td><strong>In Hours</strong></td>
-                                <td>Same metric in hours</td>
-                                <td>Planning maintenance windows</td>
+                                <td data-label="Metric"><strong>In Hours</strong></td>
+                                <td data-label="What It Means">Same metric in hours</td>
+                                <td data-label="Use Case">Planning maintenance windows</td>
                             </tr>
                             <tr>
-                                <td><strong>Failure Rate</strong></td>
-                                <td>Percentage tolerance per month</td>
-                                <td>Understanding error rate</td>
+                                <td data-label="Metric"><strong>Failure Rate</strong></td>
+                                <td data-label="What It Means">Percentage tolerance per month</td>
+                                <td data-label="Use Case">Understanding error rate</td>
                             </tr>
                         </tbody>
                     </table>
@@ -182,24 +182,24 @@
                     </thead>
                     <tbody>
                         <tr class="burn-slow">
-                            <td><strong>&lt; 2%</strong></td>
-                            <td>Slow burn (healthy)</td>
-                            <td>✅ Safe to deploy and experiment</td>
+                            <td data-label="Burn Rate"><strong>&lt; 2%</strong></td>
+                            <td data-label="What It Means">Slow burn (healthy)</td>
+                            <td data-label="Action">✅ Safe to deploy and experiment</td>
                         </tr>
                         <tr class="burn-medium">
-                            <td><strong>2-5%</strong></td>
-                            <td>Medium burn (caution)</td>
-                            <td>⚠️ Be thoughtful about deployments</td>
+                            <td data-label="Burn Rate"><strong>2-5%</strong></td>
+                            <td data-label="What It Means">Medium burn (caution)</td>
+                            <td data-label="Action">⚠️ Be thoughtful about deployments</td>
                         </tr>
                         <tr class="burn-fast">
-                            <td><strong>5% to &lt; 10%</strong></td>
-                            <td>Fast burn (alert)</td>
-                            <td>🔴 Minimize risky changes</td>
+                            <td data-label="Burn Rate"><strong>5% to &lt; 10%</strong></td>
+                            <td data-label="What It Means">Fast burn (alert)</td>
+                            <td data-label="Action">🔴 Minimize risky changes</td>
                         </tr>
                         <tr class="burn-critical">
-                            <td><strong>&ge; 10%</strong></td>
-                            <td>Critical (emergency)</td>
-                            <td>🚨 Focus on stability only</td>
+                            <td data-label="Burn Rate"><strong>&ge; 10%</strong></td>
+                            <td data-label="What It Means">Critical (emergency)</td>
+                            <td data-label="Action">🚨 Focus on stability only</td>
                         </tr>
                     </tbody>
                 </table>
@@ -306,46 +306,46 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>99%</strong></td>
-                            <td>3.65 days</td>
-                            <td>7.3 hours</td>
-                            <td>1.7 hours</td>
-                            <td>1.44 min</td>
+                            <td data-label="SLO"><strong>99%</strong></td>
+                            <td data-label="Per Year">3.65 days</td>
+                            <td data-label="Per Month">7.3 hours</td>
+                            <td data-label="Per Week">1.7 hours</td>
+                            <td data-label="Per Day">1.44 min</td>
                         </tr>
                         <tr>
-                            <td><strong>99.5%</strong></td>
-                            <td>1.83 days</td>
-                            <td>3.65 hours</td>
-                            <td>51 min</td>
-                            <td>43 sec</td>
+                            <td data-label="SLO"><strong>99.5%</strong></td>
+                            <td data-label="Per Year">1.83 days</td>
+                            <td data-label="Per Month">3.65 hours</td>
+                            <td data-label="Per Week">51 min</td>
+                            <td data-label="Per Day">43 sec</td>
                         </tr>
                         <tr>
-                            <td><strong>99.9%</strong></td>
-                            <td>8.76 hours</td>
-                            <td>43.8 min</td>
-                            <td>10 min</td>
-                            <td>86 sec</td>
+                            <td data-label="SLO"><strong>99.9%</strong></td>
+                            <td data-label="Per Year">8.76 hours</td>
+                            <td data-label="Per Month">43.8 min</td>
+                            <td data-label="Per Week">10 min</td>
+                            <td data-label="Per Day">86 sec</td>
                         </tr>
                         <tr>
-                            <td><strong>99.95%</strong></td>
-                            <td>4.38 hours</td>
-                            <td>21.9 min</td>
-                            <td>5 min</td>
-                            <td>43 sec</td>
+                            <td data-label="SLO"><strong>99.95%</strong></td>
+                            <td data-label="Per Year">4.38 hours</td>
+                            <td data-label="Per Month">21.9 min</td>
+                            <td data-label="Per Week">5 min</td>
+                            <td data-label="Per Day">43 sec</td>
                         </tr>
                         <tr>
-                            <td><strong>99.99%</strong></td>
-                            <td>52.6 min</td>
-                            <td>4.38 min</td>
-                            <td>61 sec</td>
-                            <td>8.6 sec</td>
+                            <td data-label="SLO"><strong>99.99%</strong></td>
+                            <td data-label="Per Year">52.6 min</td>
+                            <td data-label="Per Month">4.38 min</td>
+                            <td data-label="Per Week">61 sec</td>
+                            <td data-label="Per Day">8.6 sec</td>
                         </tr>
                         <tr>
-                            <td><strong>99.999%</strong></td>
-                            <td>5.26 min</td>
-                            <td>26.3 sec</td>
-                            <td>6 sec</td>
-                            <td>0.86 sec</td>
+                            <td data-label="SLO"><strong>99.999%</strong></td>
+                            <td data-label="Per Year">5.26 min</td>
+                            <td data-label="Per Month">26.3 sec</td>
+                            <td data-label="Per Week">6 sec</td>
+                            <td data-label="Per Day">0.86 sec</td>
                         </tr>
                     </tbody>
                 </table>
@@ -401,22 +401,22 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>API</td>
-                            <td>99.99%</td>
-                            <td>4.38 min</td>
-                            <td>Slow (1-2%)</td>
+                            <td data-label="Service">API</td>
+                            <td data-label="SLO">99.99%</td>
+                            <td data-label="Budget/Month">4.38 min</td>
+                            <td data-label="Typical Burn Rate">Slow (1-2%)</td>
                         </tr>
                         <tr>
-                            <td>Web UI</td>
-                            <td>99.9%</td>
-                            <td>43.8 min</td>
-                            <td>Medium (5%)</td>
+                            <td data-label="Service">Web UI</td>
+                            <td data-label="SLO">99.9%</td>
+                            <td data-label="Budget/Month">43.8 min</td>
+                            <td data-label="Typical Burn Rate">Medium (5%)</td>
                         </tr>
                         <tr>
-                            <td>Background Jobs</td>
-                            <td>99%</td>
-                            <td>7.2 hrs</td>
-                            <td>Fast (8-10%)</td>
+                            <td data-label="Service">Background Jobs</td>
+                            <td data-label="SLO">99%</td>
+                            <td data-label="Budget/Month">7.2 hrs</td>
+                            <td data-label="Typical Burn Rate">Fast (8-10%)</td>
                         </tr>
                     </tbody>
                 </table>
