@@ -33,7 +33,7 @@ test.describe('Responsive Menu Functionality', () => {
     test('should have all navigation links on home page', async ({ page }) => {
       const navLinks = page.locator('.nav-links a');
       
-      await expect(navLinks).toHaveCount(6);
+      await expect(navLinks).toHaveCount(7);
       
       // Verify all expected links
       await expect(navLinks.nth(0)).toHaveText('About');
@@ -42,6 +42,7 @@ test.describe('Responsive Menu Functionality', () => {
       await expect(navLinks.nth(3)).toHaveText('Calculator');
       await expect(navLinks.nth(4)).toHaveText('Incident Management');
       await expect(navLinks.nth(5)).toHaveText('Agent');
+      await expect(navLinks.nth(6)).toHaveText('Privacy');
     });
 
     test('should have consistent navigation on calculator page', async ({ page }) => {
@@ -50,12 +51,13 @@ test.describe('Responsive Menu Functionality', () => {
       
       const navLinks = page.locator('.nav-links a');
       
-      await expect(navLinks).toHaveCount(5);
+      await expect(navLinks).toHaveCount(6);
       await expect(navLinks.nth(0)).toHaveText('Home');
       await expect(navLinks.nth(1)).toHaveText('About');
       await expect(navLinks.nth(2)).toHaveText('What are SLOs?');
       await expect(navLinks.nth(3)).toHaveText('Calculator');
       await expect(navLinks.nth(4)).toHaveText('Incident Management');
+      await expect(navLinks.nth(5)).toHaveText('Privacy');
     });
 
     test('should have consistent navigation on incident management page', async ({ page }) => {
@@ -64,7 +66,7 @@ test.describe('Responsive Menu Functionality', () => {
       
       const navLinks = page.locator('.nav-links a');
       
-      await expect(navLinks).toHaveCount(5);
+      await expect(navLinks).toHaveCount(6);
       await expect(navLinks.nth(0)).toHaveText('Home');
     });
 
