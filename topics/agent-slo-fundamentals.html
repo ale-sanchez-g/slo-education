@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Agent SLO Fundamentals - Framework to define measurable, business-aligned objectives and a comparison of SLO tools">
+    <title>Agent SLO Fundamentals - SLO Education Hub</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="topics.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="../index.html" style="color: white; text-decoration: none;">SLO Education</a></h1>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../index.html#about">About</a></li>
+                    <li><a href="../index.html#what-are-slos">What are SLOs?</a></li>
+                    <li><a href="../error-budget-calculator.html">Calculator</a></li>
+                    <li><a href="../incident-management.html">Incident Management</a></li>
+                    <li><a href="agent-slo-fundamentals.html">Topics</a></li>
+                    <li><a href="../privacy-policy.html">Privacy</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero topics-hero">
+            <div class="container">
+                <h2>Agent SLO Fundamentals</h2>
+                <p class="hero-subtitle">A framework for defining measurable, business-aligned objectives and a guide to the tools that can help you implement them</p>
+            </div>
+        </section>
+
+        <!-- Framework Section -->
+        <section id="framework" class="section">
+            <div class="container">
+                <h2>Framework for Defining Measurable, Business-Defined Objectives</h2>
+                <p class="section-intro">Defining effective SLOs starts with understanding the business context and translating user expectations into measurable targets. This framework guides you through each step.</p>
+
+                <div class="framework-steps">
+                    <div class="framework-step">
+                        <div class="step-number">1</div>
+                        <h3>Identify Critical User Journeys</h3>
+                        <p>Start by mapping the key interactions your users have with your service. A <strong>Critical User Journey (CUJ)</strong> is a sequence of steps a user takes to achieve a specific goal — for example, "user logs in and loads their dashboard".</p>
+                        <ul>
+                            <li>Interview product and business stakeholders to surface the most important workflows</li>
+                            <li>Prioritise journeys that directly affect business outcomes (revenue, retention, satisfaction)</li>
+                            <li>Limit your initial scope to three to five journeys to keep the effort manageable</li>
+                        </ul>
+                    </div>
+
+                    <div class="framework-step">
+                        <div class="step-number">2</div>
+                        <h3>Define Service Level Indicators (SLIs)</h3>
+                        <p>An <strong>SLI</strong> is a quantitative measure of some aspect of the service level being provided. Good SLIs are directly correlated with user experience.</p>
+                        <ul>
+                            <li><strong>Availability:</strong> proportion of successful requests over total requests</li>
+                            <li><strong>Latency:</strong> proportion of requests served within a defined time threshold</li>
+                            <li><strong>Throughput:</strong> rate of successful operations per unit of time</li>
+                            <li><strong>Error rate:</strong> proportion of failed requests over total requests</li>
+                            <li><strong>Freshness:</strong> age of the most recently updated data (for data pipelines)</li>
+                        </ul>
+                    </div>
+
+                    <div class="framework-step">
+                        <div class="step-number">3</div>
+                        <h3>Set Measurable SLO Targets</h3>
+                        <p>An <strong>SLO</strong> is a target value or range for an SLI over a rolling window. Business stakeholders must agree that the target reflects a level of service worth pursuing.</p>
+                        <ul>
+                            <li>Anchor targets to historical performance and user pain thresholds</li>
+                            <li>Start slightly below your current measured reliability (avoid setting aspirational, unachievable targets)</li>
+                            <li>Use a rolling window (28 days or 30 days) to smooth out short-term noise</li>
+                            <li>Document the business rationale for each target so teams understand the "why"</li>
+                        </ul>
+                    </div>
+
+                    <div class="framework-step">
+                        <div class="step-number">4</div>
+                        <h3>Calculate and Manage the Error Budget</h3>
+                        <p>The <strong>error budget</strong> is the amount of unreliability you are permitted before breaching your SLO. It turns reliability into a shared resource that development and operations teams can reason about together.</p>
+                        <ul>
+                            <li>Error budget = 1 − SLO target (e.g. a 99.9% SLO gives a 0.1% error budget)</li>
+                            <li>When the budget is healthy, teams can ship faster; when it is depleted, reliability work takes priority</li>
+                            <li>Track burn rate alerts to detect budget depletion before it becomes critical</li>
+                        </ul>
+                    </div>
+
+                    <div class="framework-step">
+                        <div class="step-number">5</div>
+                        <h3>Review and Iterate</h3>
+                        <p>SLOs are living agreements. Schedule regular reviews with business and engineering stakeholders to ensure your objectives remain relevant as the service evolves.</p>
+                        <ul>
+                            <li>Review SLOs quarterly or after significant architectural changes</li>
+                            <li>Tighten targets when users demand higher reliability and the team has capacity</li>
+                            <li>Loosen targets temporarily after major incidents to allow safe recovery space</li>
+                            <li>Use post-incident reviews to feed learnings back into SLI definitions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Principles Section -->
+        <section id="principles" class="section bg-light">
+            <div class="container">
+                <h2>Key Principles for Business-Aligned SLOs</h2>
+                <div class="cards">
+                    <div class="card">
+                        <h3>Start with the User</h3>
+                        <p>SLOs should reflect the experience of a real user, not internal system metrics. Ask "does this metric capture whether the user successfully achieved their goal?" before adopting an SLI.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Keep It Simple</h3>
+                        <p>Fewer, well-chosen SLOs are more actionable than a large number of rarely reviewed ones. Aim for one to three SLOs per Critical User Journey and expand only when the team has built the muscle to manage them.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Make Them Visible</h3>
+                        <p>SLOs only drive behaviour when they are visible to the whole team — engineers, product managers, and business stakeholders alike. Dashboard radiators, Slack alerts, and weekly digest emails all help keep SLOs top of mind.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Agree on Consequences</h3>
+                        <p>Define in advance what happens when the error budget is exhausted. Common policies include freezing feature deployments, convening a reliability review, or escalating to senior leadership. Written policies reduce ambiguity during high-stress incidents.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools Comparison Section -->
+        <section id="tools" class="section">
+            <div class="container">
+                <h2>Comparing SLO Tools in the Market</h2>
+                <p class="section-intro">Selecting the right tooling accelerates SLO adoption. The table below compares the most widely used platforms across the dimensions that matter most when implementing the framework above.</p>
+
+                <div class="tools-table-wrapper">
+                    <table class="tools-table">
+                        <thead>
+                            <tr>
+                                <th>Tool</th>
+                                <th>SLI Types Supported</th>
+                                <th>Error Budget Tracking</th>
+                                <th>Alerting</th>
+                                <th>Open Standard</th>
+                                <th>Best For</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Google Cloud Monitoring</strong></td>
+                                <td>Availability, Latency, Window-based</td>
+                                <td>✅ Built-in</td>
+                                <td>✅ Burn rate alerts</td>
+                                <td>❌ Proprietary</td>
+                                <td>Teams already on Google Cloud</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Datadog SLOs</strong></td>
+                                <td>Metric-based, Monitor-based, Time Slice</td>
+                                <td>✅ Built-in</td>
+                                <td>✅ Composite alerts</td>
+                                <td>❌ Proprietary</td>
+                                <td>Teams using Datadog for APM and infrastructure</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dynatrace</strong></td>
+                                <td>Availability, Performance, Custom</td>
+                                <td>✅ Built-in</td>
+                                <td>✅ Davis AI-driven</td>
+                                <td>❌ Proprietary</td>
+                                <td>Enterprise environments needing AI-assisted root cause analysis</td>
+                            </tr>
+                            <tr>
+                                <td><strong>New Relic SLOs</strong></td>
+                                <td>Availability, Latency, Custom NRQL</td>
+                                <td>✅ Built-in</td>
+                                <td>✅ Policy-based</td>
+                                <td>❌ Proprietary</td>
+                                <td>Teams using New Relic for full-stack observability</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Prometheus + Sloth</strong></td>
+                                <td>Any Prometheus metric</td>
+                                <td>✅ Via recording rules</td>
+                                <td>✅ Alertmanager integration</td>
+                                <td>✅ Open source</td>
+                                <td>Kubernetes-native teams with existing Prometheus stacks</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Nobl9</strong></td>
+                                <td>Multi-source (Prometheus, Datadog, Splunk, etc.)</td>
+                                <td>✅ Built-in</td>
+                                <td>✅ Burn rate &amp; composite</td>
+                                <td>⚠️ Supports OpenSLO</td>
+                                <td>Multi-cloud organisations that want a vendor-neutral SLO layer</td>
+                            </tr>
+                            <tr>
+                                <td><strong>OpenSLO</strong></td>
+                                <td>Specification only (tool-agnostic)</td>
+                                <td>⚠️ Depends on backend</td>
+                                <td>⚠️ Depends on backend</td>
+                                <td>✅ Open standard (CNCF)</td>
+                                <td>Teams wanting a portable, tool-agnostic SLO definition format</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tools-cards">
+                    <div class="tool-card">
+                        <h3>Google Cloud Monitoring</h3>
+                        <p>Native SLO support within Google Cloud lets you define SLOs directly from Cloud Monitoring metrics. Burn rate alerting is built in, making it straightforward to set up multi-window, multi-burn-rate alerts following the Google SRE book recommendations.</p>
+                        <ul>
+                            <li>Integrates natively with Cloud Run, GKE, and App Engine</li>
+                            <li>SLO dashboards available out of the box</li>
+                            <li>Limited to GCP workloads without additional configuration</li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-card">
+                        <h3>Datadog SLOs</h3>
+                        <p>Datadog supports three SLO types — metric-based, monitor-based, and time-slice — giving teams flexibility based on their data model. SLO widgets integrate with dashboards and notebooks for stakeholder reporting.</p>
+                        <ul>
+                            <li>SLO status pages for sharing reliability with non-technical stakeholders</li>
+                            <li>Composite SLOs allow aggregating multiple services into a single target</li>
+                            <li>API-first design enables GitOps-style SLO management</li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-card">
+                        <h3>Prometheus + Sloth</h3>
+                        <p><a href="https://github.com/slok/sloth" target="_blank" rel="noopener noreferrer" aria-label="Sloth (opens in new tab)">Sloth</a> is an open-source tool that generates SLO-compliant Prometheus recording rules and alerts from a simple YAML specification. It follows the <a href="https://sre.google/workbook/alerting-on-slos/" target="_blank" rel="noopener noreferrer" aria-label="multi-window, multi-burn-rate alerting (opens in new tab)">multi-window, multi-burn-rate alerting</a> approach recommended by Google.</p>
+                        <ul>
+                            <li>Fully open source with no licensing costs</li>
+                            <li>GitOps friendly — SLO definitions live alongside your service code</li>
+                            <li>Requires an existing Prometheus and Alertmanager setup</li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-card">
+                        <h3>Nobl9</h3>
+                        <p>Nobl9 is a dedicated SLO platform that acts as a unified layer across multiple observability backends. It supports the OpenSLO specification for portable SLO definitions and provides a purpose-built UI for reliability reviews.</p>
+                        <ul>
+                            <li>Connects to over 30 data sources including Prometheus, Datadog, and Splunk</li>
+                            <li>Annotations allow teams to correlate SLO dips with deployments and incidents</li>
+                            <li>Commercial product with a free tier for small teams</li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-card">
+                        <h3>OpenSLO</h3>
+                        <p><a href="https://openslo.com/" target="_blank" rel="noopener noreferrer" aria-label="OpenSLO (opens in new tab)">OpenSLO</a> is a CNCF-aligned open specification for defining SLOs in a vendor-neutral YAML format. It is not a tool in itself, but an interoperability standard that tools like Nobl9 and Sloth can consume.</p>
+                        <ul>
+                            <li>Prevents vendor lock-in by keeping SLO definitions portable</li>
+                            <li>Growing ecosystem of converters and integrations</li>
+                            <li>Ideal as a source-of-truth format checked into version control</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Choosing a Tool Section -->
+        <section id="choosing" class="section bg-light">
+            <div class="container">
+                <h2>How to Choose the Right Tool</h2>
+                <div class="getting-started">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Assess Your Stack</h3>
+                        <p>If you are already invested in a platform like Datadog or Google Cloud, start with its native SLO features to reduce operational overhead. You can always migrate to a more portable format later.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Consider Portability</h3>
+                        <p>Teams operating across multiple cloud providers or with a diverse observability stack benefit from a dedicated SLO layer (Nobl9) or an open standard (OpenSLO) to avoid fragmented SLO definitions.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Evaluate Cost and Scale</h3>
+                        <p>Open-source solutions like Prometheus + Sloth are cost-effective at scale but require operational investment. Commercial platforms offer managed experiences that reduce toil but add licensing costs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section class="section">
+            <div class="container">
+                <h2>Further Reading</h2>
+                <div class="resources">
+                    <p>📚 <strong><a href="https://sre.google/workbook/alerting-on-slos/" target="_blank" rel="noopener noreferrer" aria-label="Google SRE Workbook — Alerting on SLOs (opens in new tab)" style="color: #667eea; text-decoration: none;">Google SRE Workbook — Alerting on SLOs:</a></strong> The definitive reference for multi-window, multi-burn-rate alerting strategies</p>
+                    <p>🛠️ <strong><a href="https://github.com/slok/sloth" target="_blank" rel="noopener noreferrer" aria-label="Sloth (opens in new tab)" style="color: #667eea; text-decoration: none;">Sloth:</a></strong> Open-source Prometheus SLO generator</p>
+                    <p>📖 <strong><a href="https://openslo.com/" target="_blank" rel="noopener noreferrer" aria-label="OpenSLO Specification (opens in new tab)" style="color: #667eea; text-decoration: none;">OpenSLO Specification:</a></strong> Vendor-neutral SLO definition standard</p>
+                    <p>🧮 <strong><a href="../error-budget-calculator.html" style="color: #667eea; text-decoration: none;">Error Budget Calculator:</a></strong> Calculate your error budget and burn rate interactively</p>
+                    <p>🚨 <strong><a href="../incident-management.html" style="color: #667eea; text-decoration: none;">Incident Management:</a></strong> Learn how to respond effectively when an SLO is breached</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SLO Education Hub. Licensed under MIT. | <a href="../privacy-policy.html" style="color: #667eea; text-decoration: none;">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+    <!-- Menu Module -->
+    <script src="../menu.js"></script>
+</body>
+</html>

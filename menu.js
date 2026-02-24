@@ -66,6 +66,7 @@
         const path = window.location.pathname;
         if (path.includes('error-budget-calculator')) return 'calculator';
         if (path.includes('incident-management')) return 'incident-management';
+        if (path.includes('topics/')) return 'topics';
         return 'home';
     }
 
