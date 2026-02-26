@@ -45,7 +45,10 @@
 
         // Determine which page we're on
         const currentPage = getCurrentPage();
-        
+
+        // Render nav links from centralized config
+        renderNavLinks(currentPage);
+
         // Create and insert hamburger button
         createHamburgerButton(navbar);
         
@@ -66,7 +69,22 @@
         const path = window.location.pathname;
         if (path.includes('error-budget-calculator')) return 'calculator';
         if (path.includes('incident-management')) return 'incident-management';
+        if (path.includes('privacy-policy')) return 'privacy-policy';
         return 'home';
+    }
+
+    /**
+     * Render navigation links into the .nav-links element from NAV_CONFIG
+     */
+    function renderNavLinks(currentPage) {
+        const navList = document.querySelector('.nav-links');
+        if (!navList) return;
+
+        const config = currentPage === 'home' ? NAV_CONFIG.home : NAV_CONFIG.other;
+
+        navList.innerHTML = config.links.map(function(link) {
+            return '<li><a href="' + link.href + '">' + link.text + '</a></li>';
+        }).join('');
     }
 
     /**
