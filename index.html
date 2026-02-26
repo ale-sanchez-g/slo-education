@@ -99,9 +99,10 @@
                 <p>Use our interactive agent to guide you through your SLO onboarding journey. Ask questions, get personalized guidance, and accelerate your learning.</p>
                 <div class="agent-container">
                     <iframe
+                        id="slo-agent-iframe"
                         src="https://www.agent37.com/g/slo-onboarding-journey"
                         title="SLO onboarding journey"
-                        sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox"
+                        sandbox="allow-scripts allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox"
                         allow="microphone; autoplay; screen-wake-lock; clipboard-write; clipboard-read;"
                         width="100%"
                         height="600"
@@ -259,6 +260,27 @@
                 privacyLink.addEventListener('click', function() {
                     trackEvent('Cookie Consent', 'click', 'Learn More');
                 });
+            }
+        });
+
+        // Handle cross-origin communication from the agent iframe via postMessage.
+        // Direct frame access across origins is blocked by the browser Same-Origin Policy,
+        // so postMessage is the correct channel for iframe <-> parent communication.
+        window.addEventListener('message', function(event) {
+            // Only accept messages from the trusted agent origin.
+            if (event.origin !== 'https://www.agent37.com') {
+                return;
+            }
+
+            var data = event.data;
+            if (!data || typeof data !== 'object') return;
+
+            var iframe = document.getElementById('slo-agent-iframe');
+            if (!iframe) return;
+
+            // Allow the iframe to resize itself by sending its content height.
+            if (data.type === 'resize' && typeof data.height === 'number') {
+                iframe.style.height = data.height + 'px';
             }
         });
     </script>
