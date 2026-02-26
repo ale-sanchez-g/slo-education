@@ -16,10 +16,9 @@
             links: [
                 { text: 'About', href: '#about' },
                 { text: 'What are SLOs?', href: '#what-are-slos' },
-                { text: 'Get Started', href: '#get-started' },
                 { text: 'Calculator', href: 'error-budget-calculator.html' },
                 { text: 'Incident Management', href: 'incident-management.html' },
-                { text: 'Agent', href: '#slo-agent' }
+                { text: 'Privacy', href: 'privacy-policy.html' }
             ]
         },
         other: {
@@ -28,7 +27,8 @@
                 { text: 'About', href: 'index.html#about' },
                 { text: 'What are SLOs?', href: 'index.html#what-are-slos' },
                 { text: 'Calculator', href: 'error-budget-calculator.html' },
-                { text: 'Incident Management', href: 'incident-management.html' }
+                { text: 'Incident Management', href: 'incident-management.html' },
+                { text: 'Privacy', href: 'privacy-policy.html' }
             ]
         }
     };

@@ -32,17 +32,15 @@ test.describe('Responsive Menu Functionality', () => {
 
     test('should have all navigation links on home page', async ({ page }) => {
       const navLinks = page.locator('.nav-links a');
-      
-      await expect(navLinks).toHaveCount(7);
-      
+
+      await expect(navLinks).toHaveCount(5);
+
       // Verify all expected links
       await expect(navLinks.nth(0)).toHaveText('About');
       await expect(navLinks.nth(1)).toHaveText('What are SLOs?');
-      await expect(navLinks.nth(2)).toHaveText('Get Started');
-      await expect(navLinks.nth(3)).toHaveText('Calculator');
-      await expect(navLinks.nth(4)).toHaveText('Incident Management');
-      await expect(navLinks.nth(5)).toHaveText('Agent');
-      await expect(navLinks.nth(6)).toHaveText('Privacy');
+      await expect(navLinks.nth(2)).toHaveText('Calculator');
+      await expect(navLinks.nth(3)).toHaveText('Incident Management');
+      await expect(navLinks.nth(4)).toHaveText('Privacy');
     });
 
     test('should have consistent navigation on calculator page', async ({ page }) => {
