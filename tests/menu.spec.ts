@@ -32,17 +32,15 @@ test.describe('Responsive Menu Functionality', () => {
 
     test('should have all navigation links on home page', async ({ page }) => {
       const navLinks = page.locator('.nav-links a');
-      
-      await expect(navLinks).toHaveCount(7);
-      
+
+      await expect(navLinks).toHaveCount(5);
+
       // Verify all expected links
       await expect(navLinks.nth(0)).toHaveText('About');
       await expect(navLinks.nth(1)).toHaveText('What are SLOs?');
-      await expect(navLinks.nth(2)).toHaveText('Get Started');
-      await expect(navLinks.nth(3)).toHaveText('Calculator');
-      await expect(navLinks.nth(4)).toHaveText('Incident Management');
-      await expect(navLinks.nth(5)).toHaveText('Agent');
-      await expect(navLinks.nth(6)).toHaveText('Privacy');
+      await expect(navLinks.nth(2)).toHaveText('Calculator');
+      await expect(navLinks.nth(3)).toHaveText('Incident Management');
+      await expect(navLinks.nth(4)).toHaveText('Privacy');
     });
 
     test('should have consistent navigation on calculator page', async ({ page }) => {
@@ -338,18 +336,196 @@ test.describe('Responsive Menu Functionality', () => {
       await page.waitForLoadState('networkidle');
       let navLinks = page.locator('.nav-links');
       await expect(navLinks).toBeVisible();
-      
+
       // Check calculator page
       await page.goto('/error-budget-calculator.html');
       await page.waitForLoadState('networkidle');
       navLinks = page.locator('.nav-links');
       await expect(navLinks).toBeVisible();
-      
+
       // Check incident management page
       await page.goto('/incident-management.html');
       await page.waitForLoadState('networkidle');
       navLinks = page.locator('.nav-links');
       await expect(navLinks).toBeVisible();
+    });
+  });
+
+  test.describe('Navigation Link Clicks', () => {
+    test.describe('From home page', () => {
+      test.beforeEach(async ({ page }) => {
+        await page.setViewportSize({ width: 1280, height: 720 });
+        await page.goto('/');
+        await page.waitForLoadState('networkidle');
+      });
+
+      test('clicking About scrolls to the About section', async ({ page }) => {
+        await page.click('.nav-links a:has-text("About")');
+        await expect(page).toHaveURL(/#about$/);
+        await expect(page.locator('#about')).toBeAttached();
+      });
+
+      test('clicking What are SLOs? scrolls to the What are SLOs section', async ({ page }) => {
+        await page.click('.nav-links a:has-text("What are SLOs?")');
+        await expect(page).toHaveURL(/#what-are-slos$/);
+        await expect(page.locator('#what-are-slos')).toBeAttached();
+      });
+
+      test('clicking Calculator navigates to the calculator page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("Calculator")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/error-budget-calculator\.html/);
+      });
+
+      test('clicking Incident Management navigates to the incident management page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("Incident Management")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/incident-management\.html/);
+      });
+
+      test('clicking Privacy navigates to the privacy policy page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("Privacy")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/privacy-policy\.html/);
+      });
+    });
+
+    test.describe('From calculator page', () => {
+      test.beforeEach(async ({ page }) => {
+        await page.setViewportSize({ width: 1280, height: 720 });
+        await page.goto('/error-budget-calculator.html');
+        await page.waitForLoadState('networkidle');
+      });
+
+      test('clicking Home navigates to the home page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("Home")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/\/(index\.html)?$/);
+      });
+
+      test('clicking About navigates to the About section on the home page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("About")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/index\.html#about/);
+        await expect(page.locator('#about')).toBeAttached();
+      });
+
+      test('clicking What are SLOs? navigates to the What are SLOs section on the home page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("What are SLOs?")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/index\.html#what-are-slos/);
+        await expect(page.locator('#what-are-slos')).toBeAttached();
+      });
+
+      test('clicking Calculator stays on the calculator page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("Calculator")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/error-budget-calculator\.html/);
+      });
+
+      test('clicking Incident Management navigates to the incident management page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("Incident Management")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/incident-management\.html/);
+      });
+
+      test('clicking Privacy navigates to the privacy policy page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("Privacy")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/privacy-policy\.html/);
+      });
+    });
+
+    test.describe('From incident management page', () => {
+      test.beforeEach(async ({ page }) => {
+        await page.setViewportSize({ width: 1280, height: 720 });
+        await page.goto('/incident-management.html');
+        await page.waitForLoadState('networkidle');
+      });
+
+      test('clicking Home navigates to the home page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("Home")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/\/(index\.html)?$/);
+      });
+
+      test('clicking About navigates to the About section on the home page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("About")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/index\.html#about/);
+        await expect(page.locator('#about')).toBeAttached();
+      });
+
+      test('clicking What are SLOs? navigates to the What are SLOs section on the home page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("What are SLOs?")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/index\.html#what-are-slos/);
+        await expect(page.locator('#what-are-slos')).toBeAttached();
+      });
+
+      test('clicking Calculator navigates to the calculator page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("Calculator")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/error-budget-calculator\.html/);
+      });
+
+      test('clicking Incident Management stays on the incident management page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("Incident Management")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/incident-management\.html/);
+      });
+
+      test('clicking Privacy navigates to the privacy policy page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("Privacy")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/privacy-policy\.html/);
+      });
+    });
+
+    test.describe('From privacy policy page', () => {
+      test.beforeEach(async ({ page }) => {
+        await page.setViewportSize({ width: 1280, height: 720 });
+        await page.goto('/privacy-policy.html');
+        await page.waitForLoadState('networkidle');
+      });
+
+      test('clicking Home navigates to the home page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("Home")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/\/(index\.html)?$/);
+      });
+
+      test('clicking About navigates to the About section on the home page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("About")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/index\.html#about/);
+        await expect(page.locator('#about')).toBeAttached();
+      });
+
+      test('clicking What are SLOs? navigates to the What are SLOs section on the home page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("What are SLOs?")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/index\.html#what-are-slos/);
+        await expect(page.locator('#what-are-slos')).toBeAttached();
+      });
+
+      test('clicking Calculator navigates to the calculator page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("Calculator")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/error-budget-calculator\.html/);
+      });
+
+      test('clicking Incident Management navigates to the incident management page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("Incident Management")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/incident-management\.html/);
+      });
+
+      test('clicking Privacy stays on the privacy policy page', async ({ page }) => {
+        await page.click('.nav-links a:has-text("Privacy")');
+        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL(/privacy-policy\.html/);
+      });
     });
   });
 });
