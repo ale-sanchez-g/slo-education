@@ -448,6 +448,9 @@
     font-family: 'Courier New', monospace;
     font-size: 1.1rem;
     line-height: 1.8;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-x: auto;
 }
 
 /* Scenario Cards */
@@ -805,6 +808,15 @@
         display: none;
     }
 
+    .framework-tree {
+        padding: 1rem;
+    }
+
+    .framework-tree pre {
+        font-size: 0.85rem;
+        line-height: 1.6;
+    }
+
     .formula-box {
         padding: 1.5rem;
     }
@@ -813,6 +825,7 @@
         font-size: 0.9rem;
         padding: 1rem;
         overflow-x: auto;
+        word-break: break-word;
     }
 
     .section h2 {
