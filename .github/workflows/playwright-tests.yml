@@ -10,6 +10,10 @@ jobs:
   test:
     timeout-minutes: 15
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
     steps:
     - uses: actions/checkout@v4
 
@@ -25,17 +29,17 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ~/.cache/ms-playwright
-        key: playwright-browsers-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+        key: playwright-${{ matrix.browser }}-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
-    - name: Install Playwright Browsers
-      run: npx playwright install chromium --with-deps
+    - name: Install Playwright Browser
+      run: npx playwright install ${{ matrix.browser }} --with-deps
 
     - name: Run Playwright tests
-      run: npm test
+      run: npx playwright test --project=${{ matrix.browser }}
 
     - uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: playwright-report
+        name: playwright-report-${{ matrix.browser }}
         path: playwright-report/
         retention-days: 30
