@@ -356,9 +356,6 @@ footer p {
         grid-template-columns: 1fr;
     }
 
-    .agent-container iframe {
-        height: 400px;
-    }
 }
 
 /* Cookie Consent Banner */
