@@ -1,3 +1,21 @@
+# v1.1.1 — Reliability pipeline page and docs
+
+## What's new
+
+### New educational content
+
+Added a new page `cuj-sli-slo-error-budget.html` featuring an interactive demo, deep dives on CUJ and SLI concepts, a reliability pipeline walkthrough (CUJ → SLI → SLO → Error Budget), further reading, cookie consent, and analytics integration.
+
+### Styling and consistency improvements
+
+Removed custom hero classes (`calculator-hero`, `incident-hero`) from `error-budget-calculator.html` and `incident-management.html` for a consistent hero section across pages. [1] [2]
+
+### Documentation updates
+
+Updated `knowledge/slo-education-site-analysis.md` to include a timestamp and a `BEFORE` section header for clearer historical context.
+
+---
+
 # v1.1.0 — Interactive SLO Examples
 
 ## What's new

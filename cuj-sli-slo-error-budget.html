@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn how Critical User Journeys drive SLI measurement, SLO targets, and Error Budget management — interactive airport reliability demo">
+    <title>CUJ → SLI → SLO → Error Budget - SLO Education Hub</title>
+    <link rel="stylesheet" href="style/styles.css">
+    <link rel="stylesheet" href="style/cuj-sli-slo-error-budget.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <script src="scripts/grafana.js" defer></script>
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="privacy-policy.html" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="index.html" style="color: white; text-decoration: none;">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h2>CUJ &#8594; SLI &#8594; SLO &#8594; Error Budget</h2>
+                <p class="hero-subtitle">See how Critical User Journeys drive your reliability pipeline — from measurement to budget</p>
+            </div>
+        </section>
+
+        <!-- Flow Overview -->
+        <section class="section" id="flow-overview">
+            <div class="container">
+                <h2>&#128279; The Reliability Pipeline</h2>
+                <p class="section-intro">Every reliability practice starts with understanding your users. Here's how the pipeline connects — from what users care about, to how you measure it, to the targets you set, and the budget you earn.</p>
+
+                <div class="flow-diagram" aria-label="Reliability pipeline: CUJ to SLI to SLO to Error Budget">
+                    <div class="flow-step">
+                        <div class="flow-icon" aria-hidden="true">&#128100;</div>
+                        <div class="flow-label">CUJ</div>
+                        <div class="flow-desc">Critical User Journey — what users care about</div>
+                    </div>
+                    <div class="flow-arrow" aria-hidden="true">&#8594;</div>
+                    <div class="flow-step">
+                        <div class="flow-icon" aria-hidden="true">&#128202;</div>
+                        <div class="flow-label">SLI</div>
+                        <div class="flow-desc">Service Level Indicator — how we measure it</div>
+                    </div>
+                    <div class="flow-arrow" aria-hidden="true">&#8594;</div>
+                    <div class="flow-step">
+                        <div class="flow-icon" aria-hidden="true">&#127919;</div>
+                        <div class="flow-label">SLO</div>
+                        <div class="flow-desc">Service Level Objective — our target</div>
+                    </div>
+                    <div class="flow-arrow" aria-hidden="true">&#8594;</div>
+                    <div class="flow-step">
+                        <div class="flow-icon" aria-hidden="true">&#128200;</div>
+                        <div class="flow-label">Error Budget</div>
+                        <div class="flow-desc">How much failure we can afford</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CUJ Deep Dive -->
+        <section class="section bg-light" id="what-is-cuj">
+            <div class="container">
+                <h2>&#128100; What is a Critical User Journey?</h2>
+                <p class="section-intro">A CUJ is a sequence of steps a user takes to accomplish a key goal. It defines <strong>what matters</strong> for your users — and therefore for your service reliability.</p>
+
+                <div class="cuj-grid">
+                    <div class="cuj-card">
+                        <h3>How to Identify CUJs</h3>
+                        <ul>
+                            <li><strong>Ask:</strong> What actions must users <em>always</em> be able to complete?</li>
+                            <li><strong>Focus:</strong> On the most critical, high-frequency user paths</li>
+                            <li><strong>Validate:</strong> With product, business, and user research</li>
+                            <li><strong>Prioritize:</strong> By business impact, not technical complexity</li>
+                        </ul>
+                    </div>
+                    <div class="cuj-card">
+                        <h3>Good CUJ Examples</h3>
+                        <ul>
+                            <li>&#9989; User can search and book a flight</li>
+                            <li>&#9989; User can complete airport check-in</li>
+                            <li>&#9989; User receives real-time flight updates</li>
+                            <li>&#10060; Too broad: "User can use the app"</li>
+                            <li>&#10060; Too narrow: "User can sort results by price"</li>
+                        </ul>
+                    </div>
+                    <div class="cuj-card">
+                        <h3>Why CUJs Drive Everything</h3>
+                        <p>Without a CUJ, SLIs are just metrics. With a CUJ, they become <strong>user-meaningful signals</strong> that tell you whether users are succeeding at what they came to do.</p>
+                        <p>CUJs ensure your reliability work targets what actually matters to the business and its customers.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Demo Section -->
+        <section class="section" id="interactive-demo">
+            <div class="container">
+                <h2>&#9992; Interactive Demo: Airport Reliability Pipeline</h2>
+                <p class="section-intro">Select a Critical User Journey below to see how it drives SLI measurement, SLO targets, and Error Budget management.</p>
+
+                <!-- Step 1: CUJ Selection -->
+                <div class="demo-block" id="step-cuj">
+                    <div class="demo-step-header">
+                        <span class="demo-step-number">Step 1</span>
+                        <h3>Pick a Critical User Journey</h3>
+                    </div>
+
+                    <div class="journey-cards" role="group" aria-label="Select a Critical User Journey">
+                        <button class="journey-card" data-journey="booking" aria-pressed="false">
+                            <span class="journey-emoji" aria-hidden="true">&#9992;</span>
+                            <strong class="journey-name">Flight Booking</strong>
+                            <span class="journey-tagline">Online booking system</span>
+                        </button>
+                        <button class="journey-card" data-journey="checkin" aria-pressed="false">
+                            <span class="journey-emoji" aria-hidden="true">&#127915;</span>
+                            <strong class="journey-name">Airport Check-in</strong>
+                            <span class="journey-tagline">Online &amp; kiosk check-in</span>
+                        </button>
+                        <button class="journey-card" data-journey="operations" aria-pressed="false">
+                            <span class="journey-emoji" aria-hidden="true">&#128747;</span>
+                            <strong class="journey-name">Flight Operations</strong>
+                            <span class="journey-tagline">Real-time flight data</span>
+                        </button>
+                    </div>
+
+                    <p class="journey-description" id="journey-desc">Select a journey above to begin exploring the reliability pipeline.</p>
+                </div>
+
+                <!-- Step 2: SLI -->
+                <div class="demo-block" id="step-sli">
+                    <div class="demo-step-header">
+                        <span class="demo-step-number">Step 2</span>
+                        <h3>SLI — Measuring What Matters</h3>
+                    </div>
+
+                    <div class="sli-panel">
+                        <div class="sli-info">
+                            <div class="sli-info-label">Indicator Name</div>
+                            <div class="sli-name" id="sli-name">—</div>
+                            <div class="sli-info-label">What it measures</div>
+                            <p class="sli-description" id="sli-description">Select a journey to see its SLI.</p>
+                            <div class="sli-info-label">Formula</div>
+                            <code class="sli-formula" id="sli-formula">—</code>
+                        </div>
+                        <div class="sli-meter">
+                            <div class="sli-meter-label">Current SLI Value</div>
+                            <div class="sli-bar-wrapper" role="progressbar" aria-label="Current SLI value" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                <div class="sli-bar" id="sli-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="sli-value" id="sli-value">—</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: SLO -->
+                <div class="demo-block" id="step-slo">
+                    <div class="demo-step-header">
+                        <span class="demo-step-number">Step 3</span>
+                        <h3>SLO — Our Service Promise</h3>
+                    </div>
+
+                    <div class="slo-panel">
+                        <div class="slo-target-display">
+                            <div class="slo-target-label">SLO Target</div>
+                            <div class="slo-target-badge" id="slo-target-badge">—</div>
+                            <div class="slo-status" id="slo-status">—</div>
+                        </div>
+                        <div class="slo-details">
+                            <p id="slo-explanation">Select a journey to see its SLO.</p>
+                            <p class="slo-budget-preview" id="slo-budget-preview">—</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Error Budget -->
+                <div class="demo-block" id="step-budget">
+                    <div class="demo-step-header">
+                        <span class="demo-step-number">Step 4</span>
+                        <h3>Error Budget — How Much Can We Fail?</h3>
+                    </div>
+
+                    <div class="budget-panel">
+                        <div class="budget-gauge">
+                            <div class="budget-gauge-label">Budget Remaining</div>
+                            <div class="budget-bar-wrapper" role="progressbar" aria-label="Error Budget Remaining" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                <div class="budget-bar" id="budget-bar" style="width: 100%"></div>
+                            </div>
+                            <div class="budget-stats">
+                                <span class="budget-percentage" id="budget-percentage">—</span>
+                                <span class="budget-hours" id="budget-hours">Select a journey to see your budget</span>
+                            </div>
+                        </div>
+
+                        <div class="budget-controls">
+                            <button class="simulate-btn" id="simulate-incident" disabled>
+                                &#9889; Simulate Incident
+                            </button>
+                            <button class="reset-btn" id="reset-budget" disabled>
+                                &#128260; Reset Budget
+                            </button>
+                        </div>
+
+                        <div class="budget-decision" id="budget-decision">
+                            <h4 class="decision-title">&#128161; Team Decision</h4>
+                            <p class="decision-text" id="decision-text">Select a journey above to see the recommended team action.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLI Deep Dive -->
+        <section class="section bg-light" id="about-sli">
+            <div class="container">
+                <h2>&#128202; Understanding SLIs</h2>
+                <p class="section-intro">A <strong>Service Level Indicator</strong> is a quantitative measure of your service's behaviour from the user's perspective. It answers: "How well is the service performing right now?"</p>
+
+                <h3>Common SLI Types</h3>
+                <div class="sli-types-grid">
+                    <div class="sli-type-card">
+                        <h4>Availability</h4>
+                        <p>Is the service up and responding?</p>
+                        <code>successful_requests / total_requests</code>
+                    </div>
+                    <div class="sli-type-card">
+                        <h4>Latency</h4>
+                        <p>Is the service responding fast enough?</p>
+                        <code>requests_under_threshold / total_requests</code>
+                    </div>
+                    <div class="sli-type-card">
+                        <h4>Throughput</h4>
+                        <p>Is the service handling enough load?</p>
+                        <code>successful_jobs / total_jobs_submitted</code>
+                    </div>
+                    <div class="sli-type-card">
+                        <h4>Freshness</h4>
+                        <p>Is the data current enough?</p>
+                        <code>updates_within_window / expected_updates</code>
+                    </div>
+                </div>
+
+                <div class="key-concept">
+                    <h3>Good SLI Design Principles</h3>
+                    <ul>
+                        <li><strong>User-focused:</strong> Measure what users experience, not what's easy to instrument</li>
+                        <li><strong>Ratio-based:</strong> Express as a proportion (e.g., 99.5%) not raw counts</li>
+                        <li><strong>Bounded:</strong> Should have a clear 0–100% range</li>
+                        <li><strong>Actionable:</strong> A change in the SLI should trigger a meaningful response</li>
+                        <li><strong>Aligned to CUJ:</strong> Each SLI should map directly to a user goal</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Putting It Together Section -->
+        <section class="section" id="putting-together">
+            <div class="container">
+                <h2>&#128295; Putting It All Together</h2>
+                <p class="section-intro">Here's the complete pipeline in action — from user need to engineering decision.</p>
+
+                <div class="pipeline-steps">
+                    <div class="pipeline-step">
+                        <span class="pipeline-number">1</span>
+                        <div class="pipeline-content">
+                            <h3>Identify the CUJ</h3>
+                            <p>"Users must be able to complete a flight booking in under 3 minutes"</p>
+                        </div>
+                    </div>
+                    <div class="pipeline-arrow" aria-hidden="true">&#8595;</div>
+                    <div class="pipeline-step">
+                        <span class="pipeline-number">2</span>
+                        <div class="pipeline-content">
+                            <h3>Define the SLI</h3>
+                            <p>Booking Success Rate = successful_bookings / total_attempts &#215; 100</p>
+                        </div>
+                    </div>
+                    <div class="pipeline-arrow" aria-hidden="true">&#8595;</div>
+                    <div class="pipeline-step">
+                        <span class="pipeline-number">3</span>
+                        <div class="pipeline-content">
+                            <h3>Set the SLO</h3>
+                            <p>Booking Success Rate &#8805; 99.5% measured over a 30-day rolling window</p>
+                        </div>
+                    </div>
+                    <div class="pipeline-arrow" aria-hidden="true">&#8595;</div>
+                    <div class="pipeline-step">
+                        <span class="pipeline-number">4</span>
+                        <div class="pipeline-content">
+                            <h3>Calculate the Error Budget</h3>
+                            <p>(1 &#8722; 0.995) &#215; 720h = <strong>3.6 hours</strong> of allowed downtime per month</p>
+                        </div>
+                    </div>
+                    <div class="pipeline-arrow" aria-hidden="true">&#8595;</div>
+                    <div class="pipeline-step">
+                        <span class="pipeline-number">5</span>
+                        <div class="pipeline-content">
+                            <h3>Make Engineering Decisions</h3>
+                            <p>Budget healthy? Deploy freely. Budget low? Stabilise. Budget exhausted? Stop, fix, review.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Further Learning -->
+        <section class="section" id="further-reading">
+            <div class="container">
+                <h2>&#128214; Further Learning</h2>
+                <ul class="reading-list">
+                    <li><a href="https://sre.google/sre-book/service-level-objectives/" target="_blank" rel="noopener noreferrer">Google SRE Book — Service Level Objectives</a></li>
+                    <li><a href="https://sre.google/workbook/implementing-slos/" target="_blank" rel="noopener noreferrer">Google SRE Workbook — Implementing SLOs</a></li>
+                    <li><a href="error-budget-calculator.html">Error Budget Calculator — Try it with your own numbers</a></li>
+                    <li><a href="incident-management.html">Incident Management Guide — How CUJs help during incidents</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section bg-light">
+            <div class="container" style="text-align: center;">
+                <p><strong>Last Updated:</strong> February 2026</p>
+                <p><strong>Created For:</strong> SRE Teams &amp; Engineering Leaders</p>
+                <p><strong>Status:</strong> Ready to Use</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SLO Education Hub. Licensed under MIT. | <a href="privacy-policy.html" style="color: #667eea; text-decoration: none;">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        var CONSENT_KEY = 'slo-education-analytics-consent';
+        var consentBanner = document.getElementById('cookie-consent-banner');
+        var acceptBtn = document.getElementById('cookie-accept');
+        var declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            var consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function() { dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+    <script src="scripts/cuj-sli-slo-error-budget.js"></script>
+    <script src="scripts/menu.js"></script>
+</body>
+</html>
