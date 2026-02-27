@@ -75,56 +75,89 @@
                 <h2>SLO Examples in Practice</h2>
                 <p class="section-intro">Good SLOs describe a promise you make to users. Start with a familiar situation, then apply the same thinking to your service.</p>
                 <div class="examples-grid">
-                    <div class="example-card">
-                        <div class="example-type">Availability</div>
-                        <div class="slo-target">99.9%</div>
-                        <div class="example-analogy">
-                            <span class="analogy-label">Coffee shop</span>
-                            <p>A coffee shop opens at 7am every day. If it's locked or out of service for more than ~43 minutes a month, regulars stop relying on it and go elsewhere.</p>
+                    <!-- Card 1: Availability -->
+                    <div class="flip-card" tabindex="0" role="button" aria-pressed="false" aria-label="Availability example — click to flip">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="example-type">Availability</div>
+                                <div class="slo-target">99.9%</div>
+                                <div class="example-analogy">
+                                    <span class="analogy-label">Coffee shop</span>
+                                    <p>A coffee shop opens at 7am every day. If it's locked or broken for more than ~43 minutes a month, regulars stop relying on it and go elsewhere.</p>
+                                </div>
+                                <div class="flip-hint">Click to see the technical definition &#8594;</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example-type">Availability</div>
+                                <div class="slo-target">99.9%</div>
+                                <div class="example-tech-label">In technology terms</div>
+                                <dl class="example-detail">
+                                    <dt>SLI</dt>
+                                    <dd>% of HTTP requests returning a successful response (2xx/3xx)</dd>
+                                    <dt>Target</dt>
+                                    <dd>99.9% of requests succeed over a 30-day rolling window</dd>
+                                    <dt>Means</dt>
+                                    <dd>At most ~43 minutes of downtime per month before users lose trust</dd>
+                                </dl>
+                                <div class="flip-hint">&#8592; Click to go back</div>
+                            </div>
                         </div>
-                        <div class="example-tech-label">In technology terms</div>
-                        <dl class="example-detail">
-                            <dt>SLI</dt>
-                            <dd>% of HTTP requests returning a successful response (2xx/3xx)</dd>
-                            <dt>Target</dt>
-                            <dd>99.9% of requests succeed over a 30-day rolling window</dd>
-                            <dt>Means</dt>
-                            <dd>At most ~43 minutes of downtime per month before users lose trust</dd>
-                        </dl>
                     </div>
-                    <div class="example-card">
-                        <div class="example-type">Latency</div>
-                        <div class="slo-target">&lt; 200ms</div>
-                        <div class="example-analogy">
-                            <span class="analogy-label">Airport security</span>
-                            <p>An airport promises that 95% of passengers clear security in under 10 minutes. A few complex cases take longer, but most travellers get through quickly and make their gate.</p>
+                    <!-- Card 2: Latency -->
+                    <div class="flip-card" tabindex="0" role="button" aria-pressed="false" aria-label="Latency example — click to flip">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="example-type">Latency</div>
+                                <div class="slo-target">&lt; 200ms</div>
+                                <div class="example-analogy">
+                                    <span class="analogy-label">Airport security</span>
+                                    <p>An airport promises that 95% of passengers clear security in under 10 minutes. A few complex cases take longer, but most travellers get through quickly and make their gate.</p>
+                                </div>
+                                <div class="flip-hint">Click to see the technical definition &#8594;</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example-type">Latency</div>
+                                <div class="slo-target">&lt; 200ms</div>
+                                <div class="example-tech-label">In technology terms</div>
+                                <dl class="example-detail">
+                                    <dt>SLI</dt>
+                                    <dd>HTTP response time distribution, measured at the 95th percentile</dd>
+                                    <dt>Target</dt>
+                                    <dd>p95 latency &lt; 200ms, measured over a 1-hour window</dd>
+                                    <dt>Means</dt>
+                                    <dd>95% of users get a response in under 200ms — only 1 in 20 requests may be slower</dd>
+                                </dl>
+                                <div class="flip-hint">&#8592; Click to go back</div>
+                            </div>
                         </div>
-                        <div class="example-tech-label">In technology terms</div>
-                        <dl class="example-detail">
-                            <dt>SLI</dt>
-                            <dd>HTTP response time distribution, measured at the 95th percentile</dd>
-                            <dt>Target</dt>
-                            <dd>p95 latency &lt; 200ms, measured over a 1-hour window</dd>
-                            <dt>Means</dt>
-                            <dd>95% of users get a response in under 200ms — only 1 in 20 requests may be slower</dd>
-                        </dl>
                     </div>
-                    <div class="example-card">
-                        <div class="example-type">Error Rate</div>
-                        <div class="slo-target">&lt; 0.1%</div>
-                        <div class="example-analogy">
-                            <span class="analogy-label">Bank ATM network</span>
-                            <p>A bank aims to complete at least 999 out of every 1,000 cash withdrawals successfully. One failed transaction in a thousand is tolerable — more than that and customers start queuing at branches.</p>
+                    <!-- Card 3: Error Rate -->
+                    <div class="flip-card" tabindex="0" role="button" aria-pressed="false" aria-label="Error rate example — click to flip">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="example-type">Error Rate</div>
+                                <div class="slo-target">&lt; 0.1%</div>
+                                <div class="example-analogy">
+                                    <span class="analogy-label">Bank ATM network</span>
+                                    <p>A bank aims to complete at least 999 out of every 1,000 cash withdrawals successfully. One failed transaction in a thousand is tolerable — more than that and customers start queuing at branches.</p>
+                                </div>
+                                <div class="flip-hint">Click to see the technical definition &#8594;</div>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="example-type">Error Rate</div>
+                                <div class="slo-target">&lt; 0.1%</div>
+                                <div class="example-tech-label">In technology terms</div>
+                                <dl class="example-detail">
+                                    <dt>SLI</dt>
+                                    <dd>Ratio of failed requests (5xx responses) to total requests</dd>
+                                    <dt>Target</dt>
+                                    <dd>Error rate stays below 0.1% per day</dd>
+                                    <dt>Means</dt>
+                                    <dd>No more than 1 error per 1,000 requests — leaving a small, predictable error budget</dd>
+                                </dl>
+                                <div class="flip-hint">&#8592; Click to go back</div>
+                            </div>
                         </div>
-                        <div class="example-tech-label">In technology terms</div>
-                        <dl class="example-detail">
-                            <dt>SLI</dt>
-                            <dd>Ratio of failed requests (5xx responses) to total requests</dd>
-                            <dt>Target</dt>
-                            <dd>Error rate stays below 0.1% per day</dd>
-                            <dt>Means</dt>
-                            <dd>No more than 1 error per 1,000 requests — leaving a small, predictable error budget</dd>
-                        </dl>
                     </div>
                 </div>
             </div>
@@ -226,6 +259,21 @@
 
         // Check consent on page load
         checkConsent();
+
+        // Flip cards
+        document.querySelectorAll('.flip-card').forEach(function(card) {
+            function toggle() {
+                var flipped = card.classList.toggle('flipped');
+                card.setAttribute('aria-pressed', flipped);
+            }
+            card.addEventListener('click', toggle);
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggle();
+                }
+            });
+        });
 
         // Event tracking for CTAs and navigation
         function trackEvent(category, action, label) {
