@@ -1,14 +1,5 @@
 /* Incident Management Page Styles */
 
-/* Hero Section */
-.incident-hero {
-    padding: 4rem 0;
-}
-
-.incident-hero h2 {
-    font-size: 2.5rem;
-}
-
 /* Theory Grid */
 .theory-grid {
     display: grid;
@@ -790,14 +781,6 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .incident-hero {
-        padding: 3rem 0;
-    }
-
-    .incident-hero h2 {
-        font-size: 1.75rem;
-    }
-
     .theory-grid {
         grid-template-columns: 1fr;
     }
