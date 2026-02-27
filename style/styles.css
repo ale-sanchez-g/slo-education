@@ -286,6 +286,40 @@ pre, code {
     line-height: 1.1;
 }
 
+.example-analogy {
+    background: #f0f2ff;
+    border-left: 3px solid #667eea;
+    border-radius: 0 4px 4px 0;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.analogy-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #667eea;
+    margin-bottom: 0.35rem;
+}
+
+.example-analogy p {
+    color: #444;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin: 0;
+}
+
+.example-tech-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #999;
+    margin-bottom: 0.5rem;
+}
+
 .example-detail {
     display: grid;
     grid-template-columns: auto 1fr;

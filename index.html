@@ -73,26 +73,36 @@
         <section id="examples" class="section">
             <div class="container">
                 <h2>SLO Examples in Practice</h2>
-                <p class="section-intro">Here are three common SLOs used in production services. Each example shows the SLI being measured, the target, and what it means for users.</p>
+                <p class="section-intro">Good SLOs describe a promise you make to users. Start with a familiar situation, then apply the same thinking to your service.</p>
                 <div class="examples-grid">
                     <div class="example-card">
                         <div class="example-type">Availability</div>
                         <div class="slo-target">99.9%</div>
+                        <div class="example-analogy">
+                            <span class="analogy-label">Coffee shop</span>
+                            <p>A coffee shop opens at 7am every day. If it's locked or out of service for more than ~43 minutes a month, regulars stop relying on it and go elsewhere.</p>
+                        </div>
+                        <div class="example-tech-label">In technology terms</div>
                         <dl class="example-detail">
                             <dt>SLI</dt>
-                            <dd>Percentage of HTTP requests that return a successful response (2xx/3xx)</dd>
+                            <dd>% of HTTP requests returning a successful response (2xx/3xx)</dd>
                             <dt>Target</dt>
                             <dd>99.9% of requests succeed over a 30-day rolling window</dd>
                             <dt>Means</dt>
-                            <dd>At most ~43 minutes of downtime per month is acceptable</dd>
+                            <dd>At most ~43 minutes of downtime per month before users lose trust</dd>
                         </dl>
                     </div>
                     <div class="example-card">
                         <div class="example-type">Latency</div>
                         <div class="slo-target">&lt; 200ms</div>
+                        <div class="example-analogy">
+                            <span class="analogy-label">Airport security</span>
+                            <p>An airport promises that 95% of passengers clear security in under 10 minutes. A few complex cases take longer, but most travellers get through quickly and make their gate.</p>
+                        </div>
+                        <div class="example-tech-label">In technology terms</div>
                         <dl class="example-detail">
                             <dt>SLI</dt>
-                            <dd>Distribution of HTTP request durations, measured at the 95th percentile</dd>
+                            <dd>HTTP response time distribution, measured at the 95th percentile</dd>
                             <dt>Target</dt>
                             <dd>p95 latency &lt; 200ms, measured over a 1-hour window</dd>
                             <dt>Means</dt>
@@ -102,6 +112,11 @@
                     <div class="example-card">
                         <div class="example-type">Error Rate</div>
                         <div class="slo-target">&lt; 0.1%</div>
+                        <div class="example-analogy">
+                            <span class="analogy-label">Bank ATM network</span>
+                            <p>A bank aims to complete at least 999 out of every 1,000 cash withdrawals successfully. One failed transaction in a thousand is tolerable — more than that and customers start queuing at branches.</p>
+                        </div>
+                        <div class="example-tech-label">In technology terms</div>
                         <dl class="example-detail">
                             <dt>SLI</dt>
                             <dd>Ratio of failed requests (5xx responses) to total requests</dd>
