@@ -172,3 +172,60 @@ test.describe('Visual snapshots - Desktop', () => {
     });
   }
 });
+
+// ─── Flip card visual tests ───────────────────────────────────────────────────
+
+test.describe('Visual snapshots - Flip cards', () => {
+  async function dismissCookieBanner(page: any) {
+    const acceptBtn = page.locator('#cookie-accept');
+    if (await acceptBtn.isVisible()) {
+      await acceptBtn.click();
+    }
+  }
+
+  test('examples section front face renders correctly on desktop', async ({ page }) => {
+    await page.setViewportSize(DESKTOP_VIEWPORT);
+    await page.goto('/index.html');
+    await page.waitForLoadState('networkidle');
+    await dismissCookieBanner(page);
+
+    const section = page.locator('#examples');
+    await section.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(300); // settle after scroll
+
+    await expect(section).toHaveScreenshot('examples-desktop-front.png', {
+      maxDiffPixelRatio: 0.02,
+    });
+  });
+
+  test('examples section back face renders correctly on desktop (first card flipped)', async ({ page }) => {
+    await page.setViewportSize(DESKTOP_VIEWPORT);
+    await page.goto('/index.html');
+    await page.waitForLoadState('networkidle');
+    await dismissCookieBanner(page);
+
+    const section = page.locator('#examples');
+    await section.scrollIntoViewIfNeeded();
+    await page.locator('.flip-card').first().click();
+    await page.waitForTimeout(650); // wait for full flip animation
+
+    await expect(section).toHaveScreenshot('examples-desktop-flipped.png', {
+      maxDiffPixelRatio: 0.02,
+    });
+  });
+
+  test('examples section front face renders correctly on mobile', async ({ page }) => {
+    await page.setViewportSize(MOBILE_VIEWPORT);
+    await page.goto('/index.html');
+    await page.waitForLoadState('networkidle');
+    await dismissCookieBanner(page);
+
+    const section = page.locator('#examples');
+    await section.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(300);
+
+    await expect(section).toHaveScreenshot('examples-mobile-front.png', {
+      maxDiffPixelRatio: 0.02,
+    });
+  });
+});

@@ -7,7 +7,7 @@
   var COLLECTOR_URL = 'https://faro-collector-prod-au-southeast-1.grafana.net/collect/69ac052af265df10b6446755443a2ff9';
   var APP_CONFIG = {
     url: COLLECTOR_URL,
-    app: { name: 'slo-education-hub', version: '1.0.0', environment: 'production' },
+    app: { name: 'slo-education-hub', version: '1.1.0', environment: 'production' },
     sessionTracking: { samplingRate: 1, persistent: true },
   };
 
