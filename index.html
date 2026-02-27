@@ -56,7 +56,7 @@
                 <div class="cards">
                     <div class="card">
                         <h3>Service Level Objectives</h3>
-                        <p>SLOs are target values or ranges for service levels that are measured by Service Level Indicators (SLIs). They represent the reliability goals for your services.</p>
+                        <p>A <strong>Service Level Indicator (SLI)</strong> measures a specific aspect of your service — like request success rate or response time. A <strong>Service Level Objective (SLO)</strong> sets the target for that measure — for example, "99.9% of requests succeed". Together they define what good looks like for your users.</p>
                     </div>
                     <div class="card">
                         <h3>Why SLOs Matter</h3>
@@ -70,7 +70,52 @@
             </div>
         </section>
 
-        <section id="get-started" class="section">
+        <section id="examples" class="section">
+            <div class="container">
+                <h2>SLO Examples in Practice</h2>
+                <p class="section-intro">Here are three common SLOs used in production services. Each example shows the SLI being measured, the target, and what it means for users.</p>
+                <div class="examples-grid">
+                    <div class="example-card">
+                        <div class="example-type">Availability</div>
+                        <div class="slo-target">99.9%</div>
+                        <dl class="example-detail">
+                            <dt>SLI</dt>
+                            <dd>Percentage of HTTP requests that return a successful response (2xx/3xx)</dd>
+                            <dt>Target</dt>
+                            <dd>99.9% of requests succeed over a 30-day rolling window</dd>
+                            <dt>Means</dt>
+                            <dd>At most ~43 minutes of downtime per month is acceptable</dd>
+                        </dl>
+                    </div>
+                    <div class="example-card">
+                        <div class="example-type">Latency</div>
+                        <div class="slo-target">&lt; 200ms</div>
+                        <dl class="example-detail">
+                            <dt>SLI</dt>
+                            <dd>Distribution of HTTP request durations, measured at the 95th percentile</dd>
+                            <dt>Target</dt>
+                            <dd>p95 latency &lt; 200ms, measured over a 1-hour window</dd>
+                            <dt>Means</dt>
+                            <dd>95% of users get a response in under 200ms — only 1 in 20 requests may be slower</dd>
+                        </dl>
+                    </div>
+                    <div class="example-card">
+                        <div class="example-type">Error Rate</div>
+                        <div class="slo-target">&lt; 0.1%</div>
+                        <dl class="example-detail">
+                            <dt>SLI</dt>
+                            <dd>Ratio of failed requests (5xx responses) to total requests</dd>
+                            <dt>Target</dt>
+                            <dd>Error rate stays below 0.1% per day</dd>
+                            <dt>Means</dt>
+                            <dd>No more than 1 error per 1,000 requests — leaving a small, predictable error budget</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="get-started" class="section bg-light">
             <div class="container">
                 <h2>Get Started</h2>
                 <div class="getting-started">
@@ -93,7 +138,7 @@
             </div>
         </section>
 
-        <section class="section bg-light">
+        <section class="section">
             <div class="container">
                 <h2>Resources</h2>
                 <div class="resources">

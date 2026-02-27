@@ -244,6 +244,70 @@ pre, code {
     line-height: 1.7;
 }
 
+/* Examples Section */
+.section-intro {
+    text-align: center;
+    color: #555;
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+}
+
+.examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.example-card {
+    background: white;
+    border: 1px solid #e8e8e8;
+    border-top: 4px solid #667eea;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.example-type {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #667eea;
+    margin-bottom: 0.5rem;
+}
+
+.slo-target {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+.example-detail {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.4rem 1rem;
+}
+
+.example-detail dt {
+    font-weight: 700;
+    color: #2c3e50;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding-top: 0.1rem;
+}
+
+.example-detail dd {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
 /* Resources Section */
 .resources p {
     font-size: 1.1rem;
@@ -354,6 +418,14 @@ footer p {
 
     .getting-started {
         grid-template-columns: 1fr;
+    }
+
+    .examples-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .slo-target {
+        font-size: 2rem;
     }
 
 }
