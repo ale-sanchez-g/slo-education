@@ -93,45 +93,6 @@
             </div>
         </section>
 
-        <section id="slo-agent" class="section">
-            <div class="container">
-                <h2>SLO Onboarding Agent</h2>
-                <p>Use our interactive agent to guide you through your SLO onboarding journey. Ask questions, get personalized guidance, and accelerate your learning.</p>
-                <div class="agent-container">
-                    <iframe
-                        id="slo-agent-iframe"
-                        src="https://www.agent37.com/g/slo-onboarding-journey"
-                        title="SLO onboarding journey"
-                        sandbox="allow-scripts allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox"
-                        allow="microphone; autoplay; screen-wake-lock; clipboard-write; clipboard-read;"
-                        width="100%"
-                        height="600"
-                        style="border: none;">
-                        <div style="padding: 2rem; text-align: center; background-color: #f8f9fa; border-radius: 8px;">
-                            <h3 style="color: #2c3e50; margin-bottom: 1rem;">Interactive SLO Agent</h3>
-                            <p style="color: #555; margin-bottom: 1rem;">
-                                Your browser doesn't support iframes or has blocked this content. 
-                                Our interactive SLO onboarding agent helps guide you through your journey with personalized assistance.
-                            </p>
-                            <p style="color: #555; margin-bottom: 1rem;">
-                                <strong>Alternative access:</strong><br>
-                                Visit the agent directly at: 
-                                <a href="https://www.agent37.com/g/slo-onboarding-journey" 
-                                   target="_blank" 
-                                   rel="noopener noreferrer"
-                                   style="color: #3498db; text-decoration: underline;">
-                                    https://www.agent37.com/g/slo-onboarding-journey
-                                </a>
-                            </p>
-                            <p style="color: #777; font-size: 0.9rem;">
-                                You can also explore the resources section below for documentation and community support.
-                            </p>
-                        </div>
-                    </iframe>
-                </div>
-            </div>
-        </section>
-
         <section class="section bg-light">
             <div class="container">
                 <h2>Resources</h2>
@@ -246,14 +207,6 @@
                 }
             });
 
-            // Track external agent links
-            const agentLinks = document.querySelectorAll('a[href*="agent37.com"]');
-            agentLinks.forEach(function(agentLink) {
-                agentLink.addEventListener('click', function() {
-                    trackEvent('External Link', 'click', 'SLO Agent Direct Link');
-                });
-            });
-
             // Track privacy link in cookie consent
             const privacyLink = document.querySelector('#cookie-consent-banner a[href="#privacy"]');
             if (privacyLink) {
@@ -263,27 +216,7 @@
             }
         });
 
-        // Handle cross-origin communication from the agent iframe via postMessage.
-        // Direct frame access across origins is blocked by the browser Same-Origin Policy,
-        // so postMessage is the correct channel for iframe <-> parent communication.
-        window.addEventListener('message', function(event) {
-            // Only accept messages from the trusted agent origin.
-            if (event.origin !== 'https://www.agent37.com') {
-                return;
-            }
-
-            var data = event.data;
-            if (!data || typeof data !== 'object') return;
-
-            var iframe = document.getElementById('slo-agent-iframe');
-            if (!iframe) return;
-
-            // Allow the iframe to resize itself by sending its content height.
-            if (data.type === 'resize' && typeof data.height === 'number') {
-                iframe.style.height = data.height + 'px';
-            }
-        });
-    </script>
+</script>
 
     <!-- Menu Module -->
     <script src="scripts/menu.js"></script>
