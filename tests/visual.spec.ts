@@ -7,6 +7,7 @@ const PAGES = [
   { name: 'home', path: '/index.html' },
   { name: 'error-budget-calculator', path: '/error-budget-calculator.html' },
   { name: 'incident-management', path: '/incident-management.html' },
+  { name: 'cuj-sli-slo-error-budget', path: '/cuj-sli-slo-error-budget.html' },
   { name: 'privacy-policy', path: '/privacy-policy.html' },
 ];
 
