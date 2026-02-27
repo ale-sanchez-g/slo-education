@@ -1,10 +1,5 @@
 /* CUJ → SLI → SLO → Error Budget page styles */
 
-/* Hero modifier */
-.cuj-hero {
-    background: linear-gradient(135deg, #2c3e50 0%, #667eea 100%);
-}
-
 /* ===== Flow Diagram ===== */
 .flow-diagram {
     display: flex;
