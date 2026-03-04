@@ -413,12 +413,75 @@ pre, code {
 footer {
     background-color: #2c3e50;
     color: white;
-    padding: 2rem 0;
+    padding: 3rem 0 1.5rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-brand .footer-logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: white;
+}
+
+.footer-tagline {
+    opacity: 0.7;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.footer-section h4 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section ul li a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #667eea;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
     text-align: center;
 }
 
-footer p {
-    opacity: 0.8;
+.footer-bottom p {
+    opacity: 0.6;
+    font-size: 0.875rem;
+}
+
+.footer-bottom a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+}
+
+.footer-bottom a:hover {
+    color: #667eea;
 }
 
 /* Responsive Design */
@@ -660,4 +723,17 @@ footer p {
 .privacy-content strong {
     color: #2c3e50;
     font-weight: 600;
+}
+
+/* Footer Responsive */
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
 }
