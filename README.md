@@ -41,7 +41,13 @@ python3 -m http.server 8000
 ## 📁 Site Structure
 
 - `index.html` - Main landing page
-- `styles.css` - Styling for the landing page
+- `cuj-sli-slo-error-budget.html` - CUJ → SLI → SLO → Error Budget educational page
+- `error-budget-calculator.html` - Interactive error budget calculator
+- `incident-management.html` - Incident management guidance page
+- `privacy-policy.html` - Privacy policy
+- `style/styles.css` - Site-wide styles
+- `scripts/menu.js` - Navigation module (renders the header nav on every page)
+- `scripts/footer.js` - Footer module (renders the unified footer on every page, lazy-loaded via `defer`)
 - `.github/workflows/deploy.yml` - GitHub Actions deployment workflow
 
 ## 📄 License

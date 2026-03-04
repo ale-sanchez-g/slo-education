@@ -1,3 +1,29 @@
+# v1.1.2 — Footer design and content consolidation
+
+## What's new
+
+### Unified multi-column footer
+
+Replaced the single-line copyright footer on all pages with a structured 4-column grid layout containing four sections:
+
+- **Brand / tagline** — SLO Education logo and description
+- **Quick Links** — internal navigation to all site pages
+- **Resources** — external links (Google SRE Book, Discord Community, Sloth Tool)
+- **Legal** — Privacy Policy and MIT License
+
+Responsive breakpoints collapse the grid to 2 columns at ≤ 768 px and 1 column at ≤ 480 px. Link hover transitions use the site's `#667eea` accent colour.
+
+### Footer JavaScript module
+
+All footer markup is now maintained in a single place: `scripts/footer.js`. The module follows the same IIFE pattern as `scripts/menu.js` and dynamically renders the footer into the `<footer>` placeholder on `DOMContentLoaded`. It is loaded with the `defer` attribute on every page so it never blocks page rendering.
+
+### HTML cleanup
+
+- All 5 pages (`index.html`, `cuj-sli-slo-error-budget.html`, `error-budget-calculator.html`, `incident-management.html`, `privacy-policy.html`) reduced from a 37-line duplicated footer block to a single `<footer></footer>` placeholder plus one `<script>` tag.
+- Removed inline `style="color: #667eea; text-decoration: none;"` attributes from footer anchor elements.
+
+---
+
 # v1.1.1 — Reliability pipeline page and docs
 
 ## What's new
