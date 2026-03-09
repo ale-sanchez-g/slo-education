@@ -339,10 +339,12 @@ test.describe('Incident Management Page', () => {
     });
 
     test('should display resources section', async ({ page }) => {
-      await expect(page.locator('text=Additional Resources')).toBeVisible();
+      // Resources section is now rendered by the centralized resources module
+      const resourcesSection = page.locator('#resources-section');
+      await expect(resourcesSection).toBeVisible();
 
-      // Check resource cards
-      const resourcesGrid = page.locator('.resources-grid');
+      // Check resource cards from the centralized module
+      const resourcesGrid = page.locator('#resources-section .resources-grid');
       await expect(resourcesGrid).toBeVisible();
     });
   });
