@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://slo-education.com.au/sitemap.xml
