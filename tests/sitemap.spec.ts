@@ -16,7 +16,7 @@ test.describe('Sitemap and Robots.txt', () => {
     expect(response?.status()).toBe(200);
 
     const contentType = response?.headers()['content-type'] ?? '';
-    expect(contentType).toMatch(/xml|text/);
+    expect(contentType).toMatch(/^(application|text)\/xml\b/i);
   });
 
   test('sitemap.xml should contain all expected page URLs', async ({ page }) => {
