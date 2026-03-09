@@ -20,8 +20,8 @@ test.describe('Sitemap and Robots.txt', () => {
   });
 
   test('sitemap.xml should contain all expected page URLs', async ({ page }) => {
-    await page.goto('/sitemap.xml');
-    const content = await page.content();
+    const response = await page.goto('/sitemap.xml');
+    const content = await response?.text() ?? '';
 
     for (const url of EXPECTED_URLS) {
       expect(content).toContain(url);
@@ -29,8 +29,8 @@ test.describe('Sitemap and Robots.txt', () => {
   });
 
   test('sitemap.xml should use the correct XML namespace', async ({ page }) => {
-    await page.goto('/sitemap.xml');
-    const content = await page.content();
+    const response = await page.goto('/sitemap.xml');
+    const content = await response?.text() ?? '';
 
     expect(content).toContain('http://www.sitemaps.org/schemas/sitemap/0.9');
   });
