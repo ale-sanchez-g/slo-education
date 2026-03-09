@@ -25,23 +25,14 @@
             title: 'Community',
             items: [
                 { text: 'SRE Discord Community', url: 'https://discord.gg/YdG26M8P', external: true },
-                { text: 'r/SRE on Reddit', url: 'https://www.reddit.com/r/sre/', external: true }
             ]
         },
         {
             icon: '🛠️',
             title: 'Tools',
             items: [
-                { text: 'Sloth – SLO Generator', url: 'https://github.com/slok/sloth', external: true },
+                { text: 'Sloth - SLO Generator', url: 'https://github.com/slok/sloth', external: true },
                 { text: 'Error Budget Calculator', url: 'error-budget-calculator.html', external: false }
-            ]
-        },
-        {
-            icon: '🔗',
-            title: 'Related Pages',
-            items: [
-                { text: 'CUJ → SLI → SLO', url: 'cuj-sli-slo-error-budget.html', external: false },
-                { text: 'Incident Management', url: 'incident-management.html', external: false }
             ]
         }
     ];
