@@ -1,3 +1,51 @@
+# v1.1.3 — Centralized Resources module
+
+## What's new
+
+### Unified Resources section across all pages
+
+Introduced a centralized Resources module (`scripts/resources.js`) that provides a consistent Resources section across all pages. The module follows the same IIFE pattern established by `scripts/menu.js` and `scripts/footer.js`, dynamically rendering three resource categories into a `#resources-section` placeholder.
+
+**Resource categories:**
+
+- **📚 Documentation** — Google SRE Book, SRE Workbook
+- **💬 Community** — SRE Discord Community
+- **🛠️ Tools** — Sloth SLO Generator, Error Budget Calculator
+
+The module is loaded with the `defer` attribute on all pages, ensuring it never blocks page rendering (lazy-loaded, non-blocking).
+
+### Responsive grid-based design
+
+Added new CSS styling in `style/styles.css` for `.resources-grid` and `.resource-card` classes:
+
+- Grid layout with `auto-fit` columns (minimum 280px width)
+- Cards feature white background, rounded corners, box shadow, and a top border in the site's `#667eea` accent color
+- Responsive breakpoints collapse to fewer columns on smaller screens
+- Link hover transitions match site-wide styling
+
+### HTML simplification
+
+All 5 pages (`index.html`, `cuj-sli-slo-error-budget.html`, `error-budget-calculator.html`, `incident-management.html`, `privacy-policy.html`) updated:
+
+- Replaced duplicated Resources markup with a single `<div id="resources-section"></div>` placeholder
+- Added `<script src="scripts/resources.js" defer></script>` tag
+
+### Test coverage
+
+**Functional tests** (`tests/resources.spec.ts`) — New test suite covering:
+- Resources section renders on all 5 pages with correct heading
+- Three category cards present (Documentation, Community, Tools) on every page
+- All expected links visible and functional on each page
+- External links have proper `target="_blank"` and `rel="noopener noreferrer"` attributes
+- Internal links (Error Budget Calculator) do not have external attributes
+
+**Visual regression tests** — Per-page snapshots added:
+- Desktop and mobile screenshots for each of the 5 pages
+- Cookie banner dismissed for consistent visual comparison
+- Regenerated all visual snapshots to reflect the new Resources section
+
+---
+
 # v1.1.2 — Footer design and content consolidation
 
 ## What's new
