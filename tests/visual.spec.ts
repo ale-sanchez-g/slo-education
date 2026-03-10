@@ -9,6 +9,7 @@ const PAGES = [
   { name: 'incident-management', path: '/incident-management.html' },
   { name: 'cuj-sli-slo-error-budget', path: '/cuj-sli-slo-error-budget.html' },
   { name: 'privacy-policy', path: '/privacy-policy.html' },
+  { name: 'blog', path: '/blog/index.html' },
 ];
 
 /**
