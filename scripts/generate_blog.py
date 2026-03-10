@@ -21,7 +21,7 @@ import re
 import sys
 import urllib.request
 import urllib.error
-from datetime import date, timezone, datetime
+from datetime import date
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
@@ -108,7 +108,7 @@ education website called "SLO Education Hub" (https://slo-education.com.au).
 Write a high-quality, educational blog post about: **{topic}**
 
 Requirements:
-- Length: 250–500 words (body text only, excluding the title)
+- Length: 200–500 words (body text only, excluding the title)
 - Audience: software engineers and IT professionals who are new to SRE concepts
 - Tone: clear, practical, and encouraging — avoid jargon without explanation
 - Include at least 3 hyperlinks to reputable external resources (Google SRE Book,

@@ -59,11 +59,15 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Checkout repository (with generated files)
+      - name: Checkout repository (with newly generated files)
         uses: actions/checkout@v4
         with:
+          # Pull the branch HEAD after generate-and-deploy may have pushed commits
           ref: ${{ github.ref }}
-          fetch-depth: 1
+          fetch-depth: 0
+
+      - name: Pull latest commits
+        run: git pull origin ${{ github.ref_name }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
