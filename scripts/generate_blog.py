@@ -215,10 +215,15 @@ _SAFE_HREF_RE = re.compile(r"^(https?://|/)", re.IGNORECASE)
 
 
 def _make_xml_safe(html_str: str) -> str:
-    """Replace bare & (not part of a valid entity) with &amp; so the HTML
-    fragment can be parsed by the XML-strict ElementTree parser."""
+    """Replace bare & (not part of a valid XML entity) with &amp; so the HTML
+    fragment can be parsed by the XML-strict ElementTree parser.
+
+    XML only defines five named entities (&amp;, &lt;, &gt;, &apos;, &quot;),
+    plus numeric character references. All other '&name;' sequences are
+    treated as plain text and must be escaped here.
+    """
     return re.sub(
-        r'&(?!(?:[a-zA-Z][a-zA-Z0-9]*|#[0-9]+|#x[0-9a-fA-F]+);)',
+        r'&(?!(?:amp|lt|gt|apos|quot|#[0-9]+|#x[0-9a-fA-F]+);)',
         '&amp;',
         html_str,
     )
