@@ -1,0 +1,2 @@
+# Python dependencies for SLO Education Hub blog generator
+google-genai>=0.4.2

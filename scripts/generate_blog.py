@@ -16,14 +16,26 @@ Required environment variable:
 """
 
 import json
+import logging
 import os
 import re
 import sys
-import urllib.request
-import urllib.error
 from datetime import date
 from pathlib import Path
 import xml.etree.ElementTree as ET
+
+try:
+    from google import genai
+except ImportError:
+    sys.exit("ERROR: google-genai package not installed. Run: pip install google-genai")
+
+# Configure logging for better observability
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[logging.StreamHandler()]
+)
+logger = logging.getLogger(__name__)
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Configuration
@@ -35,10 +47,6 @@ SITEMAP_PATH = REPO_ROOT / "sitemap.xml"
 BLOG_INDEX_PATH = BLOG_DIR / "index.html"
 SITE_BASE_URL = "https://slo-education.com.au"
 GEMINI_MODEL = "gemini-2.5-flash"
-GEMINI_API_URL = (
-    "https://generativelanguage.googleapis.com/v1beta/models/"
-    f"{GEMINI_MODEL}:generateContent"
-)
 
 # Pool of SRE/Observability topics rotated by ISO week number so each run
 # produces a distinct topic without state management.
@@ -108,7 +116,7 @@ education website called "SLO Education Hub" (https://slo-education.com.au).
 Write a high-quality, educational blog post about: **{topic}**
 
 Requirements:
-- Length: 200 to 500 words (body text only, excluding the title)
+- Length: 200 to 300 words (body text only, excluding the title)
 - Audience: software engineers and IT professionals who are new to SRE concepts
 - Tone: clear, practical, and encouraging — avoid jargon without explanation
 - Include at least 3 hyperlinks to reputable external resources (Google SRE Book,
@@ -123,7 +131,7 @@ Requirements:
 - Do NOT include a meta section, frontmatter, or JSON
 - Output format: return a JSON object with EXACTLY these keys:
   {{
-    "title": "<concise, engaging article title (max 80 chars)>",
+    "title": "<concise, engaging article title (max 80 chars)",
     "description": "<meta description, 120-160 chars, keyword-rich>",
     "keywords": "<comma-separated list of 5-8 relevant keywords>",
     "tags": ["<tag1>", "<tag2>", "<tag3>"],
@@ -138,36 +146,49 @@ Return only the JSON object, with no additional text or markdown fences."""
 # ──────────────────────────────────────────────────────────────────────────────
 
 def call_gemini(api_key: str, prompt: str) -> dict:
-    """Call the Gemini API and return the parsed JSON response from the model."""
-    payload = json.dumps({
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {
-            "temperature": 0.7,
-            "maxOutputTokens": 8056,
-            "responseMimeType": "application/json",
-        },
-    }).encode("utf-8")
-
-    url = f"{GEMINI_API_URL}?key={api_key}"
-    req = urllib.request.Request(
-        url,
-        data=payload,
-        headers={"Content-Type": "application/json"},
-        method="POST",
-    )
-
+    """Call the Gemini API using the official SDK and return the parsed JSON response."""
+    logger.info(f"Initializing Gemini SDK with model: {GEMINI_MODEL}")
+    
     try:
-        with urllib.request.urlopen(req, timeout=60) as resp:
-            raw = json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as exc:
-        body = exc.read().decode("utf-8", errors="replace")
-        raise RuntimeError(f"Gemini API HTTP {exc.code}: {body}") from exc
-
-    try:
-        text = raw["candidates"][0]["content"]["parts"][0]["text"]
+        # Initialize the client with API key
+        client = genai.Client(api_key=api_key)
+        
+        # Configure generation settings
+        generation_config = genai.types.GenerateContentConfig(
+            temperature=0.7,
+            max_output_tokens=9000,
+            response_mime_type="application/json",
+        )
+        
+        logger.info("Sending request to Gemini API...")
+        response = client.models.generate_content(
+            model=GEMINI_MODEL,
+            contents=prompt,
+            config=generation_config,
+        )
+        
+        # Log response metadata for observability
+        if hasattr(response, 'usage_metadata') and response.usage_metadata:
+            logger.info(
+                f"Token usage - Prompt: {response.usage_metadata.prompt_token_count}, "
+                f"Candidates: {response.usage_metadata.candidates_token_count}, "
+                f"Total: {response.usage_metadata.total_token_count}"
+            )
+        
+        # Extract and parse the JSON response
+        text = response.text
+        logger.debug(f"Response received (length: {len(text)} chars)")
+        
         return json.loads(text)
-    except (KeyError, IndexError, json.JSONDecodeError) as exc:
-        raise RuntimeError(f"Unexpected Gemini response structure: {raw}") from exc
+        
+    except json.JSONDecodeError as exc:
+        logger.error(f"Failed to parse JSON response: {exc}")
+        logger.debug(f"Raw response text: {text[:500]}...")
+        raise RuntimeError(f"Invalid JSON in Gemini response: {exc}") from exc
+    
+    except Exception as exc:
+        logger.error(f"Gemini API call failed: {type(exc).__name__}: {exc}")
+        raise RuntimeError(f"Gemini API error: {exc}") from exc
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -397,19 +418,27 @@ def update_sitemap(slug: str, pub_date: str) -> None:
 # ──────────────────────────────────────────────────────────────────────────────
 
 def main() -> None:
+    logger.info("Starting blog post generation")
+    
     api_key = os.environ.get("GEMINI_API_KEY", "").strip()
     if not api_key:
+        logger.error("GEMINI_API_KEY environment variable is not set")
         sys.exit("ERROR: GEMINI_API_KEY environment variable is not set.")
 
     # Pick topic by ISO week number for deterministic rotation
     today = date.today()
     iso_week = today.isocalendar()[1]
     topic = TOPICS[iso_week % len(TOPICS)]
-    print(f"Generating post for week {iso_week}: {topic}")
+    logger.info(f"Week {iso_week}: Selected topic '{topic}'")
 
     prompt = build_prompt(topic)
-    print("Calling Gemini API…")
-    data = call_gemini(api_key, prompt)
+    logger.debug(f"Prompt length: {len(prompt)} characters")
+    
+    try:
+        data = call_gemini(api_key, prompt)
+    except Exception as exc:
+        logger.error(f"Failed to generate content: {exc}")
+        sys.exit(f"ERROR: Content generation failed: {exc}")
 
     title = data.get("title", "").strip()
     description = data.get("description", "").strip()
@@ -418,7 +447,10 @@ def main() -> None:
     body_html = data.get("body_html", "").strip()
 
     if not title or not body_html:
+        logger.error(f"Gemini response missing required fields: {data.keys()}")
         sys.exit(f"ERROR: Gemini response missing required fields: {data}")
+
+    logger.info(f"Generated post: '{title}' ({len(body_html)} chars, {len(tags)} tags)")
 
     pub_date = today.isoformat()
     slug = f"{pub_date}-{slugify(title)}"
@@ -428,18 +460,19 @@ def main() -> None:
     post_path = BLOG_DIR / f"{slug}.html"
     post_html = render_post_html(title, description, keywords, tags, body_html, pub_date, slug)
     post_path.write_text(post_html, encoding="utf-8")
-    print(f"Written: {post_path}")
+    logger.info(f"Written blog post: {post_path}")
 
     # 2. Update blog/index.html
     card_html = build_card_html(title, description, tags, pub_date, slug)
     update_blog_index(card_html)
-    print(f"Updated: {BLOG_INDEX_PATH}")
+    logger.info(f"Updated blog index: {BLOG_INDEX_PATH}")
 
     # 3. Update sitemap.xml
     update_sitemap(slug, pub_date)
-    print(f"Updated: {SITEMAP_PATH}")
+    logger.info(f"Updated sitemap: {SITEMAP_PATH}")
 
-    print("Done.")
+    logger.info("✓ Blog post generation complete")
+    print(f"✓ Generated: {slug}.html")
 
 
 if __name__ == "__main__":
