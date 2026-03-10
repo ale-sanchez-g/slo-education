@@ -32,16 +32,22 @@
             title: 'Tools',
             items: [
                 { text: 'Sloth - SLO Generator', url: 'https://github.com/slok/sloth', external: true },
-                { text: 'Error Budget Calculator', url: 'error-budget-calculator.html', external: false }
+                { text: 'Error Budget Calculator', url: 'error-budget-calculator.html', external: false, rootRelative: true }
             ]
         }
     ];
+
+    /** Return a prefix for root-relative internal links based on the current URL path. */
+    function getRootPrefix() {
+        return window.location.pathname.includes('/blog/') ? '../' : '';
+    }
 
     /** Build the resources section HTML and inject it into the #resources-section element. */
     function renderResources() {
         var container = document.getElementById('resources-section');
         if (!container) { return; }
 
+        var rootPrefix = getRootPrefix();
         var html = [
             '<section class="section">',
             '  <div class="container">',
@@ -60,7 +66,8 @@
                         '" target="_blank" rel="noopener noreferrer">' + item.text + '</a></li>'
                     );
                 } else {
-                    html.push('          <li><a href="' + item.url + '">' + item.text + '</a></li>');
+                    var href = item.rootRelative ? rootPrefix + item.url : item.url;
+                    html.push('          <li><a href="' + href + '">' + item.text + '</a></li>');
                 }
             });
             html.push('        </ul>');

@@ -37,10 +37,13 @@ jobs:
     - name: Run Playwright tests
       run: npx playwright test
         tests/calculator.spec.ts
+        tests/cta.spec.ts
+        tests/cuj-sli-slo-error-budget.spec.ts
         tests/incident-management.spec.ts
         tests/menu.spec.ts
-        tests/cta.spec.ts
         tests/privacy-policy.spec.ts
+        tests/resources.spec.ts
+        tests/sitemap.spec.ts
         --project=${{ matrix.browser }}
 
     - uses: actions/upload-artifact@v4

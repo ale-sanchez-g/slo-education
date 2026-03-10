@@ -10,10 +10,17 @@
 (function () {
     'use strict';
 
+    /** Detect if the current page lives inside the blog/ subdirectory. */
+    function isInBlogDir() {
+        return window.location.pathname.includes('/blog/');
+    }
+
     /** Build the footer inner HTML and inject it into the <footer> element. */
     function renderFooter() {
         var footerEl = document.querySelector('footer');
         if (!footerEl) { return; }
+
+        var root = isInBlogDir() ? '../' : '';
 
         footerEl.innerHTML = [
             '<div class="container">',
@@ -25,10 +32,11 @@
             '    <div class="footer-section">',
             '      <h4>Quick Links</h4>',
             '      <ul>',
-            '        <li><a href="index.html">Home</a></li>',
-            '        <li><a href="cuj-sli-slo-error-budget.html">CUJ, SLI &amp; SLO</a></li>',
-            '        <li><a href="error-budget-calculator.html">Error Budget Calculator</a></li>',
-            '        <li><a href="incident-management.html">Incident Management</a></li>',
+            '        <li><a href="' + root + 'index.html">Home</a></li>',
+            '        <li><a href="' + root + 'cuj-sli-slo-error-budget.html">CUJ, SLI &amp; SLO</a></li>',
+            '        <li><a href="' + root + 'error-budget-calculator.html">Error Budget Calculator</a></li>',
+            '        <li><a href="' + root + 'incident-management.html">Incident Management</a></li>',
+            '        <li><a href="' + root + 'blog/index.html">Blog</a></li>',
             '      </ul>',
             '    </div>',
             '    <div class="footer-section">',
@@ -42,13 +50,13 @@
             '    <div class="footer-section">',
             '      <h4>Legal</h4>',
             '      <ul>',
-            '        <li><a href="privacy-policy.html">Privacy Policy</a></li>',
-            '        <li><a href="LICENSE">MIT License</a></li>',
+            '        <li><a href="' + root + 'privacy-policy.html">Privacy Policy</a></li>',
+            '        <li><a href="' + root + 'LICENSE">MIT License</a></li>',
             '      </ul>',
             '    </div>',
             '  </div>',
             '  <div class="footer-bottom">',
-            '    <p>&copy; 2026 SLO Education Hub. Licensed under <a href="LICENSE">MIT</a>.</p>',
+            '    <p>&copy; 2026 SLO Education Hub. Licensed under <a href="' + root + 'LICENSE">MIT</a>.</p>',
             '  </div>',
             '</div>'
         ].join('\n');

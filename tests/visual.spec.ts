@@ -9,6 +9,15 @@ const PAGES = [
   { name: 'incident-management', path: '/incident-management.html' },
   { name: 'cuj-sli-slo-error-budget', path: '/cuj-sli-slo-error-budget.html' },
   { name: 'privacy-policy', path: '/privacy-policy.html' },
+  { name: 'blog', path: '/blog/index.html' },
+];
+
+// Pages that include the centralised resources module
+const PAGES_WITH_RESOURCES = [
+  { name: 'home', path: '/index.html' },
+  { name: 'error-budget-calculator', path: '/error-budget-calculator.html' },
+  { name: 'incident-management', path: '/incident-management.html' },
+  { name: 'cuj-sli-slo-error-budget', path: '/cuj-sli-slo-error-budget.html' },
 ];
 
 /**
@@ -229,4 +238,54 @@ test.describe('Visual snapshots - Flip cards', () => {
       maxDiffPixelRatio: 0.02,
     });
   });
+});
+
+// ─── Visual snapshots of the resources section ───────────────────────────────
+
+test.describe('Resources Module – visual snapshots desktop', () => {
+  for (const { name, path } of PAGES_WITH_RESOURCES) {
+    test(`${name} resources section renders correctly on desktop`, async ({ page }) => {
+      await page.setViewportSize(DESKTOP_VIEWPORT);
+      await page.goto(path);
+      await page.waitForLoadState('networkidle');
+
+      // Dismiss cookie banner if present so it doesn't occlude content
+      const acceptBtn = page.locator('#cookie-accept');
+      if (await acceptBtn.isVisible()) {
+        await acceptBtn.click();
+      }
+
+      const section = page.locator('#resources-section');
+      await section.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(200);
+
+      await expect(section).toHaveScreenshot(`resources-${name}-desktop.png`, {
+        maxDiffPixelRatio: 0.02,
+      });
+    });
+  }
+});
+
+test.describe('Resources Module – visual snapshots mobile', () => {
+  for (const { name, path } of PAGES_WITH_RESOURCES) {
+    test(`${name} resources section renders correctly on mobile`, async ({ page }) => {
+      await page.setViewportSize(MOBILE_VIEWPORT);
+      await page.goto(path);
+      await page.waitForLoadState('networkidle');
+
+      // Dismiss cookie banner if present so it doesn't occlude content
+      const acceptBtn = page.locator('#cookie-accept');
+      if (await acceptBtn.isVisible()) {
+        await acceptBtn.click();
+      }
+
+      const section = page.locator('#resources-section');
+      await section.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(200);
+
+      await expect(section).toHaveScreenshot(`resources-${name}-mobile.png`, {
+        maxDiffPixelRatio: 0.02,
+      });
+    });
+  }
 });

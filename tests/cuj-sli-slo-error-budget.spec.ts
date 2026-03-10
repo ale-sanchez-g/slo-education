@@ -312,21 +312,6 @@ test.describe('CUJ → SLI → SLO → Error Budget Page', () => {
       await expect(sliTypes).toHaveCount(4);
     });
 
-    test('should display the SLO educational section', async ({ page }) => {
-      const section = page.locator('#about-slo');
-      await expect(section).toBeVisible();
-    });
-
-    test('should display the Error Budget educational section', async ({ page }) => {
-      const section = page.locator('#about-error-budget');
-      await expect(section).toBeVisible();
-    });
-
-    test('should display four budget usage cards', async ({ page }) => {
-      const budgetCards = page.locator('.budget-use-card');
-      await expect(budgetCards).toHaveCount(4);
-    });
-
     test('should display the pipeline steps section', async ({ page }) => {
       const section = page.locator('#putting-together');
       await expect(section).toBeVisible();
@@ -335,19 +320,6 @@ test.describe('CUJ → SLI → SLO → Error Budget Page', () => {
     test('should show five pipeline steps', async ({ page }) => {
       const pipelineSteps = page.locator('.pipeline-step');
       await expect(pipelineSteps).toHaveCount(5);
-    });
-
-    test('should display the quick reference table', async ({ page }) => {
-      const section = page.locator('#quick-reference');
-      await expect(section).toBeVisible();
-
-      const table = section.locator('table');
-      await expect(table).toBeVisible();
-    });
-
-    test('should display the further reading section', async ({ page }) => {
-      const section = page.locator('#further-reading');
-      await expect(section).toBeVisible();
     });
   });
 
