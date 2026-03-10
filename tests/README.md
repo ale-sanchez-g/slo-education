@@ -1,16 +1,73 @@
-# Playwright Tests for SLO Education Hub
+# Tests for SLO Education Hub
 
 ## Overview
 
+This directory contains automated tests for the SLO Education Hub:
+- **Playwright Tests** (TypeScript): End-to-end browser tests for UI functionality
+- **Python Unit Tests**: Unit tests for the blog generator script
+
+## Python Unit Tests
+
+### Prerequisites
+
+- Python 3.8 or higher
+- pip
+
+### Installation
+
+```bash
+# Install Python dependencies
+pip install -r requirements.txt
+```
+
+### Running Python Tests
+
+```bash
+# Run all Python tests
+npm run test:python
+
+# Or use pytest directly
+pytest tests/test_generate_blog.py -v
+
+# Run with coverage report
+npm run test:python:coverage
+
+# Or use pytest directly
+pytest tests/test_generate_blog.py --cov=scripts --cov-report=html --cov-report=term
+```
+
+### Python Test Features
+
+The `test_generate_blog.py` suite includes:
+- **No API calls**: All Gemini API calls are mocked - no real API key needed
+- **No file modifications**: All file I/O is mocked - safe to run anywhere
+- **CI/CD ready**: Runs in isolated environment without side effects
+- **Comprehensive coverage**: Tests all functions including edge cases
+
+Test coverage includes:
+- ✅ Text slugification and sanitization
+- ✅ Prompt generation
+- ✅ Gemini API calls (mocked)
+- ✅ HTML rendering for blog posts
+- ✅ Blog index updates
+- ✅ Sitemap XML updates
+- ✅ Topic selection algorithm
+- ✅ Error handling and validation
+- ✅ Main workflow integration
+
+## Playwright Tests (End-to-End)
+
+### Overview
+
 Automated end-to-end tests for the SLO Education Hub CTA functionality using Playwright.
 
-## Prerequisites
+### Prerequisites
 
 - Node.js (v18 or higher)
 - npm or yarn
 - Local development server running on `http://127.0.0.1:5500`
 
-## Installation
+### Installation
 
 ```bash
 # Install dependencies

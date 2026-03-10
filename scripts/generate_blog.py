@@ -282,6 +282,7 @@ def render_post_html(
                     {body_html}
                 </article>
             </div>
+            <p>** This blog has been generated with the help og Gemini AI</p>
         </section>
 
         <div id="resources-section"></div>
