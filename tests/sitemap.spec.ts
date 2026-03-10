@@ -8,6 +8,7 @@ const EXPECTED_URLS = [
   `${SITE_DOMAIN}/error-budget-calculator.html`,
   `${SITE_DOMAIN}/incident-management.html`,
   `${SITE_DOMAIN}/privacy-policy.html`,
+  `${SITE_DOMAIN}/blog/`,
 ];
 
 test.describe('Sitemap and Robots.txt', () => {

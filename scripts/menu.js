@@ -19,6 +19,7 @@
                 { text: 'Calculator', href: 'error-budget-calculator.html' },
                 { text: 'CUJ \u2192 SLI \u2192 SLO', href: 'cuj-sli-slo-error-budget.html' },
                 { text: 'Incident Management', href: 'incident-management.html' },
+                { text: 'Blog', href: 'blog/index.html' },
                 { text: 'Privacy', href: 'privacy-policy.html' }
             ]
         },
@@ -30,7 +31,20 @@
                 { text: 'Calculator', href: 'error-budget-calculator.html' },
                 { text: 'CUJ \u2192 SLI \u2192 SLO', href: 'cuj-sli-slo-error-budget.html' },
                 { text: 'Incident Management', href: 'incident-management.html' },
+                { text: 'Blog', href: 'blog/index.html' },
                 { text: 'Privacy', href: 'privacy-policy.html' }
+            ]
+        },
+        blog: {
+            links: [
+                { text: 'Home', href: '../index.html' },
+                { text: 'About', href: '../index.html#about' },
+                { text: 'What are SLOs?', href: '../index.html#what-are-slos' },
+                { text: 'Calculator', href: '../error-budget-calculator.html' },
+                { text: 'CUJ \u2192 SLI \u2192 SLO', href: '../cuj-sli-slo-error-budget.html' },
+                { text: 'Incident Management', href: '../incident-management.html' },
+                { text: 'Blog', href: 'index.html' },
+                { text: 'Privacy', href: '../privacy-policy.html' }
             ]
         }
     };
@@ -73,6 +87,7 @@
         if (path.includes('cuj-sli-slo-error-budget')) return 'cuj-sli-slo-error-budget';
         if (path.includes('incident-management')) return 'incident-management';
         if (path.includes('privacy-policy')) return 'privacy-policy';
+        if (path.includes('/blog/')) return 'blog';
         return 'home';
     }
 
@@ -83,7 +98,14 @@
         const navList = document.querySelector('.nav-links');
         if (!navList) return;
 
-        const config = currentPage === 'home' ? NAV_CONFIG.home : NAV_CONFIG.other;
+        var config;
+        if (currentPage === 'home') {
+            config = NAV_CONFIG.home;
+        } else if (currentPage === 'blog') {
+            config = NAV_CONFIG.blog;
+        } else {
+            config = NAV_CONFIG.other;
+        }
 
         navList.innerHTML = config.links.map(function(link) {
             return '<li><a href="' + link.href + '">' + link.text + '</a></li>';

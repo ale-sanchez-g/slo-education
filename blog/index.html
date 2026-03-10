@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SRE &amp; Observability Blog — weekly articles on Site Reliability Engineering, SLOs, incident management, and service reliability published by SLO Education Hub.">
+    <meta name="keywords" content="SRE, Site Reliability Engineering, SLOs, observability, incident management, error budgets, reliability, DevOps">
+    <title>Blog - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="../privacy-policy.html" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="../index.html">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>SRE &amp; Observability Blog</h2>
+                <p class="hero-subtitle">Weekly articles on Site Reliability Engineering, SLOs, and modern observability practices</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div id="blog-posts" class="blog-grid">
+                    <!-- Blog posts are injected here by the weekly-blog workflow -->
+                    <p class="blog-empty">No posts yet — check back soon!</p>
+                </div>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>
