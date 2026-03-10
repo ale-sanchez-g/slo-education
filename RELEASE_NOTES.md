@@ -1,3 +1,65 @@
+# v1.2.0 — Weekly SRE blog automation and blog hub
+
+## What's new
+
+### Weekly Gemini-powered blog bot
+
+Added an automated weekly content pipeline that generates SRE/observability articles and publishes them to the site blog.
+
+- New workflow: `.github/workflows/weekly-blog.yml`
+- Scheduled run: every Monday at 08:00 UTC (`cron: 0 8 * * 1`)
+- Manual trigger support via `workflow_dispatch`
+- Generates content using Gemini (`scripts/generate_blog.py`)
+- Commits and pushes new blog post files plus sitemap updates automatically
+- Deploys updated site to GitHub Pages after content generation
+
+### New blog section and styling
+
+Introduced a dedicated blog experience with index page and reusable styling:
+
+- New page: `blog/index.html`
+- New styles: `style/blog.css`
+- Blog page added to site navigation and footer links
+- Visual regression snapshots added for blog desktop and mobile rendering
+
+### Generator reliability and security hardening
+
+Enhanced the Python blog generator with stronger validation and safer output handling:
+
+- Deterministic weekly topic rotation based on ISO week number
+- Structured JSON response contract for model output
+- Allowlist-based HTML sanitization for generated article body
+- Escaping of model-provided metadata fields before HTML rendering
+- Safer link handling for generated `<a href>` attributes
+- Improved logging and error paths for API and JSON parsing failures
+
+### Navigation and shared-module updates
+
+Updated shared modules so blog pages under `/blog/` resolve links correctly:
+
+- `scripts/menu.js` now supports a blog-specific navigation config
+- `scripts/footer.js` detects blog subdirectory and adjusts internal links
+- `scripts/resources.js` applies root-prefix handling for internal resource links
+
+### Test and tooling expansion
+
+Significant new automated coverage and supporting tooling were added:
+
+- New Python unit suite for blog generation: `tests/test_generate_blog.py`
+- New sitemap/robots validation suite: `tests/sitemap.spec.ts`
+- Existing Playwright visual suite expanded to include blog page snapshots
+- New Python dependencies in `requirements.txt` (`google-genai`, `pytest`, `pytest-mock`, `pytest-cov`)
+- New npm scripts for Python test execution and coverage (`test:python`, `test:python:coverage`, `test:all`)
+
+### SEO and crawler support
+
+Added crawler and discovery assets for production domain support:
+
+- `robots.txt`
+- `sitemap.xml`
+
+---
+
 # v1.1.3 — Centralized Resources module
 
 ## What's new
