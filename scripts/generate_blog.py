@@ -34,7 +34,7 @@ BLOG_DIR = REPO_ROOT / "blog"
 SITEMAP_PATH = REPO_ROOT / "sitemap.xml"
 BLOG_INDEX_PATH = BLOG_DIR / "index.html"
 SITE_BASE_URL = "https://slo-education.com.au"
-GEMINI_MODEL = "gemini-2.0-flash"
+GEMINI_MODEL = "gemini-2.5-flash"
 GEMINI_API_URL = (
     "https://generativelanguage.googleapis.com/v1beta/models/"
     f"{GEMINI_MODEL}:generateContent"
@@ -108,7 +108,7 @@ education website called "SLO Education Hub" (https://slo-education.com.au).
 Write a high-quality, educational blog post about: **{topic}**
 
 Requirements:
-- Length: 200–500 words (body text only, excluding the title)
+- Length: 200 to 500 words (body text only, excluding the title)
 - Audience: software engineers and IT professionals who are new to SRE concepts
 - Tone: clear, practical, and encouraging — avoid jargon without explanation
 - Include at least 3 hyperlinks to reputable external resources (Google SRE Book,
@@ -117,6 +117,8 @@ Requirements:
     * https://slo-education.com.au/cuj-sli-slo-error-budget.html  (CUJ → SLI → SLO)
     * https://slo-education.com.au/error-budget-calculator.html   (Error Budget Calculator)
     * https://slo-education.com.au/incident-management.html       (Incident Management)
+    * https://slo-education.com.au/blog/                          (Blog index page with more articles)
+- Do NOT Repeate the topic in the title verbatim — create a concise, engaging title that captures the essence of the article
 - Do NOT use first-person ("I", "we") — write in second or third person
 - Do NOT include a meta section, frontmatter, or JSON
 - Output format: return a JSON object with EXACTLY these keys:
@@ -141,7 +143,7 @@ def call_gemini(api_key: str, prompt: str) -> dict:
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {
             "temperature": 0.7,
-            "maxOutputTokens": 2048,
+            "maxOutputTokens": 8056,
             "responseMimeType": "application/json",
         },
     }).encode("utf-8")
