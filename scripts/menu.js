@@ -231,8 +231,12 @@
                     }
                     document.body.style.overflow = '';
                 } else {
-                    // Ensure proper state on mobile
-                    document.body.style.overflow = '';
+                    // Ensure proper state on mobile based on menu visibility
+                    if (navLinks && navLinks.classList.contains('active')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = '';
+                    }
                 }
             }, 250);
         });
