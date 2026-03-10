@@ -274,19 +274,20 @@ class TestUpdateSitemap:
         with patch('xml.etree.ElementTree.parse') as mock_parse:
             with patch.object(Path, 'read_text', return_value=sitemap_xml):
                 with patch.object(Path, 'write_text'):
-                    tree = ET.ElementTree(ET.fromstring(sitemap_xml))
-                    mock_parse.return_value = tree
+                    with patch.object(ET.ElementTree, 'write'):
+                        tree = ET.ElementTree(ET.fromstring(sitemap_xml))
+                        mock_parse.return_value = tree
 
-                    generate_blog.update_sitemap("test-slug", "2026-03-10")
+                        generate_blog.update_sitemap("test-slug", "2026-03-10")
 
-                    ns = "http://www.sitemaps.org/schemas/sitemap/0.9"
-                    locs = [
-                        loc.text
-                        for loc in tree.getroot().findall(f"{{{ns}}}url/{{{ns}}}loc")
-                    ]
+                        ns = "http://www.sitemaps.org/schemas/sitemap/0.9"
+                        locs = [
+                            loc.text
+                            for loc in tree.getroot().findall(f"{{{ns}}}url/{{{ns}}}loc")
+                        ]
 
-                    assert f"{generate_blog.SITE_BASE_URL}/blog/" in locs
-                    assert f"{generate_blog.SITE_BASE_URL}/blog/test-slug.html" in locs
+                        assert f"{generate_blog.SITE_BASE_URL}/blog/" in locs
+                        assert f"{generate_blog.SITE_BASE_URL}/blog/test-slug.html" in locs
     
     def test_prevents_duplicate_urls(self):
         # Sitemap already has the blog index
@@ -302,18 +303,19 @@ class TestUpdateSitemap:
         with patch('xml.etree.ElementTree.parse') as mock_parse:
             with patch.object(Path, 'read_text', return_value=sitemap_xml):
                 with patch.object(Path, 'write_text'):
-                    tree = ET.ElementTree(ET.fromstring(sitemap_xml))
-                    mock_parse.return_value = tree
+                    with patch.object(ET.ElementTree, 'write'):
+                        tree = ET.ElementTree(ET.fromstring(sitemap_xml))
+                        mock_parse.return_value = tree
 
-                    generate_blog.update_sitemap("new-post", "2026-03-10")
+                        generate_blog.update_sitemap("new-post", "2026-03-10")
 
-                    ns = "http://www.sitemaps.org/schemas/sitemap/0.9"
-                    locs = [
-                        loc.text
-                        for loc in tree.getroot().findall(f"{{{ns}}}url/{{{ns}}}loc")
-                    ]
+                        ns = "http://www.sitemaps.org/schemas/sitemap/0.9"
+                        locs = [
+                            loc.text
+                            for loc in tree.getroot().findall(f"{{{ns}}}url/{{{ns}}}loc")
+                        ]
 
-                    assert locs.count(f"{generate_blog.SITE_BASE_URL}/blog/") == 1
+                        assert locs.count(f"{generate_blog.SITE_BASE_URL}/blog/") == 1
 
 
 class TestTopicSelection:

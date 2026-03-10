@@ -10,7 +10,7 @@ This directory contains automated tests for the SLO Education Hub:
 
 ### Prerequisites
 
-- Python 3.8 or higher
+- Python 3.9 or higher
 - pip
 
 ### Installation

@@ -2,7 +2,7 @@
 """
 generate_blog.py — Weekly blog post generator for SLO Education Hub.
 
-Uses the Gemini API to produce a 200-500 word educational article on SRE /
+Uses the Gemini API to produce a 200–300 word educational article on SRE /
 Observability topics, then:
   1. Writes the post as a standalone HTML file under blog/
   2. Inserts a card into blog/index.html
@@ -15,6 +15,7 @@ Required environment variable:
   GEMINI_API_KEY — Google Gemini API key stored in GitHub Secrets
 """
 
+import html
 import json
 import logging
 import os
@@ -47,6 +48,7 @@ SITEMAP_PATH = REPO_ROOT / "sitemap.xml"
 BLOG_INDEX_PATH = BLOG_DIR / "index.html"
 SITE_BASE_URL = "https://slo-education.com.au"
 GEMINI_MODEL = "gemini-2.5-flash"
+AI_DISPLAY_NAME = "Gemini AI"
 
 # Pool of SRE/Observability topics rotated by ISO week number so each run
 # produces a distinct topic without state management.
@@ -204,6 +206,63 @@ def slugify(text: str) -> str:
     return text[:80]
 
 
+# Allowlist of tags and attributes permitted in model-generated body HTML.
+_ALLOWED_TAGS = {"h2", "h3", "p", "ul", "ol", "li", "a", "strong", "em", "code", "pre", "blockquote"}
+_ALLOWED_ATTRS = {
+    "a": {"href"},
+}
+_SAFE_HREF_RE = re.compile(r"^(https?://|/)", re.IGNORECASE)
+
+
+def sanitize_body_html(raw: str) -> str:
+    """Strip any tags/attributes not in the allowlist from model-generated HTML.
+
+    Uses the standard-library xml.etree.ElementTree parser for a
+    dependency-free, allowlist-based sanitiser.  Because ET requires a single
+    root element, the raw fragment is wrapped in a <div> before parsing and
+    the wrapper is then stripped from the result.
+    """
+    try:
+        root = ET.fromstring(f"<div>{raw}</div>")
+    except ET.ParseError:
+        # If the model returned malformed XML/HTML, fall back to plain-text.
+        return html.escape(raw)
+
+    def _clean(el: ET.Element) -> str:
+        parts: list[str] = []
+        tag = el.tag.lower() if isinstance(el.tag, str) else ""
+
+        if tag not in _ALLOWED_TAGS and tag != "div":
+            # Disallowed tag — keep only its text content.
+            parts.append(html.escape(el.text or ""))
+            for child in el:
+                parts.append(_clean(child))
+                parts.append(html.escape(child.tail or ""))
+            return "".join(parts)
+
+        # Build safe attribute string.
+        safe_attrs = ""
+        permitted = _ALLOWED_ATTRS.get(tag, set())
+        for attr, val in el.attrib.items():
+            attr_lower = attr.lower()
+            if attr_lower not in permitted:
+                continue
+            if attr_lower == "href" and not _SAFE_HREF_RE.match(val):
+                continue
+            safe_attrs += f' {html.escape(attr_lower)}="{html.escape(val)}"'
+
+        inner = html.escape(el.text or "")
+        for child in el:
+            inner += _clean(child)
+            inner += html.escape(child.tail or "")
+
+        if tag == "div":
+            return inner  # strip the wrapper div itself
+        return f"<{tag}{safe_attrs}>{inner}</{tag}>"
+
+    return _clean(root)
+
+
 def render_post_html(
     title: str,
     description: str,
@@ -214,24 +273,29 @@ def render_post_html(
     slug: str,
 ) -> str:
     """Return the full HTML for an individual blog post page."""
+    # Escape model-supplied strings used in HTML attribute contexts.
+    esc_title = html.escape(title)
+    esc_description = html.escape(description)
+    esc_keywords = html.escape(keywords)
     tags_html = "".join(
-        f'<span class="blog-post-tag">{t}</span>' for t in tags
+        f'<span class="blog-post-tag">{html.escape(t)}</span>' for t in tags
     )
     canonical = f"{SITE_BASE_URL}/blog/{slug}.html"
+    safe_body = sanitize_body_html(body_html)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{description}">
-    <meta name="keywords" content="{keywords}">
-    <meta property="og:title" content="{title} - SLO Education Hub">
-    <meta property="og:description" content="{description}">
+    <meta name="description" content="{esc_description}">
+    <meta name="keywords" content="{esc_keywords}">
+    <meta property="og:title" content="{esc_title} - SLO Education Hub">
+    <meta property="og:description" content="{esc_description}">
     <meta property="og:type" content="article">
     <meta property="og:url" content="{canonical}">
     <meta property="article:published_time" content="{pub_date}">
-    <title>{title} - SLO Education Hub</title>
+    <title>{esc_title} - SLO Education Hub</title>
     <link rel="stylesheet" href="../style/styles.css">
     <link rel="stylesheet" href="../style/blog.css">
     <link rel="icon" href="../favicon.svg" type="image/svg+xml">
@@ -266,8 +330,8 @@ def render_post_html(
     <main>
         <section class="hero">
             <div class="container">
-                <h2>{title}</h2>
-                <p class="hero-subtitle">{description}</p>
+                <h2>{esc_title}</h2>
+                <p class="hero-subtitle">{esc_description}</p>
             </div>
         </section>
 
@@ -279,10 +343,10 @@ def render_post_html(
                     {tags_html}
                 </div>
                 <article class="blog-post-content">
-                    {body_html}
+                    {safe_body}
                 </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of {AI_DISPLAY_NAME}.</strong></p>
             </div>
-            <p>** This blog has been generated with the help og Gemini AI</p>
         </section>
 
         <div id="resources-section"></div>
