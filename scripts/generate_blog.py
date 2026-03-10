@@ -2,7 +2,7 @@
 """
 generate_blog.py — Weekly blog post generator for SLO Education Hub.
 
-Uses the Gemini API to produce a 200–300 word educational article on SRE /
+Uses the Gemini API to produce a 200 to 300 word educational article on SRE /
 Observability topics, then:
   1. Writes the post as a standalone HTML file under blog/
   2. Inserts a card into blog/index.html
@@ -137,7 +137,7 @@ Requirements:
     "description": "<meta description, 120-160 chars, keyword-rich>",
     "keywords": "<comma-separated list of 5-8 relevant keywords>",
     "tags": ["<tag1>", "<tag2>", "<tag3>"],
-    "body_html": "<the full article body as valid HTML — use <h2>, <h3>, <p>, <ul>/<li>, and <a href> tags only>"
+    "body_html": "<the full article body as XML-compatible HTML — use <h2>, <h3>, <p>, <ul>/<li>, and <a href> tags only; every & character in text or attribute values MUST be written as &amp; (e.g. 'SRE &amp; Platform Engineering'); all tags must be properly closed; do NOT use bare & anywhere>"
   }}
 
 Return only the JSON object, with no additional text or markdown fences."""
@@ -214,6 +214,21 @@ _ALLOWED_ATTRS = {
 _SAFE_HREF_RE = re.compile(r"^(https?://|/)", re.IGNORECASE)
 
 
+def _make_xml_safe(html_str: str) -> str:
+    """Replace bare & (not part of a valid XML entity) with &amp; so the HTML
+    fragment can be parsed by the XML-strict ElementTree parser.
+
+    XML only defines five named entities (&amp;, &lt;, &gt;, &apos;, &quot;),
+    plus numeric character references. All other '&name;' sequences are
+    treated as plain text and must be escaped here.
+    """
+    return re.sub(
+        r'&(?!(?:amp|lt|gt|apos|quot|#[0-9]+|#x[0-9a-fA-F]+);)',
+        '&amp;',
+        html_str,
+    )
+
+
 def sanitize_body_html(raw: str) -> str:
     """Strip any tags/attributes not in the allowlist from model-generated HTML.
 
@@ -221,11 +236,16 @@ def sanitize_body_html(raw: str) -> str:
     dependency-free, allowlist-based sanitiser.  Because ET requires a single
     root element, the raw fragment is wrapped in a <div> before parsing and
     the wrapper is then stripped from the result.
+
+    Bare & characters (e.g. in link text or attribute values) are pre-processed
+    to &amp; so they don't cause an XML ParseError.
     """
+    xml_safe = _make_xml_safe(raw)
     try:
-        root = ET.fromstring(f"<div>{raw}</div>")
+        root = ET.fromstring(f"<div>{xml_safe}</div>")
     except ET.ParseError:
-        # If the model returned malformed XML/HTML, fall back to plain-text.
+        # If the model returned truly malformed XML/HTML, fall back to plain-text.
+        logger.warning("sanitize_body_html: XML parse failed even after & → &amp; fix; falling back to escaped text.")
         return html.escape(raw)
 
     def _clean(el: ET.Element) -> str:
