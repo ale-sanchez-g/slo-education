@@ -48,6 +48,15 @@ pre, code {
     color: white;
 }
 
+.logo a {
+    color: white;
+    text-decoration: none;
+}
+
+.logo a:hover {
+    color: #b39ddb;
+}
+
 .nav-links {
     display: flex;
     list-style: none;
@@ -526,7 +535,7 @@ footer {
     color: #667eea;
 }
 
-/* Responsive Design */
+/* Responsive Design - Mobile First (max-width: 768px) */
 @media (max-width: 768px) {
     .navbar .container {
         flex-wrap: wrap;
@@ -622,7 +631,6 @@ footer {
     .slo-target {
         font-size: 2rem;
     }
-
 }
 
 /* Cookie Consent Banner */

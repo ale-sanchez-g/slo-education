@@ -68,6 +68,12 @@
         // Create and insert hamburger button
         createHamburgerButton(navbar);
         
+        // Ensure nav-links starts in clean state
+        const navLinks = document.querySelector('.nav-links');
+        if (navLinks) {
+            navLinks.classList.remove('active');
+        }
+        
         // Setup menu toggle functionality
         setupMenuToggle();
         
@@ -146,6 +152,10 @@
         if (!hamburger || !navLinks) return;
 
         hamburger.addEventListener('click', function() {
+            // Only toggle if hamburger is visible (mobile)
+            const hamburgerComputedStyle = window.getComputedStyle(hamburger);
+            if (hamburgerComputedStyle.display === 'none') return;
+            
             const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
             
             // Toggle menu
@@ -220,6 +230,9 @@
                         navLinks.classList.remove('active');
                     }
                     document.body.style.overflow = '';
+                } else {
+                    // Ensure proper state on mobile
+                    document.body.style.overflow = '';
                 }
             }, 250);
         });
@@ -231,25 +244,32 @@
     function highlightCurrentPage(currentPage) {
         const navLinks = document.querySelectorAll('.nav-links a');
         const currentPathname = window.location.pathname;
-        const currentFilename = currentPathname.split('/').pop() || 'index.html';
-        
-        navLinks.forEach(link => {
+
+        navLinks.forEach(function(link) {
             const href = link.getAttribute('href');
-            
             if (!href) return;
-            
-            // Extract filename from href
-            const hrefFilename = href.split('/').pop().split('#')[0];
-            
-            // Check if link matches current page
-            if (currentPage === 'home' && href.startsWith('#')) {
-                // On home page, highlight internal links
-                if (window.location.hash === href) {
+
+            // Handle pure hash links on the home page
+            if (href.startsWith('#')) {
+                if (currentPage === 'home' && window.location.hash === href) {
                     link.classList.add('active');
                 }
-            } else if (hrefFilename && hrefFilename === currentFilename) {
-                // Exact filename match
-                link.classList.add('active');
+                return;
+            }
+
+            // Resolve the href to an absolute path to avoid false matches
+            // e.g. ../index.html vs index.html when both filenames are index.html
+            try {
+                const resolved = new URL(href, window.location.href);
+                // Strip trailing slash and index.html for normalised comparison
+                const normalisePath = function(p) {
+                    return p.replace(/\/index\.html$/, '/').replace(/\/$/, '') || '/';
+                };
+                if (normalisePath(resolved.pathname) === normalisePath(currentPathname)) {
+                    link.classList.add('active');
+                }
+            } catch (e) {
+                // Fallback: skip unresolvable hrefs
             }
         });
     }
