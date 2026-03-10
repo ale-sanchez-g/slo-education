@@ -126,10 +126,10 @@ Requirements:
     * https://slo-education.com.au/error-budget-calculator.html   (Error Budget Calculator)
     * https://slo-education.com.au/incident-management.html       (Incident Management)
     * https://slo-education.com.au/blog/                          (Blog index page with more articles)
-- Do NOT Repeate the topic in the title verbatim — create a concise, engaging title that captures the essence of the article
+- Do NOT repeat the topic in the title verbatim — create a concise, engaging title that captures the essence of the article
 - Do NOT use first-person ("I", "we") — write in second or third person
-- Do NOT include a meta section, frontmatter, or JSON
-- Output format: return a JSON object with EXACTLY these keys:
+- Do NOT include any prose, commentary, frontmatter, or markdown fences outside the JSON object
+- Output format: return ONLY a JSON object with EXACTLY these keys:
   {{
     "title": "<concise, engaging article title (max 80 chars)",
     "description": "<meta description, 120-160 chars, keyword-rich>",
