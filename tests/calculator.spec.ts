@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Error Budget Calculator Page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/error-budget-calculator.html');
+    await page.goto('/error-budget-calculator');
     await page.waitForLoadState('networkidle');
   });
 
@@ -16,7 +16,7 @@ test.describe('Error Budget Calculator Page', () => {
   });
 
   test('should have navigation back to home page', async ({ page }) => {
-    const homeLink = page.locator('a[href="index.html"]').first();
+    const homeLink = page.locator('a[href="/"]').first();
     await expect(homeLink).toBeVisible();
   });
 
@@ -183,14 +183,14 @@ test.describe('Error Budget Calculator Page', () => {
     await page.waitForLoadState('networkidle');
     
     // Click calculator link in navigation
-    const calculatorLink = page.locator('a[href="error-budget-calculator.html"]').first();
+    const calculatorLink = page.locator('a[href="/error-budget-calculator"]').first();
     await calculatorLink.click();
     
     // Wait for navigation
     await page.waitForLoadState('networkidle');
     
     // Verify we're on calculator page
-    await expect(page).toHaveURL(/error-budget-calculator.html/);
+    await expect(page).toHaveURL(/\/error-budget-calculator/);
     await expect(page.locator('h2').first()).toContainText('Error Budget Calculator');
   });
 

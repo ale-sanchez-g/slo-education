@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Privacy Policy Page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/privacy-policy.html');
+    await page.goto('/privacy-policy');
     await page.waitForLoadState('networkidle');
   });
 
@@ -16,10 +16,10 @@ test.describe('Privacy Policy Page', () => {
   });
 
   test('should have navigation links in header', async ({ page }) => {
-    const homeLink = page.locator('a[href="index.html"]').first();
+    const homeLink = page.locator('a[href="/"]').first();
     await expect(homeLink).toBeVisible();
     
-    const privacyLink = page.locator('a[href="privacy-policy.html"]').first();
+    const privacyLink = page.locator('a[href="/privacy-policy"]').first();
     await expect(privacyLink).toBeVisible();
   });
 
@@ -57,7 +57,7 @@ test.describe('Privacy Policy Page', () => {
   });
 
   test('should have privacy policy link in footer', async ({ page }) => {
-    const footerPrivacyLink = page.locator('footer a[href="privacy-policy.html"]');
+    const footerPrivacyLink = page.locator('footer a[href="/privacy-policy"]');
     await expect(footerPrivacyLink).toBeVisible();
   });
 
@@ -71,13 +71,13 @@ test.describe('Privacy Policy Page', () => {
     await page.waitForLoadState('networkidle');
     
     // Click on Privacy link in navigation
-    const privacyNavLink = page.locator('nav a[href="privacy-policy.html"]');
+    const privacyNavLink = page.locator('nav a[href="/privacy-policy"]');
     await privacyNavLink.click();
     
     await page.waitForLoadState('networkidle');
     
     // Verify we're on the privacy policy page
-    await expect(page).toHaveURL(/privacy-policy.html/);
+    await expect(page).toHaveURL(/\/privacy-policy/);
     await expect(page.locator('h2').first()).toContainText('Privacy Policy');
   });
 
@@ -91,13 +91,13 @@ test.describe('Privacy Policy Page', () => {
     
     if (isVisible) {
       // Click Learn More link
-      const learnMoreLink = cookieBanner.locator('a[href="privacy-policy.html"]');
+      const learnMoreLink = cookieBanner.locator('a[href="/privacy-policy"]');
       await learnMoreLink.click();
       
       await page.waitForLoadState('networkidle');
       
       // Verify we're on the privacy policy page
-      await expect(page).toHaveURL(/privacy-policy.html/);
+      await expect(page).toHaveURL(/\/privacy-policy/);
       await expect(page.locator('h2').first()).toContainText('Privacy Policy');
     }
   });
@@ -114,13 +114,13 @@ test.describe('Privacy Policy Page', () => {
     }
     
     // Click on Privacy Policy link in footer
-    const footerPrivacyLink = page.locator('footer a[href="privacy-policy.html"]');
+    const footerPrivacyLink = page.locator('footer a[href="/privacy-policy"]');
     await footerPrivacyLink.click();
     
     await page.waitForLoadState('networkidle');
     
     // Verify we're on the privacy policy page
-    await expect(page).toHaveURL(/privacy-policy.html/);
+    await expect(page).toHaveURL(/\/privacy-policy/);
     await expect(page.locator('h2').first()).toContainText('Privacy Policy');
   });
 });

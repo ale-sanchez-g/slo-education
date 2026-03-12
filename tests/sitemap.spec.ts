@@ -4,10 +4,10 @@ const SITE_DOMAIN = 'https://slo-education.com.au';
 
 const EXPECTED_URLS = [
   `${SITE_DOMAIN}/`,
-  `${SITE_DOMAIN}/cuj-sli-slo-error-budget.html`,
-  `${SITE_DOMAIN}/error-budget-calculator.html`,
-  `${SITE_DOMAIN}/incident-management.html`,
-  `${SITE_DOMAIN}/privacy-policy.html`,
+  `${SITE_DOMAIN}/cuj-sli-slo-error-budget`,
+  `${SITE_DOMAIN}/error-budget-calculator`,
+  `${SITE_DOMAIN}/incident-management`,
+  `${SITE_DOMAIN}/privacy-policy`,
   `${SITE_DOMAIN}/blog/`,
 ];
 

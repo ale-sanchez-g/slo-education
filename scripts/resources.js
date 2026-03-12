@@ -32,7 +32,7 @@
             title: 'Tools',
             items: [
                 { text: 'Sloth - SLO Generator', url: 'https://github.com/slok/sloth', external: true },
-                { text: 'Error Budget Calculator', url: 'error-budget-calculator.html', external: false, rootRelative: true }
+                { text: 'Error Budget Calculator', url: '/error-budget-calculator', external: false, rootRelative: false }
             ]
         }
     ];

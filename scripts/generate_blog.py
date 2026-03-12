@@ -124,9 +124,9 @@ Requirements:
 - Include at least 3 hyperlinks to reputable external resources (Google SRE Book,
   CNCF, OpenTelemetry docs, Atlassian blog, etc.) using Markdown link syntax
 - Reference at least one related page on the SLO Education Hub site:
-    * https://slo-education.com.au/cuj-sli-slo-error-budget.html  (CUJ → SLI → SLO)
-    * https://slo-education.com.au/error-budget-calculator.html   (Error Budget Calculator)
-    * https://slo-education.com.au/incident-management.html       (Incident Management)
+    * https://slo-education.com.au/cuj-sli-slo-error-budget  (CUJ → SLI → SLO)
+    * https://slo-education.com.au/error-budget-calculator   (Error Budget Calculator)
+    * https://slo-education.com.au/incident-management       (Incident Management)
     * https://slo-education.com.au/blog/                          (Blog index page with more articles)
 - Do NOT repeat the topic in the title verbatim — create a concise, engaging title that captures the essence of the article
 - Do NOT use first-person ("I", "we") — write in second or third person
@@ -300,7 +300,7 @@ def render_post_html(
     tags_html = "".join(
         f'<span class="blog-post-tag">{html.escape(t)}</span>' for t in tags
     )
-    canonical = f"{SITE_BASE_URL}/blog/{slug}.html"
+    canonical = f"{SITE_BASE_URL}/blog/{slug}"
     safe_body = sanitize_body_html(body_html)
 
     return f"""<!DOCTYPE html>
@@ -329,7 +329,7 @@ def render_post_html(
                 <strong>We value your privacy</strong><br>
                 We use cookies and analytics tools to improve your experience and understand how you use our site.
                 By clicking "Accept", you consent to the use of Google Analytics.
-                <a href="../privacy-policy.html" style="color: #fff; text-decoration: underline;">Learn more</a>
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
             </p>
             <div class="cookie-banner-buttons">
                 <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
@@ -341,7 +341,7 @@ def render_post_html(
     <header>
         <nav class="navbar">
             <div class="container">
-                <h1 class="logo"><a href="../index.html">SLO Education</a></h1>
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
                 <ul class="nav-links"></ul>
             </div>
         </nav>
@@ -357,7 +357,7 @@ def render_post_html(
 
         <section class="section">
             <div class="container">
-                <a href="index.html" class="blog-back-link">&larr; Back to Blog</a>
+                <a href="/blog/" class="blog-back-link">&larr; Back to Blog</a>
                 <div class="blog-post-meta">
                     <span>{pub_date}</span>
                     {tags_html}
@@ -433,9 +433,9 @@ def build_card_html(title: str, description: str, tags: list, pub_date: str, slu
     return (
         f'<div class="blog-card">\n'
         f'  <div class="blog-card-meta"><span>{pub_date}</span>{tags_html}</div>\n'
-        f'  <h3><a href="{slug}.html">{title}</a></h3>\n'
+        f'  <h3><a href="/blog/{slug}">{title}</a></h3>\n'
         f'  <p>{description}</p>\n'
-        f'  <a href="{slug}.html" class="read-more">Read more &rarr;</a>\n'
+        f'  <a href="/blog/{slug}" class="read-more">Read more &rarr;</a>\n'
         f'</div>'
     )
 
@@ -486,7 +486,7 @@ def update_sitemap(slug: str, pub_date: str) -> None:
         ET.SubElement(url_el, f"{{{ns}}}priority").text = priority
 
     add_url(f"{SITE_BASE_URL}/blog/", "weekly", "0.8")
-    add_url(f"{SITE_BASE_URL}/blog/{slug}.html", "monthly", "0.7", pub_date)
+    add_url(f"{SITE_BASE_URL}/blog/{slug}", "monthly", "0.7", pub_date)
 
     # Write back with XML declaration and proper indentation
     ET.indent(tree, space="  ")

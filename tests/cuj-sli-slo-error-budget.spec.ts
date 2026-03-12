@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('CUJ → SLI → SLO → Error Budget Page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/cuj-sli-slo-error-budget.html');
+    await page.goto('/cuj-sli-slo-error-budget');
     await page.waitForLoadState('networkidle');
   });
 
@@ -372,7 +372,7 @@ test.describe('CUJ → SLI → SLO → Error Budget Page', () => {
 
   test.describe('Navigation', () => {
     test('should have the CUJ → SLI → SLO link highlighted as active in nav', async ({ page }) => {
-      const cujLink = page.locator('.nav-links a[href="cuj-sli-slo-error-budget.html"]');
+      const cujLink = page.locator('.nav-links a[href="/cuj-sli-slo-error-budget"]');
       await expect(cujLink).toHaveClass(/active/);
     });
 
@@ -381,7 +381,7 @@ test.describe('CUJ → SLI → SLO → Error Budget Page', () => {
       const homeLink = page.locator('.nav-links a:has-text("Home")');
       await homeLink.click();
       await page.waitForLoadState('networkidle');
-      await expect(page).toHaveURL(/\/(index\.html)?$/);
+      await expect(page).toHaveURL(/\/$/);
     });
 
     test('should navigate to calculator page when Calculator is clicked', async ({ page }) => {
@@ -389,7 +389,7 @@ test.describe('CUJ → SLI → SLO → Error Budget Page', () => {
       const calcLink = page.locator('.nav-links a:has-text("Calculator")');
       await calcLink.click();
       await page.waitForLoadState('networkidle');
-      await expect(page).toHaveURL(/error-budget-calculator\.html/);
+      await expect(page).toHaveURL(/\/error-budget-calculator/);
     });
 
     test('should navigate to incident management when clicked', async ({ page }) => {
@@ -397,14 +397,14 @@ test.describe('CUJ → SLI → SLO → Error Budget Page', () => {
       const incidentLink = page.locator('.nav-links a:has-text("Incident Management")');
       await incidentLink.click();
       await page.waitForLoadState('networkidle');
-      await expect(page).toHaveURL(/incident-management\.html/);
+      await expect(page).toHaveURL(/\/incident-management/);
     });
   });
 
   test.describe('Mobile Responsiveness', () => {
     test.beforeEach(async ({ page }) => {
       await page.setViewportSize({ width: 375, height: 667 });
-      await page.goto('/cuj-sli-slo-error-budget.html');
+      await page.goto('/cuj-sli-slo-error-budget');
       await page.waitForLoadState('networkidle');
     });
 

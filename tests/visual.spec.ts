@@ -4,20 +4,20 @@ const MOBILE_VIEWPORT = { width: 375, height: 667 };
 const DESKTOP_VIEWPORT = { width: 1280, height: 800 };
 
 const PAGES = [
-  { name: 'home', path: '/index.html' },
-  { name: 'error-budget-calculator', path: '/error-budget-calculator.html' },
-  { name: 'incident-management', path: '/incident-management.html' },
-  { name: 'cuj-sli-slo-error-budget', path: '/cuj-sli-slo-error-budget.html' },
-  { name: 'privacy-policy', path: '/privacy-policy.html' },
-  { name: 'blog', path: '/blog/index.html' },
+  { name: 'home', path: '/' },
+  { name: 'error-budget-calculator', path: '/error-budget-calculator' },
+  { name: 'incident-management', path: '/incident-management' },
+  { name: 'cuj-sli-slo-error-budget', path: '/cuj-sli-slo-error-budget' },
+  { name: 'privacy-policy', path: '/privacy-policy' },
+  { name: 'blog', path: '/blog/' },
 ];
 
 // Pages that include the centralised resources module
 const PAGES_WITH_RESOURCES = [
-  { name: 'home', path: '/index.html' },
-  { name: 'error-budget-calculator', path: '/error-budget-calculator.html' },
-  { name: 'incident-management', path: '/incident-management.html' },
-  { name: 'cuj-sli-slo-error-budget', path: '/cuj-sli-slo-error-budget.html' },
+  { name: 'home', path: '/' },
+  { name: 'error-budget-calculator', path: '/error-budget-calculator' },
+  { name: 'incident-management', path: '/incident-management' },
+  { name: 'cuj-sli-slo-error-budget', path: '/cuj-sli-slo-error-budget' },
 ];
 
 /**
@@ -95,7 +95,7 @@ test.describe('Desktop - No horizontal overflow', () => {
 test.describe('Mobile - pre element text wrapping', () => {
   test('framework-tree pre element wraps text and does not overflow on mobile', async ({ page }) => {
     await page.setViewportSize(MOBILE_VIEWPORT);
-    await page.goto('/error-budget-calculator.html');
+    await page.goto('/error-budget-calculator');
     await page.waitForLoadState('networkidle');
 
     const preEl = page.locator('.framework-tree pre');
@@ -123,7 +123,7 @@ test.describe('Mobile - pre element text wrapping', () => {
 
   test('formula elements do not overflow on mobile', async ({ page }) => {
     await page.setViewportSize(MOBILE_VIEWPORT);
-    await page.goto('/error-budget-calculator.html');
+    await page.goto('/error-budget-calculator');
     await page.waitForLoadState('networkidle');
 
     const formulas = page.locator('.formula');
@@ -195,7 +195,7 @@ test.describe('Visual snapshots - Flip cards', () => {
 
   test('examples section front face renders correctly on desktop', async ({ page }) => {
     await page.setViewportSize(DESKTOP_VIEWPORT);
-    await page.goto('/index.html');
+    await page.goto('/');
     await page.waitForLoadState('networkidle');
     await dismissCookieBanner(page);
 
@@ -210,7 +210,7 @@ test.describe('Visual snapshots - Flip cards', () => {
 
   test('examples section back face renders correctly on desktop (first card flipped)', async ({ page }) => {
     await page.setViewportSize(DESKTOP_VIEWPORT);
-    await page.goto('/index.html');
+    await page.goto('/');
     await page.waitForLoadState('networkidle');
     await dismissCookieBanner(page);
 
@@ -226,7 +226,7 @@ test.describe('Visual snapshots - Flip cards', () => {
 
   test('examples section front face renders correctly on mobile', async ({ page }) => {
     await page.setViewportSize(MOBILE_VIEWPORT);
-    await page.goto('/index.html');
+    await page.goto('/');
     await page.waitForLoadState('networkidle');
     await dismissCookieBanner(page);
 

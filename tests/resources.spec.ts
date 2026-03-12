@@ -2,10 +2,10 @@ import { test, expect } from '@playwright/test';
 
 // Pages that include the centralised resources module
 const PAGES_WITH_RESOURCES = [
-  { name: 'home', path: '/index.html' },
-  { name: 'error-budget-calculator', path: '/error-budget-calculator.html' },
-  { name: 'incident-management', path: '/incident-management.html' },
-  { name: 'cuj-sli-slo-error-budget', path: '/cuj-sli-slo-error-budget.html' },
+  { name: 'home', path: '/' },
+  { name: 'error-budget-calculator', path: '/error-budget-calculator' },
+  { name: 'incident-management', path: '/incident-management' },
+  { name: 'cuj-sli-slo-error-budget', path: '/cuj-sli-slo-error-budget' },
 ];
 
 const MOBILE_VIEWPORT = { width: 375, height: 667 };
@@ -65,7 +65,7 @@ test.describe('Resources Module – per-page link checks', () => {
 
       // Tools links present on every page
       await expect(section.locator('a[href="https://github.com/slok/sloth"]')).toBeVisible();
-      await expect(section.locator('a[href="error-budget-calculator.html"]')).toBeVisible();
+      await expect(section.locator('a[href="/error-budget-calculator"]')).toBeVisible();
     });
   }
 });
@@ -114,7 +114,7 @@ test.describe('Resources Module – placement above footer', () => {
 test.describe('Resources Module – grid layout', () => {
   test('resources grid has correct CSS class on desktop', async ({ page }) => {
     await page.setViewportSize(DESKTOP_VIEWPORT);
-    await page.goto('/index.html');
+    await page.goto('/');
     await page.waitForLoadState('networkidle');
 
     const grid = page.locator('#resources-section .resources-grid');
@@ -123,7 +123,7 @@ test.describe('Resources Module – grid layout', () => {
 
   test('resources grid collapses to single column on mobile', async ({ page }) => {
     await page.setViewportSize(MOBILE_VIEWPORT);
-    await page.goto('/index.html');
+    await page.goto('/');
     await page.waitForLoadState('networkidle');
 
     const grid = page.locator('#resources-section .resources-grid');
@@ -143,7 +143,7 @@ test.describe('Resources Module – grid layout', () => {
 
 test.describe('Resources Module – excluded pages', () => {
   test('privacy-policy page does not include the resources section', async ({ page }) => {
-    await page.goto('/privacy-policy.html');
+    await page.goto('/privacy-policy');
     await page.waitForLoadState('networkidle');
 
     const section = page.locator('#resources-section');

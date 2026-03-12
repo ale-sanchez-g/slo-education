@@ -16,35 +16,35 @@
             links: [
                 { text: 'About', href: '#about' },
                 { text: 'What are SLOs?', href: '#what-are-slos' },
-                { text: 'Calculator', href: 'error-budget-calculator.html' },
-                { text: 'CUJ \u2192 SLI \u2192 SLO', href: 'cuj-sli-slo-error-budget.html' },
-                { text: 'Incident Management', href: 'incident-management.html' },
-                { text: 'Blog', href: 'blog/index.html' },
-                { text: 'Privacy', href: 'privacy-policy.html' }
+                { text: 'Calculator', href: '/error-budget-calculator' },
+                { text: 'CUJ \u2192 SLI \u2192 SLO', href: '/cuj-sli-slo-error-budget' },
+                { text: 'Incident Management', href: '/incident-management' },
+                { text: 'Blog', href: '/blog/' },
+                { text: 'Privacy', href: '/privacy-policy' }
             ]
         },
         other: {
             links: [
-                { text: 'Home', href: 'index.html' },
-                { text: 'About', href: 'index.html#about' },
-                { text: 'What are SLOs?', href: 'index.html#what-are-slos' },
-                { text: 'Calculator', href: 'error-budget-calculator.html' },
-                { text: 'CUJ \u2192 SLI \u2192 SLO', href: 'cuj-sli-slo-error-budget.html' },
-                { text: 'Incident Management', href: 'incident-management.html' },
-                { text: 'Blog', href: 'blog/index.html' },
-                { text: 'Privacy', href: 'privacy-policy.html' }
+                { text: 'Home', href: '/' },
+                { text: 'About', href: '/#about' },
+                { text: 'What are SLOs?', href: '/#what-are-slos' },
+                { text: 'Calculator', href: '/error-budget-calculator' },
+                { text: 'CUJ \u2192 SLI \u2192 SLO', href: '/cuj-sli-slo-error-budget' },
+                { text: 'Incident Management', href: '/incident-management' },
+                { text: 'Blog', href: '/blog/' },
+                { text: 'Privacy', href: '/privacy-policy' }
             ]
         },
         blog: {
             links: [
-                { text: 'Home', href: '../index.html' },
-                { text: 'About', href: '../index.html#about' },
-                { text: 'What are SLOs?', href: '../index.html#what-are-slos' },
-                { text: 'Calculator', href: '../error-budget-calculator.html' },
-                { text: 'CUJ \u2192 SLI \u2192 SLO', href: '../cuj-sli-slo-error-budget.html' },
-                { text: 'Incident Management', href: '../incident-management.html' },
-                { text: 'Blog', href: 'index.html' },
-                { text: 'Privacy', href: '../privacy-policy.html' }
+                { text: 'Home', href: '/' },
+                { text: 'About', href: '/#about' },
+                { text: 'What are SLOs?', href: '/#what-are-slos' },
+                { text: 'Calculator', href: '/error-budget-calculator' },
+                { text: 'CUJ \u2192 SLI \u2192 SLO', href: '/cuj-sli-slo-error-budget' },
+                { text: 'Incident Management', href: '/incident-management' },
+                { text: 'Blog', href: '/blog/' },
+                { text: 'Privacy', href: '/privacy-policy' }
             ]
         }
     };
@@ -265,9 +265,9 @@
             // e.g. ../index.html vs index.html when both filenames are index.html
             try {
                 const resolved = new URL(href, window.location.href);
-                // Strip trailing slash and index.html for normalised comparison
+                // Strip trailing slash for normalised comparison
                 const normalisePath = function(p) {
-                    return p.replace(/\/index\.html$/, '/').replace(/\/$/, '') || '/';
+                    return p.replace(/\/$/, '') || '/';
                 };
                 if (normalisePath(resolved.pathname) === normalisePath(currentPathname)) {
                     link.classList.add('active');
