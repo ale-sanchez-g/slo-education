@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Incident Management Page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/incident-management.html');
+    await page.goto('/incident-management');
     await page.waitForLoadState('networkidle');
   });
 
@@ -17,11 +17,11 @@ test.describe('Incident Management Page', () => {
 
   test('should have navigation to other pages', async ({ page }) => {
     // Check home link
-    const homeLink = page.locator('a[href="index.html"]').first();
+    const homeLink = page.locator('a[href="/"]').first();
     await expect(homeLink).toBeVisible();
 
     // Check calculator link
-    const calculatorLink = page.locator('a[href="error-budget-calculator.html"]').first();
+    const calculatorLink = page.locator('a[href="/error-budget-calculator"]').first();
     await expect(calculatorLink).toBeVisible();
   });
 
@@ -423,31 +423,31 @@ test.describe('Incident Management Page', () => {
       await page.waitForLoadState('networkidle');
 
       // Click incident management link in navigation
-      const incidentLink = page.locator('a[href="incident-management.html"]').first();
+      const incidentLink = page.locator('a[href="/incident-management"]').first();
       await incidentLink.click();
 
       // Wait for navigation
       await page.waitForLoadState('networkidle');
 
       // Verify we're on incident management page
-      await expect(page).toHaveURL(/incident-management.html/);
+      await expect(page).toHaveURL(/\/incident-management/);
       await expect(page.locator('h2').first()).toContainText('Incident Management');
     });
 
     test('should navigate from calculator to incident management', async ({ page }) => {
       // Start at calculator page
-      await page.goto('/error-budget-calculator.html');
+      await page.goto('/error-budget-calculator');
       await page.waitForLoadState('networkidle');
 
       // Click incident management link
-      const incidentLink = page.locator('a[href="incident-management.html"]').first();
+      const incidentLink = page.locator('a[href="/incident-management"]').first();
       await incidentLink.click();
 
       // Wait for navigation
       await page.waitForLoadState('networkidle');
 
       // Verify navigation
-      await expect(page).toHaveURL(/incident-management.html/);
+      await expect(page).toHaveURL(/\/incident-management/);
     });
   });
 

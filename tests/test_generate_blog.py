@@ -71,9 +71,9 @@ class TestBuildPrompt:
     
     def test_prompt_references_site_pages(self):
         prompt = generate_blog.build_prompt("Test Topic")
-        assert "cuj-sli-slo-error-budget.html" in prompt
-        assert "error-budget-calculator.html" in prompt
-        assert "incident-management.html" in prompt
+        assert "cuj-sli-slo-error-budget" in prompt
+        assert "error-budget-calculator" in prompt
+        assert "incident-management" in prompt
 
 
 class TestCallGemini:
@@ -165,7 +165,7 @@ class TestRenderPostHTML:
             slug="test-slug"
         )
         
-        assert 'https://slo-education.com.au/blog/test-slug.html' in html
+        assert 'https://slo-education.com.au/blog/test-slug' in html
         assert 'rel="canonical"' in html
     
     def test_includes_meta_tags(self):
@@ -201,7 +201,7 @@ class TestBuildCardHTML:
         assert "Test Post" in card
         assert "Test description" in card
         assert "2026-03-10" in card
-        assert 'href="test-post.html"' in card
+        assert 'href="/blog/test-post"' in card
         assert '<span class="blog-card-tag">SRE</span>' in card
         assert '<span class="blog-card-tag">Testing</span>' in card
     
@@ -212,7 +212,7 @@ class TestBuildCardHTML:
         )
         
         assert 'Read more &rarr;' in card
-        assert 'href="slug.html"' in card
+        assert 'href="/blog/slug"' in card
 
 
 class TestUpdateBlogIndex:
@@ -287,7 +287,7 @@ class TestUpdateSitemap:
                         ]
 
                         assert f"{generate_blog.SITE_BASE_URL}/blog/" in locs
-                        assert f"{generate_blog.SITE_BASE_URL}/blog/test-slug.html" in locs
+                        assert f"{generate_blog.SITE_BASE_URL}/blog/test-slug" in locs
     
     def test_prevents_duplicate_urls(self):
         # Sitemap already has the blog index
