@@ -33,16 +33,15 @@ test.describe('Responsive Menu Functionality', () => {
     test('should have all navigation links on home page', async ({ page }) => {
       const navLinks = page.locator('.nav-links a');
 
-      await expect(navLinks).toHaveCount(7);
+      await expect(navLinks).toHaveCount(6);
 
       // Verify all expected links
-      await expect(navLinks.nth(0)).toHaveText('About');
-      await expect(navLinks.nth(1)).toHaveText('What are SLOs?');
-      await expect(navLinks.nth(2)).toHaveText('Calculator');
-      await expect(navLinks.nth(3)).toHaveText('CUJ \u2192 SLI \u2192 SLO');
-      await expect(navLinks.nth(4)).toHaveText('Incident Management');
-      await expect(navLinks.nth(5)).toHaveText('Blog');
-      await expect(navLinks.nth(6)).toHaveText('Privacy');
+      await expect(navLinks.nth(0)).toHaveText('Calculator');
+      await expect(navLinks.nth(1)).toHaveText('CUJ \u2192 SLI \u2192 SLO');
+      await expect(navLinks.nth(2)).toHaveText('Incident Management');
+      await expect(navLinks.nth(3)).toHaveText('Blog');
+      await expect(navLinks.nth(4)).toHaveText('SRE Games');
+      await expect(navLinks.nth(5)).toHaveText('Privacy');
     });
 
     test('should have consistent navigation on calculator page', async ({ page }) => {
@@ -51,15 +50,14 @@ test.describe('Responsive Menu Functionality', () => {
 
       const navLinks = page.locator('.nav-links a');
 
-      await expect(navLinks).toHaveCount(8);
+      await expect(navLinks).toHaveCount(7);
       await expect(navLinks.nth(0)).toHaveText('Home');
-      await expect(navLinks.nth(1)).toHaveText('About');
-      await expect(navLinks.nth(2)).toHaveText('What are SLOs?');
-      await expect(navLinks.nth(3)).toHaveText('Calculator');
-      await expect(navLinks.nth(4)).toHaveText('CUJ \u2192 SLI \u2192 SLO');
-      await expect(navLinks.nth(5)).toHaveText('Incident Management');
-      await expect(navLinks.nth(6)).toHaveText('Blog');
-      await expect(navLinks.nth(7)).toHaveText('Privacy');
+      await expect(navLinks.nth(1)).toHaveText('Calculator');
+      await expect(navLinks.nth(2)).toHaveText('CUJ \u2192 SLI \u2192 SLO');
+      await expect(navLinks.nth(3)).toHaveText('Incident Management');
+      await expect(navLinks.nth(4)).toHaveText('Blog');
+      await expect(navLinks.nth(5)).toHaveText('SRE Games');
+      await expect(navLinks.nth(6)).toHaveText('Privacy');
     });
 
     test('should have consistent navigation on incident management page', async ({ page }) => {
@@ -68,7 +66,7 @@ test.describe('Responsive Menu Functionality', () => {
 
       const navLinks = page.locator('.nav-links a');
 
-      await expect(navLinks).toHaveCount(8);
+      await expect(navLinks).toHaveCount(7);
       await expect(navLinks.nth(0)).toHaveText('Home');
     });
 
@@ -152,7 +150,7 @@ test.describe('Responsive Menu Functionality', () => {
       await expect(navLinks).toHaveClass(/active/);
       
       // Click a link
-      const aboutLink = navLinks.locator('a:has-text("About")');
+      const aboutLink = navLinks.locator('a:has-text("Calculator")');
       await aboutLink.click();
       
       // Menu should close
@@ -373,13 +371,13 @@ test.describe('Responsive Menu Functionality', () => {
       await expect(navLinks).toBeVisible();
     });
 
-    test('should have 8 nav links on the CUJ → SLI → SLO page', async ({ page }) => {
+    test('should have 7 nav links on the CUJ → SLI → SLO page', async ({ page }) => {
       await page.setViewportSize({ width: 1280, height: 720 });
       await page.goto('/cuj-sli-slo-error-budget');
       await page.waitForLoadState('networkidle');
 
       const navLinks = page.locator('.nav-links a');
-      await expect(navLinks).toHaveCount(8);
+      await expect(navLinks).toHaveCount(7);
     });
 
     test('should highlight CUJ → SLI → SLO as active on its page', async ({ page }) => {
@@ -398,18 +396,6 @@ test.describe('Responsive Menu Functionality', () => {
         await page.setViewportSize({ width: 1280, height: 720 });
         await page.goto('/');
         await page.waitForLoadState('networkidle');
-      });
-
-      test('clicking About scrolls to the About section', async ({ page }) => {
-        await page.click('.nav-links a:has-text("About")');
-        await expect(page).toHaveURL(/#about$/);
-        await expect(page.locator('#about')).toBeAttached();
-      });
-
-      test('clicking What are SLOs? scrolls to the What are SLOs section', async ({ page }) => {
-        await page.click('.nav-links a:has-text("What are SLOs?")');
-        await expect(page).toHaveURL(/#what-are-slos$/);
-        await expect(page.locator('#what-are-slos')).toBeAttached();
       });
 
       test('clicking Calculator navigates to the calculator page', async ({ page }) => {
@@ -444,20 +430,6 @@ test.describe('Responsive Menu Functionality', () => {
         await expect(page).toHaveURL(/\/$/);
       });
 
-      test('clicking About navigates to the About section on the home page', async ({ page }) => {
-        await page.click('.nav-links a:has-text("About")');
-        await page.waitForLoadState('networkidle');
-        await expect(page).toHaveURL(/#about/);
-        await expect(page.locator('#about')).toBeAttached();
-      });
-
-      test('clicking What are SLOs? navigates to the What are SLOs section on the home page', async ({ page }) => {
-        await page.click('.nav-links a:has-text("What are SLOs?")');
-        await page.waitForLoadState('networkidle');
-        await expect(page).toHaveURL(/#what-are-slos/);
-        await expect(page.locator('#what-are-slos')).toBeAttached();
-      });
-
       test('clicking Calculator stays on the calculator page', async ({ page }) => {
         await page.click('.nav-links a:has-text("Calculator")');
         await page.waitForLoadState('networkidle');
@@ -488,20 +460,6 @@ test.describe('Responsive Menu Functionality', () => {
         await page.click('.nav-links a:has-text("Home")');
         await page.waitForLoadState('networkidle');
         await expect(page).toHaveURL(/\/$/);
-      });
-
-      test('clicking About navigates to the About section on the home page', async ({ page }) => {
-        await page.click('.nav-links a:has-text("About")');
-        await page.waitForLoadState('networkidle');
-        await expect(page).toHaveURL(/#about/);
-        await expect(page.locator('#about')).toBeAttached();
-      });
-
-      test('clicking What are SLOs? navigates to the What are SLOs section on the home page', async ({ page }) => {
-        await page.click('.nav-links a:has-text("What are SLOs?")');
-        await page.waitForLoadState('networkidle');
-        await expect(page).toHaveURL(/#what-are-slos/);
-        await expect(page.locator('#what-are-slos')).toBeAttached();
       });
 
       test('clicking Calculator navigates to the calculator page', async ({ page }) => {
@@ -572,20 +530,6 @@ test.describe('Responsive Menu Functionality', () => {
         await page.click('.nav-links a:has-text("Home")');
         await page.waitForLoadState('networkidle');
         await expect(page).toHaveURL(/\/$/);
-      });
-
-      test('clicking About navigates to the About section on the home page', async ({ page }) => {
-        await page.click('.nav-links a:has-text("About")');
-        await page.waitForLoadState('networkidle');
-        await expect(page).toHaveURL(/#about/);
-        await expect(page.locator('#about')).toBeAttached();
-      });
-
-      test('clicking What are SLOs? navigates to the What are SLOs section on the home page', async ({ page }) => {
-        await page.click('.nav-links a:has-text("What are SLOs?")');
-        await page.waitForLoadState('networkidle');
-        await expect(page).toHaveURL(/#what-are-slos/);
-        await expect(page.locator('#what-are-slos')).toBeAttached();
       });
 
       test('clicking Calculator navigates to the calculator page', async ({ page }) => {
