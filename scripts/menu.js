@@ -20,6 +20,7 @@
                 { text: 'CUJ \u2192 SLI \u2192 SLO', href: '/cuj-sli-slo-error-budget' },
                 { text: 'Incident Management', href: '/incident-management' },
                 { text: 'Blog', href: '/blog/' },
+                { text: 'SRE Games', href: 'https://cafe.slo-education.com.au/', target: '_blank' },
                 { text: 'Privacy', href: '/privacy-policy' }
             ]
         },
@@ -32,6 +33,7 @@
                 { text: 'CUJ \u2192 SLI \u2192 SLO', href: '/cuj-sli-slo-error-budget' },
                 { text: 'Incident Management', href: '/incident-management' },
                 { text: 'Blog', href: '/blog/' },
+                { text: 'SRE Games', href: 'https://cafe.slo-education.com.au/', target: '_blank' },
                 { text: 'Privacy', href: '/privacy-policy' }
             ]
         },
@@ -44,6 +46,7 @@
                 { text: 'CUJ \u2192 SLI \u2192 SLO', href: '/cuj-sli-slo-error-budget' },
                 { text: 'Incident Management', href: '/incident-management' },
                 { text: 'Blog', href: '/blog/' },
+                { text: 'SRE Games', href: 'https://cafe.slo-education.com.au/', target: '_blank' },
                 { text: 'Privacy', href: '/privacy-policy' }
             ]
         }
@@ -114,7 +117,8 @@
         }
 
         navList.innerHTML = config.links.map(function(link) {
-            return '<li><a href="' + link.href + '">' + link.text + '</a></li>';
+            var attrs = link.target ? ' target="' + link.target + '" rel="noopener noreferrer"' : '';
+            return '<li><a href="' + link.href + '"' + attrs + '>' + link.text + '</a></li>';
         }).join('');
     }
 
