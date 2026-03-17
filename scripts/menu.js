@@ -14,8 +14,6 @@
     const NAV_CONFIG = {
         home: {
             links: [
-                { text: 'About', href: '#about' },
-                { text: 'What are SLOs?', href: '#what-are-slos' },
                 { text: 'Calculator', href: '/error-budget-calculator' },
                 { text: 'CUJ \u2192 SLI \u2192 SLO', href: '/cuj-sli-slo-error-budget' },
                 { text: 'Incident Management', href: '/incident-management' },
@@ -27,8 +25,6 @@
         other: {
             links: [
                 { text: 'Home', href: '/' },
-                { text: 'About', href: '/#about' },
-                { text: 'What are SLOs?', href: '/#what-are-slos' },
                 { text: 'Calculator', href: '/error-budget-calculator' },
                 { text: 'CUJ \u2192 SLI \u2192 SLO', href: '/cuj-sli-slo-error-budget' },
                 { text: 'Incident Management', href: '/incident-management' },
@@ -40,8 +36,6 @@
         blog: {
             links: [
                 { text: 'Home', href: '/' },
-                { text: 'About', href: '/#about' },
-                { text: 'What are SLOs?', href: '/#what-are-slos' },
                 { text: 'Calculator', href: '/error-budget-calculator' },
                 { text: 'CUJ \u2192 SLI \u2192 SLO', href: '/cuj-sli-slo-error-budget' },
                 { text: 'Incident Management', href: '/incident-management' },
