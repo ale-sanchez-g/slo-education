@@ -79,6 +79,11 @@ test.describe('Responsive Menu Functionality', () => {
       // Check if the active class is applied
       await expect(calculatorLink).toHaveClass(/active/);
     });
+
+    test('should not have any active nav link on the homepage', async ({ page }) => {
+      const activeLinks = page.locator('.nav-links a.active');
+      await expect(activeLinks).toHaveCount(0);
+    });
   });
 
   test.describe('Mobile View', () => {
