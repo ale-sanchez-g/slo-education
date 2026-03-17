@@ -263,6 +263,8 @@
             // e.g. ../index.html vs index.html when both filenames are index.html
             try {
                 const resolved = new URL(href, window.location.href);
+                // Skip external links — they should never be highlighted as active
+                if (resolved.hostname !== window.location.hostname) return;
                 // Strip trailing slash for normalised comparison
                 const normalisePath = function(p) {
                     return p.replace(/\/$/, '') || '/';
