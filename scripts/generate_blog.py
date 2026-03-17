@@ -53,7 +53,6 @@ AI_DISPLAY_NAME = "Gemini AI"
 # Pool of SRE/Observability topics rotated by ISO week number so each run
 # produces a distinct topic without state management.
 TOPICS = [
-    "What is an SLO and why does it matter for reliability?",
     "Understanding error budgets: balancing reliability and innovation",
     "Service Level Indicators (SLIs): choosing the right metrics",
     "Incident management best practices for on-call teams",
@@ -65,7 +64,6 @@ TOPICS = [
     "SLO alerting: alert on burn rate, not raw error rate",
     "Chaos engineering: building confidence in reliability",
     "Platform engineering and its relationship with SRE",
-    "Service mesh and observability: what you need to know",
     "Capacity planning with error budgets",
     "On-call culture: building sustainable practices",
     "AIOps and machine learning in incident detection",
@@ -103,7 +101,7 @@ TOPICS = [
     "Communication during incidents: templates and tips",
     "Using SLOs in vendor contracts and SLAs",
     "Getting started with SRE in a small engineering team",
-    "Weekly SRE and Observability news round-up",
+    "AI observability: Beyond logs, metrics and traces"
 ]
 
 
