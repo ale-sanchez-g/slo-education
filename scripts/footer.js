@@ -36,6 +36,7 @@
             '        <li><a href="/cuj-sli-slo-error-budget">CUJ, SLI &amp; SLO</a></li>',
             '        <li><a href="/error-budget-calculator">Error Budget Calculator</a></li>',
             '        <li><a href="/incident-management">Incident Management</a></li>',
+            '        <li><a href="/ai-slo-error-budget">AI SLOs</a></li>',
             '        <li><a href="/blog/">Blog</a></li>',
             '      </ul>',
             '    </div>',
