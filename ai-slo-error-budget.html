@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI SLOs & Error Budgets - Defining and measuring 'good enough' for systems that can never be 100% deterministic. Learn how to set SLOs, error budgets, and alerting strategies for AI/ML systems.">
+    <title>AI SLOs & Error Budgets - SLO Education Hub</title>
+    <link rel="stylesheet" href="style/styles.css">
+    <link rel="stylesheet" href="style/ai-slo-error-budget.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <script src="scripts/grafana.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/" style="color: white; text-decoration: none;">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h2>AI SLOs &amp; Error Budgets</h2>
+                <p class="hero-subtitle">Defining and measuring "good enough" for systems that can never be 100% deterministic</p>
+            </div>
+        </section>
+
+        <!-- Why AI is Different Section -->
+        <section class="section">
+            <div class="container">
+                <h2>Why AI Systems Require a Different Approach</h2>
+                <p class="section-intro">Traditional SLOs assume binary outcomes — a request either succeeds or fails. AI systems introduce probabilistic outputs, where "correct" is often subjective and quality exists on a spectrum. This fundamentally changes how we define, measure, and budget for reliability.</p>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card traditional">
+                        <div class="comparison-header">
+                            <span class="comparison-icon">⚙️</span>
+                            <h3>Traditional Systems</h3>
+                        </div>
+                        <ul>
+                            <li><strong>Deterministic:</strong> Same input → same output, every time</li>
+                            <li><strong>Binary success:</strong> Request succeeds (200 OK) or fails (5xx)</li>
+                            <li><strong>Clear thresholds:</strong> Latency &lt; 200ms is measurable</li>
+                            <li><strong>Objective quality:</strong> Data is correct or incorrect</li>
+                            <li><strong>Stable baselines:</strong> Metrics don't drift without code changes</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card ai-ml">
+                        <div class="comparison-header">
+                            <span class="comparison-icon">🤖</span>
+                            <h3>AI/ML Systems</h3>
+                        </div>
+                        <ul>
+                            <li><strong>Non-deterministic:</strong> Same input may produce varied outputs</li>
+                            <li><strong>Probabilistic quality:</strong> Responses can be good, acceptable, or poor</li>
+                            <li><strong>Subjective thresholds:</strong> "Good enough" depends on context</li>
+                            <li><strong>Distribution shifts:</strong> Quality can degrade as data changes</li>
+                            <li><strong>Model drift:</strong> Performance changes over time without code changes</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="insight-banner">
+                    <div class="insight-icon">💡</div>
+                    <div class="insight-content">
+                        <strong>The Core Insight:</strong> For AI systems, you don't aim for perfection — you define what "good enough" means, measure how often you achieve it, and budget for the times you don't. The question shifts from "did it work?" to "was it good enough?"
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI SLI Types Section -->
+        <section class="section bg-light">
+            <div class="container">
+                <h2>AI Service Level Indicators (SLIs)</h2>
+                <p class="section-intro">AI systems require new categories of SLIs beyond traditional availability and latency. Here are the key dimensions to measure:</p>
+
+                <div class="sli-grid">
+                    <div class="sli-card">
+                        <div class="sli-icon">🎯</div>
+                        <h3>Quality / Accuracy</h3>
+                        <p>Measures how often the AI output meets an acceptable quality bar. Requires human evaluation, automated scoring, or proxy metrics.</p>
+                        <div class="sli-examples">
+                            <span class="sli-tag">Human thumbs-up rate</span>
+                            <span class="sli-tag">BLEU / ROUGE scores</span>
+                            <span class="sli-tag">Task completion rate</span>
+                            <span class="sli-tag">Retrieval precision@k</span>
+                        </div>
+                        <div class="sli-example-slo">
+                            <strong>Example SLO:</strong> 90% of responses rated ≥ 4/5 by users over a 28-day window
+                        </div>
+                    </div>
+
+                    <div class="sli-card">
+                        <div class="sli-icon">⚡</div>
+                        <h3>Latency</h3>
+                        <p>Time-to-first-token (TTFT) and total generation time. AI latency is often higher and more variable than traditional APIs.</p>
+                        <div class="sli-examples">
+                            <span class="sli-tag">Time-to-first-token</span>
+                            <span class="sli-tag">Total response time</span>
+                            <span class="sli-tag">Tokens per second</span>
+                            <span class="sli-tag">P99 latency</span>
+                        </div>
+                        <div class="sli-example-slo">
+                            <strong>Example SLO:</strong> 95% of requests return first token within 500ms
+                        </div>
+                    </div>
+
+                    <div class="sli-card">
+                        <div class="sli-icon">✅</div>
+                        <h3>Availability</h3>
+                        <p>The proportion of requests that receive any valid response. Includes model endpoint availability and inference infrastructure uptime.</p>
+                        <div class="sli-examples">
+                            <span class="sli-tag">Successful inference rate</span>
+                            <span class="sli-tag">Model endpoint uptime</span>
+                            <span class="sli-tag">Timeout rate</span>
+                            <span class="sli-tag">Error rate (5xx)</span>
+                        </div>
+                        <div class="sli-example-slo">
+                            <strong>Example SLO:</strong> 99.5% of inference requests complete without error
+                        </div>
+                    </div>
+
+                    <div class="sli-card">
+                        <div class="sli-icon">🛡️</div>
+                        <h3>Safety &amp; Alignment</h3>
+                        <p>Measures how often the AI produces harmful, off-topic, or policy-violating outputs. Critical for user-facing AI products.</p>
+                        <div class="sli-examples">
+                            <span class="sli-tag">Policy violation rate</span>
+                            <span class="sli-tag">Hallucination rate</span>
+                            <span class="sli-tag">Refusal accuracy</span>
+                            <span class="sli-tag">Toxicity rate</span>
+                        </div>
+                        <div class="sli-example-slo">
+                            <strong>Example SLO:</strong> &lt; 0.1% of responses flagged by safety classifier
+                        </div>
+                    </div>
+
+                    <div class="sli-card">
+                        <div class="sli-icon">📊</div>
+                        <h3>Freshness / Relevance</h3>
+                        <p>For RAG and knowledge-based systems, measures how up-to-date and contextually relevant the AI's knowledge base is.</p>
+                        <div class="sli-examples">
+                            <span class="sli-tag">Index staleness</span>
+                            <span class="sli-tag">Context hit rate</span>
+                            <span class="sli-tag">Knowledge cutoff drift</span>
+                            <span class="sli-tag">Retrieval relevance score</span>
+                        </div>
+                        <div class="sli-example-slo">
+                            <strong>Example SLO:</strong> Knowledge base refreshed within 24 hours for 99% of updates
+                        </div>
+                    </div>
+
+                    <div class="sli-card">
+                        <div class="sli-icon">💸</div>
+                        <h3>Cost Efficiency</h3>
+                        <p>Token and compute costs per successful output. Helps balance quality improvements against infrastructure spend.</p>
+                        <div class="sli-examples">
+                            <span class="sli-tag">Cost per request</span>
+                            <span class="sli-tag">Tokens per response</span>
+                            <span class="sli-tag">Cache hit rate</span>
+                            <span class="sli-tag">Model utilisation</span>
+                        </div>
+                        <div class="sli-example-slo">
+                            <strong>Example SLO:</strong> Average cost per successful completion &lt; $0.005
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Error Budget for AI Section -->
+        <section class="section">
+            <div class="container">
+                <h2>Error Budgets for AI Systems</h2>
+                <p class="section-intro">An AI error budget quantifies how much quality degradation, latency, or policy violation is acceptable before impacting the product's reliability promise. It creates a shared language between ML engineers and SREs.</p>
+
+                <div class="error-budget-explainer">
+                    <div class="eb-formula-block">
+                        <h3>The Formula</h3>
+                        <div class="ai-formula">
+                            <div class="formula-row">
+                                <span class="formula-label">Error Budget</span>
+                                <span class="formula-equals">=</span>
+                                <span class="formula-value">100% − SLO Target</span>
+                            </div>
+                            <div class="formula-example">
+                                Example: SLO = 90% quality → Error Budget = 10% of responses can be below quality bar
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="eb-principles">
+                        <h3>Key Principles for AI Error Budgets</h3>
+                        <div class="principle-list">
+                            <div class="principle-item">
+                                <div class="principle-number">1</div>
+                                <div class="principle-content">
+                                    <h4>Separate Budgets per SLI Dimension</h4>
+                                    <p>Track quality, latency, and safety as independent budgets. A quality regression shouldn't consume your latency budget.</p>
+                                </div>
+                            </div>
+                            <div class="principle-item">
+                                <div class="principle-number">2</div>
+                                <div class="principle-content">
+                                    <h4>Use Rolling Windows</h4>
+                                    <p>AI quality can shift with model updates or data drift. A 28-day rolling window captures trends better than cumulative metrics.</p>
+                                </div>
+                            </div>
+                            <div class="principle-item">
+                                <div class="principle-number">3</div>
+                                <div class="principle-content">
+                                    <h4>Account for Evaluation Lag</h4>
+                                    <p>Human-in-the-loop quality scores arrive after the fact. Design your error budget calculations to handle delayed signals.</p>
+                                </div>
+                            </div>
+                            <div class="principle-item">
+                                <div class="principle-number">4</div>
+                                <div class="principle-content">
+                                    <h4>Gate Model Deployments</h4>
+                                    <p>Before deploying a new model version, project its error budget impact using offline evals. Don't deploy if it burns the remaining budget.</p>
+                                </div>
+                            </div>
+                            <div class="principle-item">
+                                <div class="principle-number">5</div>
+                                <div class="principle-content">
+                                    <h4>Invest Budget in Experiments</h4>
+                                    <p>Like traditional SRE, a healthy AI error budget means you can experiment (new prompts, fine-tuning, model upgrades) with acceptable risk.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Budget States -->
+                <div class="eb-states">
+                    <h3>Error Budget States &amp; Actions</h3>
+                    <div class="states-grid">
+                        <div class="state-card healthy">
+                            <div class="state-indicator"></div>
+                            <h4>Healthy (&gt; 50% remaining)</h4>
+                            <p>Quality is consistently above SLO. Safe to experiment with new model versions, prompt changes, or new features.</p>
+                            <ul>
+                                <li>Run A/B experiments</li>
+                                <li>Deploy model updates</li>
+                                <li>Try new prompting strategies</li>
+                            </ul>
+                        </div>
+                        <div class="state-card warning">
+                            <div class="state-indicator"></div>
+                            <h4>At Risk (10–50% remaining)</h4>
+                            <p>Quality is trending toward SLO breach. Limit risky changes and investigate any degradation signals.</p>
+                            <ul>
+                                <li>Pause non-critical experiments</li>
+                                <li>Review recent model/data changes</li>
+                                <li>Increase evaluation sample rate</li>
+                            </ul>
+                        </div>
+                        <div class="state-card critical">
+                            <div class="state-indicator"></div>
+                            <h4>Breached (&lt; 10% remaining)</h4>
+                            <p>Quality has fallen below acceptable levels. Freeze all changes and focus on restoring quality.</p>
+                            <ul>
+                                <li>Freeze model deployments</li>
+                                <li>Consider rollback to last stable model</li>
+                                <li>Escalate to ML team for root cause</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive AI SLO Builder -->
+        <section class="section bg-light">
+            <div class="container">
+                <h2>Interactive AI SLO Builder</h2>
+                <p class="section-intro">Use this tool to define SLOs for your AI system. Select your use case and set your quality targets to get a recommended error budget and alerting thresholds.</p>
+
+                <div class="calculator-card">
+                    <h3>Configure Your AI SLO</h3>
+
+                    <div class="slo-builder-inputs">
+                        <div class="input-group">
+                            <label for="ai-use-case">AI Use Case:</label>
+                            <select id="ai-use-case" class="slo-select">
+                                <option value="">Select your AI use case...</option>
+                                <option value="chatbot">Conversational Chatbot / Assistant</option>
+                                <option value="recommendation">Recommendation Engine</option>
+                                <option value="content-generation">Content Generation (text, code, images)</option>
+                                <option value="search">AI-Powered Search / RAG</option>
+                                <option value="classification">Classification / Tagging</option>
+                                <option value="summarisation">Summarisation</option>
+                                <option value="translation">Translation</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="quality-target">Quality / Accuracy SLO Target (%):</label>
+                            <input type="number" id="quality-target" class="slo-input" min="50" max="99.9" step="0.1" placeholder="e.g. 90">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="latency-target">Latency SLO — First Token / Response (ms):</label>
+                            <input type="number" id="latency-target" class="slo-input" min="100" max="30000" step="100" placeholder="e.g. 500">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="latency-percentile">Latency Percentile:</label>
+                            <select id="latency-percentile" class="slo-select">
+                                <option value="p50">p50 (median)</option>
+                                <option value="p90">p90</option>
+                                <option value="p95" selected>p95</option>
+                                <option value="p99">p99</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="safety-required">Safety / Policy SLO Required?</label>
+                            <select id="safety-required" class="slo-select">
+                                <option value="yes">Yes — user-facing, safety is critical</option>
+                                <option value="no">No — internal tool, lower risk</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="window-days">Measurement Window (days):</label>
+                            <select id="window-days" class="slo-select">
+                                <option value="7">7 days (fast feedback)</option>
+                                <option value="28" selected>28 days (standard)</option>
+                                <option value="90">90 days (stable baseline)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button id="build-slo" class="calculate-btn">Generate AI SLO Definition</button>
+
+                    <div id="slo-result" class="slo-result" style="display: none;" aria-live="polite" aria-atomic="true">
+                        <h4>Your AI SLO Definition</h4>
+                        <div id="slo-summary" class="slo-summary"></div>
+                        <div id="slo-error-budgets" class="slo-error-budgets"></div>
+                        <div id="slo-alerting" class="slo-alerting-thresholds"></div>
+                        <div id="slo-recommendations" class="slo-recommendations"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Alerting for AI Section -->
+        <section class="section">
+            <div class="container">
+                <h2>Alerting Strategies for AI Systems</h2>
+                <p class="section-intro">AI alerting requires both traditional infrastructure alerts and new ML-specific signals. Here's how to build a comprehensive alerting strategy.</p>
+
+                <div class="alerting-layers">
+                    <h3>The Three Layers of AI Alerting</h3>
+
+                    <div class="layer-card layer-infrastructure">
+                        <div class="layer-badge">Layer 1</div>
+                        <h4>Infrastructure &amp; Availability</h4>
+                        <p class="layer-desc">Traditional infrastructure alerts — the foundation of AI reliability.</p>
+                        <div class="alerts-grid">
+                            <div class="alert-item">
+                                <div class="alert-name">Model Endpoint Error Rate</div>
+                                <div class="alert-threshold">Alert when 5xx rate &gt; 1% over 5 min</div>
+                            </div>
+                            <div class="alert-item">
+                                <div class="alert-name">Inference Latency Spike</div>
+                                <div class="alert-threshold">Alert when p95 latency &gt; 2× baseline over 10 min</div>
+                            </div>
+                            <div class="alert-item">
+                                <div class="alert-name">GPU / Compute Saturation</div>
+                                <div class="alert-threshold">Alert when GPU utilisation &gt; 90% for 15 min</div>
+                            </div>
+                            <div class="alert-item">
+                                <div class="alert-name">Queue Depth</div>
+                                <div class="alert-threshold">Alert when inference queue depth &gt; 100 requests</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layer-card layer-quality">
+                        <div class="layer-badge">Layer 2</div>
+                        <h4>Quality &amp; Model Performance</h4>
+                        <p class="layer-desc">ML-specific signals that indicate quality degradation before users notice.</p>
+                        <div class="alerts-grid">
+                            <div class="alert-item">
+                                <div class="alert-name">Burn Rate Alert</div>
+                                <div class="alert-threshold">Alert when error budget burn rate &gt; 2× at 1-hour window</div>
+                            </div>
+                            <div class="alert-item">
+                                <div class="alert-name">Quality Score Drop</div>
+                                <div class="alert-threshold">Alert when 7-day rolling quality score drops &gt; 5% from baseline</div>
+                            </div>
+                            <div class="alert-item">
+                                <div class="alert-name">User Negative Feedback Spike</div>
+                                <div class="alert-threshold">Alert when thumbs-down rate &gt; 3× 7-day average</div>
+                            </div>
+                            <div class="alert-item">
+                                <div class="alert-name">Output Token Anomaly</div>
+                                <div class="alert-threshold">Alert when average response length deviates &gt; 3σ from baseline</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layer-card layer-safety">
+                        <div class="layer-badge">Layer 3</div>
+                        <h4>Safety &amp; Policy Compliance</h4>
+                        <p class="layer-desc">Critical alerts for user-facing AI — policy violations require immediate response.</p>
+                        <div class="alerts-grid">
+                            <div class="alert-item">
+                                <div class="alert-name">Safety Classifier Violation</div>
+                                <div class="alert-threshold">Page on-call immediately for any spike above 0.1% violation rate</div>
+                            </div>
+                            <div class="alert-item">
+                                <div class="alert-name">Hallucination Rate Increase</div>
+                                <div class="alert-threshold">Alert when factual accuracy drops &gt; 10% in 1-hour window</div>
+                            </div>
+                            <div class="alert-item">
+                                <div class="alert-name">Unexpected Refusal Spike</div>
+                                <div class="alert-threshold">Alert when refusal rate increases &gt; 2× normal (model may be stuck)</div>
+                            </div>
+                            <div class="alert-item">
+                                <div class="alert-name">PII / Sensitive Data Leak</div>
+                                <div class="alert-threshold">Immediate page on-call for any detected PII in outputs</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Burn Rate Alerting for AI -->
+                <div class="burn-rate-explainer">
+                    <h3>Multi-Window Burn Rate Alerting for AI</h3>
+                    <p>Borrowed from Google's SRE practices, burn rate alerting detects quality degradation at different speeds — fast burns for immediate outages, slow burns for gradual drift.</p>
+                    <div class="table-wrapper">
+                        <table class="burn-rate-table">
+                            <thead>
+                                <tr>
+                                    <th>Alert Type</th>
+                                    <th>Long Window</th>
+                                    <th>Short Window</th>
+                                    <th>Burn Rate</th>
+                                    <th>Budget Consumed</th>
+                                    <th>Urgency</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-label="Alert Type"><strong>P0 – Critical</strong></td>
+                                    <td data-label="Long Window">1 hour</td>
+                                    <td data-label="Short Window">5 min</td>
+                                    <td data-label="Burn Rate">14.4×</td>
+                                    <td data-label="Budget Consumed">2% in 1 hour</td>
+                                    <td data-label="Urgency"><span class="urgency-badge critical">Page Now</span></td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Alert Type"><strong>P1 – High</strong></td>
+                                    <td data-label="Long Window">6 hours</td>
+                                    <td data-label="Short Window">30 min</td>
+                                    <td data-label="Burn Rate">6×</td>
+                                    <td data-label="Budget Consumed">5% in 6 hours</td>
+                                    <td data-label="Urgency"><span class="urgency-badge high">Page Now</span></td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Alert Type"><strong>P2 – Medium</strong></td>
+                                    <td data-label="Long Window">1 day</td>
+                                    <td data-label="Short Window">2 hours</td>
+                                    <td data-label="Burn Rate">3×</td>
+                                    <td data-label="Budget Consumed">10% in 1 day</td>
+                                    <td data-label="Urgency"><span class="urgency-badge medium">Ticket</span></td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Alert Type"><strong>P3 – Low</strong></td>
+                                    <td data-label="Long Window">3 days</td>
+                                    <td data-label="Short Window">6 hours</td>
+                                    <td data-label="Burn Rate">1×</td>
+                                    <td data-label="Budget Consumed">10% in 3 days</td>
+                                    <td data-label="Urgency"><span class="urgency-badge low">Monitor</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="table-note">Burn rate is calculated against a 28-day window. A burn rate of 14.4× means the budget would be fully consumed in ~2 days if sustained.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Model Drift & Degradation Section -->
+        <section class="section bg-light">
+            <div class="container">
+                <h2>Detecting &amp; Managing Model Drift</h2>
+                <p class="section-intro">Unlike traditional software, AI systems can degrade without any code changes. Model drift occurs when the real-world data distribution diverges from training data, silently eroding quality.</p>
+
+                <div class="drift-types">
+                    <div class="drift-card">
+                        <div class="drift-icon">📉</div>
+                        <h3>Data Drift</h3>
+                        <p>Input distributions shift over time (e.g., users ask different types of questions). The model wasn't trained on the new patterns.</p>
+                        <div class="drift-detection">
+                            <strong>Detection:</strong> Monitor statistical properties of inputs (embedding distance, feature histograms)
+                        </div>
+                    </div>
+                    <div class="drift-card">
+                        <div class="drift-icon">🎯</div>
+                        <h3>Concept Drift</h3>
+                        <p>The relationship between inputs and "correct" outputs changes (e.g., new product features change what a "good" support response looks like).</p>
+                        <div class="drift-detection">
+                            <strong>Detection:</strong> Monitor quality scores over time; compare recent samples to baseline eval set
+                        </div>
+                    </div>
+                    <div class="drift-card">
+                        <div class="drift-icon">🔄</div>
+                        <h3>Model Staleness</h3>
+                        <p>The world changes but the model doesn't. Knowledge cutoffs, outdated product information, or changed regulations can make old responses wrong.</p>
+                        <div class="drift-detection">
+                            <strong>Detection:</strong> Track freshness metrics, user correction rates, and knowledge coverage gaps
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drift-response-playbook">
+                    <h3>Drift Response Playbook</h3>
+                    <div class="playbook-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Establish a Quality Baseline</h4>
+                            <p>Run a curated eval set on every model deployment. This becomes your reference point for detecting drift. Store scores in your metrics platform.</p>
+                        </div>
+                    </div>
+                    <div class="playbook-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Instrument Production Quality Proxies</h4>
+                            <p>Human eval is expensive and slow. Use proxy signals: user feedback rates, engagement metrics, downstream task success, or an automated evaluator model.</p>
+                        </div>
+                    </div>
+                    <div class="playbook-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Set Drift Thresholds &amp; Alerts</h4>
+                            <p>Alert when your rolling quality proxy deviates more than 2σ from the 30-day baseline. Trigger an investigation — not necessarily a rollback.</p>
+                        </div>
+                    </div>
+                    <div class="playbook-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Investigate Before Acting</h4>
+                            <p>Confirm drift is real (not a metric pipeline issue), identify affected request types, and determine whether a hotfix, prompt update, or model retrain is appropriate.</p>
+                        </div>
+                    </div>
+                    <div class="playbook-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Close the Loop with Retraining or RAG Updates</h4>
+                            <p>For persistent drift, update your training data, fine-tuning set, or retrieval knowledge base. Validate against your eval set before deploying.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section">
+            <div class="container">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq">
+                    <div class="faq-item">
+                        <h4>Q: What SLO target should I set for AI quality?</h4>
+                        <p><strong>A:</strong> Start by measuring current quality, then set a target slightly above it (e.g., if you're at 85%, target 88%). Don't start with a 99% quality SLO — AI systems are probabilistic by nature. Tighten targets over time as you understand your system better.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Q: How do I measure AI quality without human raters?</h4>
+                        <p><strong>A:</strong> Use proxy metrics: user satisfaction signals (thumbs up/down, session continuation, task completion), automated evaluator models (LLM-as-judge), downstream task metrics (did the user need to retry?), or statistical measures like embedding similarity to ideal responses.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Q: Should AI quality SLOs be in my SLA with customers?</h4>
+                        <p><strong>A:</strong> Treat quality SLOs as internal commitments first. SLAs typically cover availability and latency. If you include AI quality in an SLA, use conservative targets (e.g., 80% quality) with clear, objective measurement criteria that customers can verify.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Q: How often should I re-evaluate my AI SLO targets?</h4>
+                        <p><strong>A:</strong> Review AI SLOs quarterly or after every major model update. Unlike traditional services, AI quality can improve significantly with a model upgrade, so your baseline shifts. Don't lock in SLO targets so tightly that they prevent you from upgrading models.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Q: How do I handle the latency variance in LLM responses?</h4>
+                        <p><strong>A:</strong> Set separate SLOs for time-to-first-token (TTFT) and total completion time. Use streaming responses to improve perceived latency. Alert on p95 or p99 latency rather than average — long tail latency is where user experience breaks down.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Q: What's the difference between AI error budgets and traditional error budgets?</h4>
+                        <p><strong>A:</strong> Traditional error budgets track binary failures (requests that return errors). AI error budgets additionally track quality failures (requests that return responses that are below the quality bar). You need both: an availability budget and a quality budget, managed independently.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Q: How do I alert on gradual model drift without too many false positives?</h4>
+                        <p><strong>A:</strong> Use multi-window burn rate alerting (fast + slow windows). For gradual drift, a slow burn alert (e.g., 3× burn rate over 3 days) catches trends early without firing on normal variation. Combine with statistical process control (SPC) charts for ongoing monitoring.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Q: Can I apply SLOs to generative AI outputs that are inherently subjective?</h4>
+                        <p><strong>A:</strong> Yes — the key is defining a clear evaluation rubric upfront. Decide what "good enough" means for your use case (e.g., "contains all required information", "tone matches brand guidelines", "no factual errors on verifiable claims") and operationalise it as a measurable SLI.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <script src="scripts/ai-slo-error-budget.js"></script>
+    <script src="scripts/menu.js"></script>
+    <script src="scripts/resources.js" defer></script>
+    <script src="scripts/footer.js" defer></script>
+</body>
+</html>

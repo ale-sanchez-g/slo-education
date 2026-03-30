@@ -21,6 +21,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://slo-education.com.au/ai-slo-error-budget</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://slo-education.com.au/privacy-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>

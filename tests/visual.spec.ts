@@ -8,6 +8,7 @@ const PAGES = [
   { name: 'error-budget-calculator', path: '/error-budget-calculator' },
   { name: 'incident-management', path: '/incident-management' },
   { name: 'cuj-sli-slo-error-budget', path: '/cuj-sli-slo-error-budget' },
+  { name: 'ai-slo-error-budget', path: '/ai-slo-error-budget' },
   { name: 'privacy-policy', path: '/privacy-policy' },
   { name: 'blog', path: '/blog/' },
 ];
@@ -18,6 +19,7 @@ const PAGES_WITH_RESOURCES = [
   { name: 'error-budget-calculator', path: '/error-budget-calculator' },
   { name: 'incident-management', path: '/incident-management' },
   { name: 'cuj-sli-slo-error-budget', path: '/cuj-sli-slo-error-budget' },
+  { name: 'ai-slo-error-budget', path: '/ai-slo-error-budget' },
 ];
 
 /**
