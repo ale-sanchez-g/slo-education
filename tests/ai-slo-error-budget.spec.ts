@@ -27,7 +27,7 @@ test.describe('AI SLO & Error Budget Page', () => {
     await expect(page.locator('text=Error Budgets for AI Systems')).toBeVisible();
     await expect(page.locator('text=Interactive AI SLO Builder')).toBeVisible();
     await expect(page.locator('text=Alerting Strategies for AI Systems')).toBeVisible();
-    await expect(page.locator('text=Detecting')).toBeVisible();
+    await expect(page.locator('h2:has-text("Detecting")')).toBeVisible();
     await expect(page.locator('text=Frequently Asked Questions')).toBeVisible();
   });
 
