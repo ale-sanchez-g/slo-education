@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn how progressive delivery and feature flags enhance software reliability, reduce deployment risks, and improve incident response for SRE beginners.">
+    <meta name="keywords" content="progressive delivery, feature flags, software reliability, SRE, continuous delivery, deployment strategies, error budget, incident management">
+    <meta property="og:title" content="Deploy with Confidence: Progressive Delivery &amp;amp; Feature Flags - SLO Education Hub">
+    <meta property="og:description" content="Learn how progressive delivery and feature flags enhance software reliability, reduce deployment risks, and improve incident response for SRE beginners.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://slo-education.com.au/blog/2026-04-06-deploy-with-confidence-progressive-delivery-amp-feature-flags">
+    <meta property="article:published_time" content="2026-04-06">
+    <title>Deploy with Confidence: Progressive Delivery &amp;amp; Feature Flags - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/2026-04-06-deploy-with-confidence-progressive-delivery-amp-feature-flags">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Deploy with Confidence: Progressive Delivery &amp;amp; Feature Flags</h2>
+                <p class="hero-subtitle">Learn how progressive delivery and feature flags enhance software reliability, reduce deployment risks, and improve incident response for SRE beginners.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <a href="/blog/" class="blog-back-link">&larr; Back to Blog</a>
+                <div class="blog-post-meta">
+                    <span>2026-04-06</span>
+                    <span class="blog-post-tag">Deployment</span><span class="blog-post-tag">Reliability</span><span class="blog-post-tag">SRE Best Practices</span>
+                </div>
+                <article class="blog-post-content">
+                    <p>Deploying new features can be a high-stakes operation. How do you introduce changes to production without risking service disruptions or impacting user experience? The answer lies in combining two powerful strategies: <strong>progressive delivery</strong> and <strong>feature flags</strong>.</p><h2>What is Progressive Delivery?</h2><p>Progressive delivery is a modern approach to software deployment that involves gradually rolling out new changes to an increasingly larger audience. Instead of a &quot;big bang&quot; release, features are introduced incrementally, allowing teams to monitor performance and user feedback at each stage. This minimizes the &quot;blast radius&quot; of potential issues, making deployments far safer.</p><p>Techniques like canary deployments and blue/green deployments are forms of progressive delivery. They enable careful observation of system health and user behavior before a full rollout. For more on monitoring, consider how well-defined <a href="https://slo-education.com.au/cuj-sli-slo-error-budget">SLIs &amp; SLOs</a> can guide these observations.</p><h2>The Power of Feature Flags</h2><p>Feature flags (also known as feature toggles) are conditional switches that allow you to turn features on or off remotely, without deploying new code. Imagine a simple &quot;if/else&quot; statement in your code, controlled by an external configuration. This decouples deployment from release, giving you unprecedented control.</p><ul><li><strong>Instant Rollback:</strong> If a new feature causes problems, you can simply toggle it off, effectively rolling back without a code redeployment. This capability is crucial for rapid <a href="https://slo-education.com.au/incident-management">incident management</a>.</li><li><strong>Targeted Releases:</strong> You can expose features to specific user segments, internal teams, or even individual users for testing.</li><li><strong>A/B Testing:</strong> Easily test different versions of a feature to see which performs better.</li></ul><p>The Cloud Native Computing Foundation (CNCF) provides resources on how these patterns integrate into cloud-native architectures, often leveraging tools like <a href="https://opentelemetry.io/docs/concepts/feature-flags/">OpenTelemetry for feature flag observability</a>, enhancing your ability to understand their impact.</p><h2>Enhancing Reliability with Both</h2><p>When progressive delivery and feature flags are used together, they form a robust defense against reliability issues. Progressive delivery manages <em>when</em> code reaches users, while feature flags control <em>which</em> code is active for those users. This combination allows teams to:</p><ul><li>Deploy frequently with less risk.</li><li>Quickly disable problematic features without downtime.</li><li>Gather real-world data before full release.</li></ul><p>This approach aligns perfectly with SRE principles, emphasizing controlled risk and rapid recovery. Google&#x27;s <a href="https://sre.google/sre-book/accelerating-delivery/">Site Reliability Engineering book</a> highlights similar strategies for accelerating delivery while maintaining reliability. By embracing these techniques, engineering teams can build confidence, reduce stress during deployments, and ultimately deliver a more reliable service to their users.</p>
+                </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of Gemini AI.</strong></p>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>

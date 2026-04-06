@@ -65,4 +65,10 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://slo-education.com.au/blog/2026-04-06-deploy-with-confidence-progressive-delivery-amp-feature-flags</loc>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
