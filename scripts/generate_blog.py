@@ -53,55 +53,62 @@ AI_DISPLAY_NAME = "Gemini AI"
 # Pool of SRE/Observability topics rotated by ISO week number so each run
 # produces a distinct topic without state management.
 TOPICS = [
-    "Understanding error budgets: balancing reliability and innovation",
-    "Service Level Indicators (SLIs): choosing the right metrics",
-    "Incident management best practices for on-call teams",
-    "Observability vs monitoring: key differences explained",
-    "Introduction to distributed tracing for SRE teams",
-    "How to write effective post-incident reviews (PIRs)",
-    "Toil reduction: automating away operational burden",
-    "Golden signals: latency, traffic, errors, and saturation",
-    "SLO alerting: alert on burn rate, not raw error rate",
-    "Chaos engineering: building confidence in reliability",
-    "Platform engineering and its relationship with SRE",
-    "Capacity planning with error budgets",
-    "On-call culture: building sustainable practices",
-    "AIOps and machine learning in incident detection",
-    "Cost of reliability: quantifying downtime impact",
-    "Progressive delivery and feature flags for reliability",
-    "Continuous verification in CI/CD pipelines",
-    "Multi-cloud observability strategies",
-    "OpenTelemetry: the open standard for observability",
-    "Runbook automation for faster incident resolution",
-    "SRE team topologies and how to structure reliability work",
-    "Database reliability engineering essentials",
-    "Security SLOs: measuring and improving security posture",
-    "Network reliability and how to measure it",
-    "Kubernetes observability: monitoring containerised workloads",
-    "Synthetic monitoring: proactively detect user-facing issues",
-    "Real user monitoring (RUM) vs synthetic monitoring",
-    "Building a reliability culture across engineering teams",
-    "Service catalogues and their role in incident response",
-    "Error budget policies: when to stop shipping features",
-    "Serverless observability challenges and solutions",
-    "Measuring and improving Mean Time To Recovery (MTTR)",
-    "Dependency risk: how third-party services affect your SLOs",
-    "Grafana and Prometheus: open-source observability stack",
-    "Datadog, New Relic, Honeycomb: choosing an observability tool",
-    "FinOps meets SRE: cost and reliability trade-offs",
-    "Reliability testing: load, stress, and soak testing",
-    "Lessons from major internet outages",
-    "Structured logging best practices for SRE",
-    "Dashboards that drive action, not just awareness",
-    "Reliability requirements in software architecture reviews",
-    "SLOs for machine-learning and AI systems",
-    "Managing technical debt through an SRE lens",
-    "SRE career paths: from practitioner to principal",
-    "Incident command systems borrowed from emergency services",
-    "Communication during incidents: templates and tips",
-    "Using SLOs in vendor contracts and SLAs",
-    "Getting started with SRE in a small engineering team",
-    "AI observability: Beyond logs, metrics and traces"
+    # SRE Foundations
+    "Error budgets demystified: stop arguing about uptime, start shipping smarter",
+    "Picking SLIs that actually matter: a practitioner's guide to meaningful metrics",
+    "Burn rate alerting: why your on-call team deserves better than raw error rate pages",
+    "Golden signals in the age of microservices: latency, traffic, errors, and saturation revisited",
+    "From SLI to SLO to SLA: the reliability contract your users never signed but always expect",
+    "Chaos engineering in 2025: injecting failure before failure finds you",
+    "Toil is a reliability risk: how to measure and systematically eliminate operational burden",
+    "Post-incident reviews that drive change, not blame",
+    "On-call sustainability: designing rotations that don't burn out your best engineers",
+    "Error budget policies: the decision framework that takes politics out of feature freezes",
+    "Capacity planning with error budgets: predicting failure before it costs you",
+    "The hidden cost of reliability: quantifying what downtime actually does to the business",
+    "SRE team topologies: embedding reliability without creating a reliability bottleneck",
+    "Getting your first SLO right: a step-by-step guide for teams starting from scratch",
+    "Incident command for software teams: borrowing structure from the world's most reliable systems",
+    "Dependency risk: your SLO is only as strong as your weakest third-party service",
+    "Security SLOs: making security posture measurable and actionable",
+    "Using SLOs in vendor contracts: turning reliability promises into enforceable commitments",
+    "Database reliability engineering: the unglamorous backbone of every SLO",
+
+    # Observability & Tooling
+    "Observability vs monitoring: why the difference matters more than ever in distributed systems",
+    "OpenTelemetry in production: lessons from teams who have actually shipped it",
+    "Distributed tracing without the overhead: making traces useful on a budget",
+    "Structured logging that engineers actually read",
+    "Dashboards that drive action: designing for decisions, not decoration",
+    "Synthetic monitoring vs real-user monitoring: when to use each and why",
+    "Grafana and Prometheus on a shoestring: open-source observability that scales",
+    "Choosing between Datadog, Honeycomb, and New Relic: a practical decision framework",
+    "Kubernetes observability: what changes when everything is ephemeral",
+    "Serverless observability: taming the invisible architecture",
+    "Multi-cloud observability: one pane of glass across AWS, GCP, and Azure",
+    "FinOps meets SRE: balancing reliability investment against cloud spend",
+    "Progressive delivery and feature flags: shipping reliability improvements safely",
+    "Reliability testing at scale: load, stress, and soak testing that actually predicts production",
+
+    # AI Agents & SRE
+    "When AI agents go on-call: how autonomous systems are reshaping incident response",
+    "SLOs for AI agents: defining reliability for systems that think",
+    "Observing LLMs in production: the new metrics SRE teams need to track",
+    "Hallucination rate as an SLI: measuring what AI gets wrong at scale",
+    "Autonomous remediation: what happens when your runbook runs itself",
+    "AI-assisted root cause analysis: promise, pitfalls, and when to trust the machine",
+    "Multi-agent system reliability: new failure modes you haven't planned for yet",
+    "Error budgets for AI pipelines: how much wrongness can your product tolerate?",
+    "Prompt drift and model degradation: the silent reliability threat in every AI deployment",
+    "SLOs for RAG pipelines: measuring retrieval quality, generation quality, and end-to-end latency",
+    "Shadow-mode testing AI agents: validating autonomous systems before they go live",
+    "The new toil: how AI agent orchestration creates operational burden at a different layer",
+    "AIOps grows up: from rule-based alerting to genuinely autonomous healing",
+    "AI agents in your CI/CD pipeline: faster deployments, new reliability risks",
+    "Responsible AI deployment: weaving safety, fairness, and SLOs into your release process",
+    "How AI is changing the SRE career: skills to build before the role transforms around you",
+    "LLM cost as a reliability signal: when your AI bill spikes, your SLOs follow",
+    "Platform engineering for AI: building the reliability primitives that AI agents depend on",
 ]
 
 
@@ -116,7 +123,7 @@ education website called "SLO Education Hub" (https://slo-education.com.au).
 Write a high-quality, educational blog post about: **{topic}**
 
 Requirements:
-- Length: 200 to 300 words (body text only, excluding the title)
+- Length: 400 to 500 words (body text only, excluding the title)
 - Audience: software engineers and IT professionals who are new to SRE concepts
 - Tone: clear, practical, and encouraging — avoid jargon without explanation
 - Include at least 3 hyperlinks to reputable external resources (Google SRE Book,
@@ -129,6 +136,7 @@ Requirements:
 - Do NOT repeat the topic in the title verbatim — create a concise, engaging title that captures the essence of the article
 - Do NOT use first-person ("I", "we") — write in second or third person
 - Do NOT include any prose, commentary, frontmatter, or markdown fences outside the JSON object
+- Do NOT use & characters or &amp; anywhere in the text. If you need to include an ampersand, write it as "and" instead.
 - Output format: return ONLY a JSON object with EXACTLY these keys:
   {{
     "title": "<concise, engaging article title (max 80 chars)",
@@ -156,7 +164,7 @@ def call_gemini(api_key: str, prompt: str) -> dict:
         # Configure generation settings
         generation_config = genai.types.GenerateContentConfig(
             temperature=0.7,
-            max_output_tokens=9000,
+            max_output_tokens=15000,
             response_mime_type="application/json",
         )
         
