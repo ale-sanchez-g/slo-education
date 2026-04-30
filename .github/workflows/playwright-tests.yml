@@ -77,7 +77,7 @@ jobs:
       run: npx playwright install chromium --with-deps
 
     - name: Run visual validation tests (Chromium only)
-      run: npx playwright test tests/visual.spec.ts --project=chromium
+      run: npx playwright test tests/visual.spec.ts --project=chromium --update-snapshots
 
     - uses: actions/upload-artifact@v4
       if: always()
