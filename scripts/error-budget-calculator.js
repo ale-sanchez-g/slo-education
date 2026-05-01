@@ -69,8 +69,8 @@ document.addEventListener('DOMContentLoaded', function() {
             downtimeMinutesUnit.textContent = 'min / mo';
         }
 
-        downtimeHours.textContent = data.hoursPerMonth.toFixed(4).replace(/\.?0+$/, '') || '0';
-        failureRate.textContent = parseFloat(data.errorRate.toPrecision(6)) + '%';
+        downtimeHours.textContent = parseFloat(data.hoursPerMonth.toPrecision(4)).toString();
+        failureRate.textContent = parseFloat(data.errorRate.toPrecision(4)).toString() + '%';
 
         // Hide burn rate result when SLO changes
         burnRateResult.style.display = 'none';
