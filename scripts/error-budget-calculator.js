@@ -1,54 +1,30 @@
-// SLO data with downtime calculations
-// Using formula: Minutes Per Month = (Error Rate / 100) × (365 × 24 × 60) / 12
-const sloData = {
-    99: {
-        percentage: 99,
-        errorRate: 1.0,
-        minutesPerMonth: 438.0,
-        hoursPerMonth: 7.3
-    },
-    99.5: {
-        percentage: 99.5,
-        errorRate: 0.5,
-        minutesPerMonth: 219.0,
-        hoursPerMonth: 3.65
-    },
-    99.9: {
-        percentage: 99.9,
-        errorRate: 0.1,
-        minutesPerMonth: 43.8,
-        hoursPerMonth: 0.73
-    },
-    99.95: {
-        percentage: 99.95,
-        errorRate: 0.05,
-        minutesPerMonth: 21.9,
-        hoursPerMonth: 0.365
-    },
-    99.99: {
-        percentage: 99.99,
-        errorRate: 0.01,
-        minutesPerMonth: 4.38,
-        hoursPerMonth: 0.073
-    }
-};
+// Calculate SLO metrics dynamically from a percentage value
+// Formula: Minutes Per Month = (Error Rate / 100) × (365 × 24 × 60) / 12
+function calculateSLOData(percentage) {
+    const errorRate = 100 - percentage;
+    const minutesPerMonth = (errorRate / 100) * (365 * 24 * 60 / 12);
+    const hoursPerMonth = minutesPerMonth / 60;
+    return { percentage, errorRate, minutesPerMonth, hoursPerMonth };
+}
 
 // Initialize calculator
 document.addEventListener('DOMContentLoaded', function() {
-    const sloSelect = document.getElementById('slo-target');
+    const sloInput = document.getElementById('slo-target');
     const progressBar = document.getElementById('progress-bar');
     const progressPercentage = document.getElementById('progress-percentage');
     const downtimeMinutes = document.getElementById('downtime-minutes');
+    const downtimeMinutesUnit = document.getElementById('downtime-minutes-unit');
     const downtimeHours = document.getElementById('downtime-hours');
     const failureRate = document.getElementById('failure-rate');
     const actualDowntimeInput = document.getElementById('actual-downtime');
     const calculateBurnBtn = document.getElementById('calculate-burn');
     const burnRateResult = document.getElementById('burn-rate-result');
+    const burnRatePlaceholder = document.getElementById('burn-rate-placeholder');
     const burnRateValue = document.getElementById('burn-rate-value');
     const burnRateStatus = document.getElementById('burn-rate-status');
 
-    // Update calculator when SLO changes
-    sloSelect.addEventListener('change', updateCalculator);
+    // Update calculator as the user types a new SLO value
+    sloInput.addEventListener('input', updateCalculator);
 
     // Calculate burn rate when button is clicked
     calculateBurnBtn.addEventListener('click', calculateBurnRate);
@@ -64,32 +40,52 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCalculator();
 
     function updateCalculator() {
-        const selectedSLO = parseFloat(sloSelect.value);
-        const data = sloData[selectedSLO];
+        const inputVal = sloInput.value.trim();
+        const percentage = parseFloat(inputVal);
+
+        if (!inputVal || isNaN(percentage) || percentage <= 0 || percentage >= 100) {
+            return;
+        }
+
+        const data = calculateSLOData(percentage);
 
         // Update progress bar
         progressBar.style.width = data.percentage + '%';
         progressPercentage.textContent = data.percentage + '%';
-        
+
         // Update ARIA attribute for accessibility
         const progressBarWrapper = progressBar.parentElement;
         if (progressBarWrapper.hasAttribute('aria-valuenow')) {
             progressBarWrapper.setAttribute('aria-valuenow', data.percentage);
         }
 
-        // Update metrics
-        downtimeMinutes.textContent = data.minutesPerMonth.toFixed(1);
-        downtimeHours.textContent = data.hoursPerMonth.toFixed(2);
-        failureRate.textContent = data.errorRate + '%';
+        // Display downtime in seconds when less than 1 minute, otherwise in minutes
+        if (data.minutesPerMonth < 1) {
+            const seconds = data.minutesPerMonth * 60;
+            downtimeMinutes.textContent = seconds.toFixed(1);
+            downtimeMinutesUnit.textContent = 'sec / mo';
+        } else {
+            downtimeMinutes.textContent = data.minutesPerMonth.toFixed(1);
+            downtimeMinutesUnit.textContent = 'min / mo';
+        }
+
+        downtimeHours.textContent = data.hoursPerMonth.toFixed(4).replace(/\.?0+$/, '') || '0';
+        failureRate.textContent = parseFloat(data.errorRate.toPrecision(6)) + '%';
 
         // Hide burn rate result when SLO changes
         burnRateResult.style.display = 'none';
+        if (burnRatePlaceholder) burnRatePlaceholder.style.display = 'block';
         actualDowntimeInput.value = '';
     }
 
     function calculateBurnRate() {
-        const selectedSLO = parseFloat(sloSelect.value);
-        const data = sloData[selectedSLO];
+        const sloVal = parseFloat(sloInput.value.trim());
+        if (!sloInput.value.trim() || isNaN(sloVal) || sloVal <= 0 || sloVal >= 100) {
+            alert('Please enter a valid SLO target between 0 and 100 (e.g. 99.9)');
+            return;
+        }
+
+        const data = calculateSLOData(sloVal);
         const actualDowntime = parseFloat(actualDowntimeInput.value);
 
         if (!actualDowntimeInput.value.trim() || isNaN(actualDowntime) || actualDowntime < 0) {
@@ -102,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Update display
         burnRateValue.textContent = burnRate.toFixed(1) + '%';
-        
+
         // Determine status and styling
         let statusText = '';
         let statusClass = '';
@@ -128,8 +124,9 @@ document.addEventListener('DOMContentLoaded', function() {
         burnRateStatus.textContent = statusText;
         burnRateStatus.className = 'burn-rate-status ' + statusClass;
 
-        // Show result
+        // Show result, hide placeholder
         burnRateResult.style.display = 'block';
+        if (burnRatePlaceholder) burnRatePlaceholder.style.display = 'none';
 
         // Smooth scroll to result
         burnRateResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });

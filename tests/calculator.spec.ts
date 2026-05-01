@@ -21,12 +21,12 @@ test.describe('Error Budget Calculator Page', () => {
   });
 
   test('should display calculator with default SLO selected', async ({ page }) => {
-    const sloSelect = page.locator('#slo-target');
-    await expect(sloSelect).toBeVisible();
+    const sloInput = page.locator('#slo-target');
+    await expect(sloInput).toBeVisible();
     
     // Check default value is 99.9%
-    const selectedValue = await sloSelect.inputValue();
-    expect(selectedValue).toBe('99.9');
+    const inputValue = await sloInput.inputValue();
+    expect(inputValue).toBe('99.9');
   });
 
   test('should display metrics for default SLO', async ({ page }) => {
@@ -44,10 +44,10 @@ test.describe('Error Budget Calculator Page', () => {
   });
 
   test('should update metrics when SLO target changes', async ({ page }) => {
-    const sloSelect = page.locator('#slo-target');
+    const sloInput = page.locator('#slo-target');
     
     // Change to 99%
-    await sloSelect.selectOption('99');
+    await sloInput.fill('99');
     await page.waitForTimeout(500);
     
     // Check updated values
@@ -116,14 +116,14 @@ test.describe('Error Budget Calculator Page', () => {
   test('should have progress bar that updates with SLO', async ({ page }) => {
     const progressBar = page.locator('#progress-bar');
     const progressPercentage = page.locator('#progress-percentage');
-    const sloSelect = page.locator('#slo-target');
+    const sloInput = page.locator('#slo-target');
     
     // Check default progress bar
     await expect(progressBar).toBeVisible();
     await expect(progressPercentage).toContainText('99.9%');
     
     // Change SLO and check progress bar updates
-    await sloSelect.selectOption('99');
+    await sloInput.fill('99');
     await page.waitForTimeout(500);
     await expect(progressPercentage).toContainText('99%');
   });
@@ -154,9 +154,9 @@ test.describe('Error Budget Calculator Page', () => {
     const calculator = page.locator('.calculator-card');
     await expect(calculator).toBeVisible();
     
-    // Check SLO selector works on mobile
-    const sloSelect = page.locator('#slo-target');
-    await expect(sloSelect).toBeVisible();
+    // Check SLO input works on mobile
+    const sloInput = page.locator('#slo-target');
+    await expect(sloInput).toBeVisible();
   });
 
   test('should have proper semantic structure', async ({ page }) => {

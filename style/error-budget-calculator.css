@@ -1,195 +1,211 @@
+/* Compact hero for calculator page */
+.hero {
+    padding: 2.5rem 0;
+}
+
+.hero h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
 /* Calculator Card */
 .calculator-card {
     background: white;
-    padding: 2.5rem;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     margin-bottom: 2rem;
+    overflow: hidden;
 }
 
-.calculator-card h3 {
+/* Calculator panels (SLO Target / Burn Rate) */
+.calc-panel {
+    padding: 1.5rem 2rem;
+}
+
+.calc-panel + .calc-panel {
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Section label (e.g. "SLO TARGET") */
+.calc-section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
     color: #667eea;
-    margin-bottom: 2rem;
-    font-size: 2rem;
-}
-
-.calculator-card h4 {
-    color: #2c3e50;
-    margin-top: 2rem;
     margin-bottom: 1rem;
-    font-size: 1.5rem;
 }
 
 /* Calculator Input */
 .calculator-input {
-    margin-bottom: 2.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .calculator-input label {
     display: block;
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
     color: #2c3e50;
+    font-size: 0.95rem;
 }
 
-.slo-select {
+/* SLO text input with % suffix and inline progress */
+.slo-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.slo-input-inner {
+    position: relative;
+    flex: 1;
+}
+
+.slo-input {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 0.6rem 2.2rem 0.6rem 0.9rem;
     font-size: 1.1rem;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
-    background: white;
-    cursor: pointer;
     transition: border-color 0.3s ease;
+    box-sizing: border-box;
 }
 
-.slo-select:focus {
+.slo-input:focus {
     outline: none;
     border-color: #667eea;
 }
 
-.slo-select:hover {
-    border-color: #667eea;
+.slo-input-suffix {
+    position: absolute;
+    right: 0.7rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #667eea;
+    font-weight: 600;
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+.slo-input-progress {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #667eea;
+    white-space: nowrap;
+    min-width: 4rem;
+    text-align: right;
 }
 
 /* Progress Bar */
 .progress-container {
-    margin: 2rem 0;
-}
-
-.progress-label {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: #2c3e50;
+    margin: 0.75rem 0 0.5rem;
 }
 
 .progress-bar-wrapper {
-    height: 40px;
-    background: #f0f0f0;
-    border-radius: 20px;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
     overflow: hidden;
-    margin: 1rem 0;
 }
 
 .progress-bar {
     height: 100%;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 20px;
+    border-radius: 4px;
     transition: width 0.5s ease;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 1rem;
-    color: white;
-    font-weight: 600;
-}
-
-.progress-percentage {
-    text-align: right;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #667eea;
 }
 
 /* Metrics Grid */
 .metrics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin: 2rem 0;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-top: 1rem;
 }
 
 .metric-card {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: 1.5rem;
+    padding: 0.85rem 1rem;
     border-radius: 8px;
     text-align: center;
-    border: 2px solid #e0e0e0;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.metric-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 1px solid #e0e0e0;
 }
 
 .metric-label {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     color: #666;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .metric-value {
-    font-size: 2.5rem;
+    font-size: 1.6rem;
     font-weight: 700;
     color: #667eea;
-    margin: 0.5rem 0;
+    line-height: 1.1;
 }
 
 .metric-unit {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     color: #888;
+    margin-top: 0.2rem;
 }
 
 /* Burn Rate Section */
 .burn-rate-section {
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 2px solid #e0e0e0;
-}
-
-.burn-rate-description {
-    color: #666;
-    margin-bottom: 1.5rem;
-}
-
-.burn-rate-input {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
+    padding-top: 1.25rem;
 }
 
 .burn-rate-input label {
-    flex: 1;
-    min-width: 200px;
+    display: block;
     font-weight: 600;
     color: #2c3e50;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
 }
 
-.burn-rate-input input {
-    flex: 2;
-    min-width: 200px;
-    padding: 0.75rem 1rem;
-    font-size: 1.1rem;
+.burn-rate-input-row {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.burn-rate-input-row input {
+    flex: 1;
+    padding: 0.6rem 0.9rem;
+    font-size: 1rem;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     transition: border-color 0.3s ease;
 }
 
-.burn-rate-input input:focus {
+.burn-rate-input-row input:focus {
     outline: none;
     border-color: #667eea;
 }
 
 .calculate-btn {
-    padding: 0.75rem 2rem;
+    padding: 0.6rem 1.5rem;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    white-space: nowrap;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .calculate-btn:hover {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
@@ -198,26 +214,39 @@
     outline-offset: 2px;
 }
 
+.burn-rate-placeholder {
+    margin-top: 1rem;
+    padding: 0.85rem 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    color: #888;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .burn-rate-result {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: 2rem;
+    padding: 1.25rem;
     border-radius: 12px;
     text-align: center;
-    border: 3px solid #e0e0e0;
+    border: 2px solid #e0e0e0;
+    margin-top: 1rem;
 }
 
 .burn-rate-value {
-    font-size: 3rem;
+    font-size: 2.25rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .burn-rate-status {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 600;
-    padding: 1rem;
+    padding: 0.6rem 1rem;
     border-radius: 8px;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 }
 
 .burn-rate-status.slow {
@@ -676,25 +705,20 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .calculator-card {
-        padding: 1.5rem;
-    }
-
-    .calculator-card h3 {
-        font-size: 1.5rem;
+    .calc-panel {
+        padding: 1.25rem;
     }
 
     .metrics-grid {
         grid-template-columns: 1fr;
     }
 
-    .burn-rate-input {
+    .burn-rate-input-row {
         flex-direction: column;
         align-items: stretch;
     }
 
-    .burn-rate-input label,
-    .burn-rate-input input,
+    .burn-rate-input-row input,
     .calculate-btn {
         width: 100%;
     }

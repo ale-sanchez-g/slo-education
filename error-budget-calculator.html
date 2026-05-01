@@ -32,56 +32,60 @@
         <section class="section">
             <div class="container">
                 <div class="calculator-card">
-                    <h3>🧮 Calculate Your Error Budget</h3>
-                    
-                    <div class="calculator-input">
-                        <label for="slo-target">Select SLO Target:</label>
-                        <select id="slo-target" class="slo-select">
-                            <option value="99">99%</option>
-                            <option value="99.5">99.5%</option>
-                            <option value="99.9" selected>99.9%</option>
-                            <option value="99.95">99.95%</option>
-                            <option value="99.99">99.99%</option>
-                        </select>
+                    <div class="calc-panel">
+                        <div class="calc-section-label">SLO Target</div>
+
+                        <div class="calculator-input">
+                            <label for="slo-target">Target availability (%)</label>
+                            <div class="slo-input-wrapper">
+                                <div class="slo-input-inner">
+                                    <input type="text" id="slo-target" class="slo-input" value="99.9" placeholder="e.g. 99.9" inputmode="decimal" autocomplete="off">
+                                    <span class="slo-input-suffix" aria-hidden="true">%</span>
+                                </div>
+                                <span class="slo-input-progress" id="progress-percentage">99.9%</span>
+                            </div>
+                        </div>
+
+                        <div class="progress-container">
+                            <div class="progress-bar-wrapper" role="progressbar" aria-valuenow="99.9" aria-valuemin="0" aria-valuemax="100" aria-label="SLO Target">
+                                <div id="progress-bar" class="progress-bar"></div>
+                            </div>
+                        </div>
+
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-label">Downtime</div>
+                                <div class="metric-value" id="downtime-minutes">43.8</div>
+                                <div class="metric-unit" id="downtime-minutes-unit">min / mo</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">In Hours</div>
+                                <div class="metric-value" id="downtime-hours">0.73</div>
+                                <div class="metric-unit">hrs / mo</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Failure Rate</div>
+                                <div class="metric-value" id="failure-rate">0.1%</div>
+                                <div class="metric-unit">per month</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="progress-container">
-                        <div class="progress-label">SLO Target Progress</div>
-                        <div class="progress-bar-wrapper" role="progressbar" aria-valuenow="99.9" aria-valuemin="0" aria-valuemax="100" aria-label="SLO Target">
-                            <div id="progress-bar" class="progress-bar"></div>
-                        </div>
-                        <div class="progress-percentage" id="progress-percentage">99.9%</div>
-                    </div>
-
-                    <div class="metrics-grid">
-                        <div class="metric-card">
-                            <div class="metric-label">Allowed Downtime</div>
-                            <div class="metric-value" id="downtime-minutes">43.8</div>
-                            <div class="metric-unit">minutes/month</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-label">In Hours</div>
-                            <div class="metric-value" id="downtime-hours">0.73</div>
-                            <div class="metric-unit">hours/month</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-label">Failure Rate</div>
-                            <div class="metric-value" id="failure-rate">0.1%</div>
-                            <div class="metric-unit">per month</div>
-                        </div>
-                    </div>
-
-                    <div class="burn-rate-section">
-                        <h4>Calculate Burn Rate</h4>
-                        <p class="burn-rate-description">Enter actual downtime this month to calculate your burn rate</p>
+                    <div class="calc-panel burn-rate-section">
+                        <div class="calc-section-label">Burn Rate</div>
                         <div class="burn-rate-input">
-                            <label for="actual-downtime">Actual Downtime (minutes):</label>
-                            <input type="number" id="actual-downtime" min="0" step="0.1" placeholder="0.0">
-                            <button id="calculate-burn" class="calculate-btn">Calculate Burn Rate</button>
+                            <label for="actual-downtime">Actual downtime this month (minutes)</label>
+                            <div class="burn-rate-input-row">
+                                <input type="text" id="actual-downtime" inputmode="decimal" placeholder="e.g. 1.5" autocomplete="off">
+                                <button id="calculate-burn" class="calculate-btn">Calculate</button>
+                            </div>
                         </div>
                         <div id="burn-rate-result" class="burn-rate-result" style="display: none;" aria-live="polite" aria-atomic="true">
                             <div class="burn-rate-value" id="burn-rate-value">0%</div>
                             <div class="burn-rate-status" id="burn-rate-status"></div>
+                        </div>
+                        <div id="burn-rate-placeholder" class="burn-rate-placeholder">
+                            <span>🕐 Enter downtime above and click Calculate to see your burn rate and status.</span>
                         </div>
                     </div>
                 </div>
