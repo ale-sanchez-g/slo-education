@@ -211,7 +211,7 @@ class TestBuildCardHTML:
             pub_date="2026-03-10", slug="slug"
         )
         
-        assert 'Read more &rarr;' in card
+        assert 'Read more →' in card
         assert 'href="/blog/slug"' in card
 
 
