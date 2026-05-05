@@ -136,7 +136,10 @@ Requirements:
 - Do NOT repeat the topic in the title verbatim — create a concise, engaging title that captures the essence of the article
 - Do NOT use first-person ("I", "we") — write in second or third person
 - Do NOT include any prose, commentary, frontmatter, or markdown fences outside the JSON object
-- Do NOT use & characters or &amp; anywhere in the text. If you need to include an ampersand, write it as "and" instead.
+- Do NOT use numeric character references (such as &#x27;) for apostrophes — use a plain ' character instead.
+- Do NOT use named HTML entities for arrows (rarr, larr) — use the plain Unicode characters → and ← instead.
+- Do NOT use named HTML entities for em dashes (mdash) — use a plain — character instead.
+- Do NOT use named HTML entities for quotes (quot) — use plain " characters instead.
 - Output format: return ONLY a JSON object with EXACTLY these keys:
   {{
     "title": "<concise, engaging article title (max 80 chars)",
@@ -363,7 +366,7 @@ def render_post_html(
 
         <section class="section">
             <div class="container">
-                <a href="/blog/" class="blog-back-link">&larr; Back to Blog</a>
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
                 <div class="blog-post-meta">
                     <span>{pub_date}</span>
                     {tags_html}
@@ -441,7 +444,7 @@ def build_card_html(title: str, description: str, tags: list, pub_date: str, slu
         f'  <div class="blog-card-meta"><span>{pub_date}</span>{tags_html}</div>\n'
         f'  <h3><a href="/blog/{slug}">{title}</a></h3>\n'
         f'  <p>{description}</p>\n'
-        f'  <a href="/blog/{slug}" class="read-more">Read more &rarr;</a>\n'
+        f'  <a href="/blog/{slug}" class="read-more">Read more →</a>\n'
         f'</div>'
     )
 
