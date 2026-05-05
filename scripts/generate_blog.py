@@ -137,6 +137,11 @@ Requirements:
 - Do NOT use first-person ("I", "we") — write in second or third person
 - Do NOT include any prose, commentary, frontmatter, or markdown fences outside the JSON object
 - Do NOT use & characters or &amp; anywhere in the text. If you need to include an ampersand, write it as "and" instead.
+- Do NOT use &#x27; or similar numeric character references for apostrophes — use a plain ' character instead.
+- Do NOT use &amp;rarr; or similar entities for arrows — use a plain → character instead.
+- Do NOT use &amp;mdash; or similar entities for em dashes — use a plain — character instead.
+- Do NOT use &quot; or similar entities for quotes — use plain " characters instead.
+- Do NOT use &larr; or &rarr; or similar entities for arrows — use plain ← and → characters instead.
 - Output format: return ONLY a JSON object with EXACTLY these keys:
   {{
     "title": "<concise, engaging article title (max 80 chars)",
@@ -363,7 +368,7 @@ def render_post_html(
 
         <section class="section">
             <div class="container">
-                <a href="/blog/" class="blog-back-link">&larr; Back to Blog</a>
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
                 <div class="blog-post-meta">
                     <span>{pub_date}</span>
                     {tags_html}
