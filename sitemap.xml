@@ -89,4 +89,10 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://slo-education.com.au/blog/2026-05-11-opentelemetry-in-production-practical-lessons-for-sre-success</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
