@@ -101,4 +101,10 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://slo-education.com.au/blog/2026-05-25-structured-logs-your-sre-secret-weapon-for-faster-debugging</loc>
+    <lastmod>2026-05-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
