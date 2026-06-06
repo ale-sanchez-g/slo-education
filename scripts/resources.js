@@ -31,7 +31,7 @@
             icon: '🛠️',
             title: 'Tools',
             items: [
-                { text: 'Sloth - SLO Generator', url: 'https://github.com/slok/sloth', external: true },
+                { text: 'OPM - Open Prompt Manager', url: 'https://opm-dx1.com', external: true },
                 { text: 'Error Budget Calculator', url: '/error-budget-calculator', external: false, rootRelative: false }
             ]
         }

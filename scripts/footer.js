@@ -45,7 +45,7 @@
             '      <ul>',
             '        <li><a href="https://sre.google/sre-book/table-of-contents/" target="_blank" rel="noopener noreferrer">Google SRE Book</a></li>',
             '        <li><a href="https://discord.gg/YdG26M8P" target="_blank" rel="noopener noreferrer">Discord Community</a></li>',
-            '        <li><a href="https://github.com/slok/sloth" target="_blank" rel="noopener noreferrer">Sloth Tool</a></li>',
+            '        <li><a href="https://opm-dx1.com" target="_blank" rel="noopener noreferrer">OPM (Open Prompt Manager)</a></li>',
             '        <li><a href="https://cafe.slo-education.com.au/" target="_blank" rel="noopener noreferrer">SRE Games</a></li>',
             '      </ul>',
             '    </div>',

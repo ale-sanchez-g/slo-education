@@ -64,7 +64,7 @@ test.describe('Resources Module – per-page link checks', () => {
       await expect(section.locator('a[href="https://discord.gg/YdG26M8P"]')).toBeVisible();
 
       // Tools links present on every page
-      await expect(section.locator('a[href="https://github.com/slok/sloth"]')).toBeVisible();
+      await expect(section.locator('a[href="https://opm-dx1.com"]')).toBeVisible();
       await expect(section.locator('a[href="/error-budget-calculator"]')).toBeVisible();
     });
   }
