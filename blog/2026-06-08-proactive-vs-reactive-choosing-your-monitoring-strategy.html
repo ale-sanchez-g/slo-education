@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore synthetic monitoring &amp; real-user monitoring (RUM) for SRE. Learn when to use each approach to ensure robust system performance &amp; exceptional user experience.">
+    <meta name="keywords" content="synthetic monitoring, real-user monitoring, RUM, SRE, performance monitoring, user experience, SLOs, reliability">
+    <meta property="og:title" content="Proactive vs. Reactive: Choosing Your Monitoring Strategy - SLO Education Hub">
+    <meta property="og:description" content="Explore synthetic monitoring &amp; real-user monitoring (RUM) for SRE. Learn when to use each approach to ensure robust system performance &amp; exceptional user experience.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://slo-education.com.au/blog/2026-06-08-proactive-vs-reactive-choosing-your-monitoring-strategy">
+    <meta property="article:published_time" content="2026-06-08">
+    <title>Proactive vs. Reactive: Choosing Your Monitoring Strategy - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/2026-06-08-proactive-vs-reactive-choosing-your-monitoring-strategy">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Proactive vs. Reactive: Choosing Your Monitoring Strategy</h2>
+                <p class="hero-subtitle">Explore synthetic monitoring &amp; real-user monitoring (RUM) for SRE. Learn when to use each approach to ensure robust system performance &amp; exceptional user experience.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
+                <div class="blog-post-meta">
+                    <span>2026-06-08</span>
+                    <span class="blog-post-tag">SRE</span><span class="blog-post-tag">Monitoring</span><span class="blog-post-tag">Performance</span>
+                </div>
+                <article class="blog-post-content">
+                    <h2>Monitoring: Your Eyes &amp; Ears in SRE</h2><p>In the world of Site Reliability Engineering (SRE), understanding the health and performance of your systems is paramount. You can&#x27;t improve what you don&#x27;t measure. Effective monitoring is the foundation of maintaining Service Level Objectives (SLOs) and ensuring a great user experience. But not all monitoring is created equal. This article will demystify two core monitoring approaches: synthetic monitoring and real-user monitoring (RUM), helping you understand when and why to use each.</p><h3>Synthetic Monitoring: The Proactive Watchdog</h3><p>Imagine having a dedicated team constantly checking your website or application, even when no real users are around. That&#x27;s essentially what synthetic monitoring does. It involves automated scripts that simulate user interactions or API calls from various geographical locations at regular intervals.</p><ul><li><strong>How it Works:</strong> Bots or scripts mimic actions like logging in, adding items to a cart, or simply loading a page. They record performance metrics and check for errors.</li><li><strong>Key Benefits:</strong></li><ul><li><strong>Proactive Detection:</strong> Catches issues before real users are affected, allowing you to fix problems preemptively.</li><li><strong>Baseline Performance:</strong> Establishes a consistent performance baseline, making it easier to spot deviations.</li><li><strong>Third-Party Dependency Monitoring:</strong> Checks the availability and performance of external APIs or services your application relies on.</li><li><strong>Geographical Insights:</strong> Understands how performance varies across different regions.</li></ul></ul><p>Synthetic monitoring is excellent for critical user journeys (CUJs) and ensuring core functionality is always available. It&#x27;s a key part of defining your Service Level Indicators (SLIs) for availability. Learn more about the <a href="https://slo-education.com.au/cuj-sli-slo-error-budget">CUJ → SLI → SLO relationship</a> on our site.</p><h3>Real-User Monitoring (RUM): The Voice of Your Customers</h3><p>While synthetic monitoring simulates users, Real-User Monitoring (RUM) collects data directly from actual user sessions. It provides insights into the true experience of your customers as they interact with your application.</p><ul><li><strong>How it Works:</strong> Small JavaScript snippets injected into web pages or SDKs in mobile apps collect data on page load times, frontend errors, network requests, and user interactions.</li><li><strong>Key Benefits:</strong></li><ul><li><strong>True User Experience:</strong> Reflects the actual performance and experience across diverse devices, browsers, and network conditions.</li><li><strong>Impact Assessment:</strong> Helps understand the real-world impact of performance issues on user engagement and conversion rates.</li><li><strong>Geographical &amp; Device Specifics:</strong> Pinpoints performance bottlenecks specific to certain user segments or locations.</li><li><strong>Troubleshooting Frontend Issues:</strong> Identifies client-side errors and performance degradations that might not be visible to synthetic tests.</li></ul></ul><p>RUM offers an authentic pulse on how your application performs for its intended audience. Many modern observability tools, including those leveraging <a href="https://opentelemetry.io/docs/instrumentation/js/getting-started/browser/">OpenTelemetry for browser RUM</a>, provide robust capabilities in this area.</p><h3>When to Use Each &amp; Why: A Synergistic Approach</h3><p>Neither synthetic nor RUM is a silver bullet; they are complementary tools that provide a comprehensive view of your system&#x27;s health. </p><ul><li><strong>Use Synthetic Monitoring when:</strong> You need early warnings about outages or performance regressions, want to monitor critical business transactions consistently, or test new features in pre-production environments. It&#x27;s your first line of defense.</li><li><strong>Use Real-User Monitoring when:</strong> You need to understand the actual impact of performance on your users, identify bottlenecks across various user segments, or validate the effectiveness of your synthetic tests. It&#x27;s your ultimate source of truth for user experience.</li></ul><p>A robust SRE strategy often involves both. Synthetic monitoring acts as your proactive sentinel, while RUM provides the empirical evidence of user satisfaction. Together, they offer a complete picture, ensuring you can meet your SLOs and deliver exceptional reliability. For more on developing a comprehensive monitoring strategy, consider resources like <a href="https://sre.google/sre-book/monitoring-distributed-systems/">Google&#x27;s SRE Book on Monitoring Distributed Systems</a> or <a href="https://www.atlassian.com/software/jira/service-management/guides/application-monitoring/">Atlassian&#x27;s guide to application monitoring</a>.</p><p>By strategically implementing both synthetic and real-user monitoring, SRE teams gain unparalleled visibility, enabling them to build and maintain highly reliable and performant systems that delight users.</p>
+                </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of Gemini AI.</strong></p>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>
