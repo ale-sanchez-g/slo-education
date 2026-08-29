@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Latency SLOs alone will not keep a RAG pipeline reliable. Learn to measure retrieval quality, generation quality and cost as SLIs your team can act on.">
+    <meta name="keywords" content="RAG SLOs, LLM observability, AI reliability, retrieval augmented generation, OpenTelemetry GenAI, LLM as judge, AI error budgets, SRE">
+    <meta property="og:title" content="Reliability for RAG: Setting SLOs for AI Retrieval Pipelines - SLO Education Hub">
+    <meta property="og:description" content="Latency SLOs alone will not keep a RAG pipeline reliable. Learn to measure retrieval quality, generation quality and cost as SLIs your team can act on.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://slo-education.com.au/blog/2026-08-24-reliability-for-rag-setting-slos-for-ai-retrieval-pipelines">
+    <meta property="article:published_time" content="2026-08-24">
+    <title>Reliability for RAG: Setting SLOs for AI Retrieval Pipelines - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/2026-08-24-reliability-for-rag-setting-slos-for-ai-retrieval-pipelines">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Reliability for RAG: Setting SLOs for AI Retrieval Pipelines</h2>
+                <p class="hero-subtitle">Latency SLOs alone will not keep a RAG pipeline reliable. Learn to measure retrieval quality, generation quality and cost as SLIs your team can act on.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
+                <div class="blog-post-meta">
+                    <span>2026-08-24</span>
+                    <span class="blog-post-tag">AI Reliability</span><span class="blog-post-tag">SLOs</span><span class="blog-post-tag">Observability</span>
+                </div>
+                <article class="blog-post-content">
+                    <h2>A Green Dashboard and an Unhappy User</h2>
+<p>Retrieval-augmented generation (RAG) pipelines break a comfortable assumption. Traditional services fail loudly: a request returns a 500, latency spikes, a queue backs up. A RAG pipeline can return HTTP 200 in 400 milliseconds with a fluent, confident, completely wrong answer. Every classic signal stays green while the product quietly fails.</p>
+<p>That gap is why availability and latency alone are insufficient targets for AI systems. Reliability here has to include whether the answer was any good.</p>
+<h2>Measure Three Layers, Not One</h2>
+<p>A RAG request passes through distinct stages, and each fails in its own way. Treating the pipeline as one opaque box makes incidents almost impossible to diagnose, so define indicators at each layer:</p>
+<ul>
+<li>Retrieval: did the search return documents that actually contain the answer? Offline evaluation sets scored for recall and precision give you a measurable target here.</li>
+<li>Generation: did the model use those documents faithfully? The failure mode to watch is a claim that is not supported by any retrieved passage.</li>
+<li>End-to-end: latency, availability and cost for the full request, including time to first token if the interface streams.</li>
+</ul>
+<p>Splitting the layers pays off during an incident. When answer quality drops, the first question is whether retrieval stopped finding the right documents (often an indexing or embedding problem) or the model stopped using them well (often a prompt or model version change). Those have entirely different fixes.</p>
+<h2>Turning Quality Into an SLI</h2>
+<p>Quality feels subjective, but it can be sampled and scored like any other signal. The common production pattern is LLM-as-judge: route a sample of live completions to a separate evaluator model that scores them against explicit criteria such as factual support, relevance and instruction following. Sampling 10 to 20% of traffic is generally enough for a stable trend without a prohibitive bill.</p>
+<p>Two cautions are worth building in from the start. Judges drift, so keep a small human-labelled set to periodically check the judge itself, and treat a judge model upgrade as a change that can move your metric independently of the system it measures. Publish the sampled score as a metric and it becomes a genuine SLI, with all the usual machinery available: a target, an error budget, and a burn rate.</p>
+<h2>Instrument With Open Standards</h2>
+<p>Bespoke logging for AI systems ages badly. The <a href="https://opentelemetry.io/docs/specs/semconv/gen-ai/">OpenTelemetry GenAI semantic conventions</a> define shared names for model calls, token usage and operation duration, so telemetry means the same thing regardless of which provider or framework produced it. Capture the retrieval step and the generation step as separate spans on one trace, and a slow or wrong answer becomes something you can follow end to end. The <a href="https://opentelemetry.io/docs/concepts/signals/traces/">tracing concepts documentation</a> is a good starting point if distributed tracing is new to your team, and the OpenTelemetry project's <a href="https://opentelemetry.io/blog/2026/genai-observability/">walkthrough of GenAI observability</a> shows what a fully instrumented model call looks like in practice.</p>
+<h2>Budget for Wrongness, and Watch the Bill</h2>
+<p>No AI system is perfectly accurate, so decide explicitly how much wrongness the product can absorb. A 97% faithfulness target is a real objective with a real budget: 3 wrong answers in 100 is either acceptable for an internal research assistant or unacceptable for medical guidance, and naming the number turns an anxious debate into a design decision. The <a href="https://slo-education.com.au/ai-slo-error-budget">AI SLO and error budget guide</a> walks through applying this to AI workloads, and the <a href="https://slo-education.com.au/error-budget-calculator">error budget calculator</a> converts a target into concrete allowances.</p>
+<p>Finally, track cost per successful answer as a first-class signal. Token spend that suddenly climbs usually means retrieval is returning more context than it should, or the model is retrying. In AI systems the bill is often the earliest indicator that reliability is about to follow.</p>
+                </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of AI.</strong></p>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>

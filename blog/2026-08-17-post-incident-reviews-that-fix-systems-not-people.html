@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Turn incident retrospectives into real reliability gains. Learn how blameless post-incident reviews surface systemic causes and produce action items that ship.">
+    <meta name="keywords" content="blameless postmortem, post-incident review, incident retrospective, incident management, SRE culture, psychological safety, action items, reliability">
+    <meta property="og:title" content="Post-Incident Reviews That Fix Systems, Not People - SLO Education Hub">
+    <meta property="og:description" content="Turn incident retrospectives into real reliability gains. Learn how blameless post-incident reviews surface systemic causes and produce action items that ship.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://slo-education.com.au/blog/2026-08-17-post-incident-reviews-that-fix-systems-not-people">
+    <meta property="article:published_time" content="2026-08-17">
+    <title>Post-Incident Reviews That Fix Systems, Not People - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/2026-08-17-post-incident-reviews-that-fix-systems-not-people">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Post-Incident Reviews That Fix Systems, Not People</h2>
+                <p class="hero-subtitle">Turn incident retrospectives into real reliability gains. Learn how blameless post-incident reviews surface systemic causes and produce action items that ship.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
+                <div class="blog-post-meta">
+                    <span>2026-08-17</span>
+                    <span class="blog-post-tag">Incident Management</span><span class="blog-post-tag">SRE Culture</span><span class="blog-post-tag">Reliability</span>
+                </div>
+                <article class="blog-post-content">
+                    <h2>The Wrong Question</h2>
+<p>When a service goes down, the instinctive question is &quot;who changed something?&quot; It is also the least useful question available. Engineers who expect to be named stop volunteering detail, and the review ends up documenting a single unlucky commit instead of the conditions that let a single commit take production down.</p>
+<p>A blameless post-incident review inverts that instinct. It assumes competent people acted reasonably given the information they had, and asks what made the failure possible, and what made it hard to detect or recover from. The <a href="https://sre.google/workbook/postmortem-culture/">Google SRE Workbook chapter on postmortem culture</a> makes the practical case: blame suppresses exactly the information the organisation needs to get more reliable.</p>
+<h2>Build the Timeline First</h2>
+<p>Before analysis, reconstruct what happened as a factual, timestamped narrative. Resist the urge to explain while you assemble it. A useful timeline covers six phases, and each one is a separate opportunity to improve:</p>
+<ul>
+<li>Detection: how long until anyone knew, and was it a monitor or a customer?</li>
+<li>Escalation: how long until the person who could fix it was engaged?</li>
+<li>Mitigation: what stopped the bleeding, and what was tried that did not work?</li>
+<li>Communication: what did stakeholders and users know, and when?</li>
+<li>Recovery: when was full service actually restored, not just the alert cleared?</li>
+<li>Prevention: what would stop this class of failure recurring?</li>
+</ul>
+<p>Teams frequently discover their biggest win is not in the fix at all. Shaving twenty minutes off detection often delivers more user-visible reliability than eliminating the trigger, and it generalises to incidents nobody has had yet.</p>
+<h2>Contributing Factors, Not a Root Cause</h2>
+<p>Complex systems rarely fail for one reason. A deploy went out, a health check was too permissive, a dashboard was misleading, and a runbook was stale. Removing any one of those might have prevented the outage, which means all four are contributing factors and none is uniquely the root cause.</p>
+<p>Aim for two to five systemic factors, each framed as a property of the system rather than a property of a person: &quot;the canary stage had no automated rollback&quot; rather than &quot;the engineer did not watch the canary.&quot; Record what worked, too. Knowing which safeguards held is how a team learns what to invest in, and it keeps the review honest rather than purely negative.</p>
+<h2>Action Items That Actually Ship</h2>
+<p>Most reviews fail here. An action item like &quot;improve monitoring&quot; is not work, it is a wish. Every item needs a named owner, a due date, and a scope small enough to finish inside a normal sprint. It helps to sort them into two buckets: mitigative items close this specific gap, while preventative items address the whole class of failure. PagerDuty publishes its own <a href="https://response.pagerduty.com/after/post_mortem_process/">postmortem process</a> openly, including who owns the follow-up and how quickly it is scheduled.</p>
+<p>Track them in the same backlog as feature work, because a list nobody schedules is a list nobody completes. If action items from previous incidents are consistently unfinished, that is a signal in its own right, and often a sign the team needs an explicit error budget policy to justify the time. Atlassian&#x27;s <a href="https://www.atlassian.com/incident-management/postmortem/blameless">guide to blameless postmortems</a> covers practical ways to keep that follow-through visible.</p>
+<h2>Timing and Culture</h2>
+<p>Draft the review within about 72 hours while memory is fresh, and publish the final version within one to two weeks. Circulate it widely, since the value compounds when teams learn from incidents they did not experience.</p>
+<p>Culture is set by example. When a senior engineer opens a review by describing their own misread of a dashboard, everyone else learns that candour is safe. To connect this practice to the wider response process, see the <a href="https://slo-education.com.au/incident-management">incident management guide</a>, and browse the <a href="https://slo-education.com.au/blog/">blog</a> for related reliability practices.</p>
+                </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of AI.</strong></p>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>

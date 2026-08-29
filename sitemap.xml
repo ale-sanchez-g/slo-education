@@ -167,4 +167,22 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://slo-education.com.au/blog/2026-08-10-burn-rate-alerts-catch-slo-breaches-before-they-land</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://slo-education.com.au/blog/2026-08-17-post-incident-reviews-that-fix-systems-not-people</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://slo-education.com.au/blog/2026-08-24-reliability-for-rag-setting-slos-for-ai-retrieval-pipelines</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
