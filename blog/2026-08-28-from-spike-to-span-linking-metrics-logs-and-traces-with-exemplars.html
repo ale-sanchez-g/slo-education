@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Stop copy-pasting timestamps between dashboards. Learn how exemplars and trace context turn metrics, logs and traces into one connected investigation.">
+    <meta name="keywords" content="exemplars, trace context, OpenTelemetry, Prometheus exemplars, Grafana Tempo, log correlation, W3C Trace Context, observability">
+    <meta property="og:title" content="From Spike to Span: Linking Metrics, Logs and Traces with Exemplars - SLO Education Hub">
+    <meta property="og:description" content="Stop copy-pasting timestamps between dashboards. Learn how exemplars and trace context turn metrics, logs and traces into one connected investigation.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://slo-education.com.au/blog/2026-08-28-from-spike-to-span-linking-metrics-logs-and-traces-with-exemplars">
+    <meta property="article:published_time" content="2026-08-28">
+    <title>From Spike to Span: Linking Metrics, Logs and Traces with Exemplars - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/2026-08-28-from-spike-to-span-linking-metrics-logs-and-traces-with-exemplars">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>From Spike to Span: Linking Metrics, Logs and Traces with Exemplars</h2>
+                <p class="hero-subtitle">Stop copy-pasting timestamps between dashboards. Learn how exemplars and trace context turn metrics, logs and traces into one connected investigation.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
+                <div class="blog-post-meta">
+                    <span>2026-08-28</span>
+                    <span class="blog-post-tag">Observability</span><span class="blog-post-tag">OpenTelemetry</span><span class="blog-post-tag">Prometheus</span>
+                </div>
+                <article class="blog-post-content">
+                    <h2>Three Tabs and a Timestamp</h2>
+<p>Most investigations still follow the same choreography. A latency panel spikes at 14:07. The engineer notes the time, opens the tracing tool, filters by service and a duration threshold, scrolls through candidates that might be the right request, picks one, copies its trace ID, and pastes it into the log search. Ten minutes have passed and the incident has not been touched yet.</p>
+<p>The three signals each answer a different question. Metrics say when and how much. Traces say where in the request path. Logs say why. What is usually missing is the join key that lets a person move between them without re-typing anything. Two pieces of plumbing supply that key: trace context and exemplars.</p>
+<h2>One ID to Bind Them</h2>
+<p>The join key is the trace ID, and the first job is to make sure every component agrees on it. The <a href="https://www.w3.org/TR/trace-context/">W3C Trace Context</a> recommendation standardises the traceparent and tracestate headers so that a trace ID survives the hop from an API gateway written in Go to a queue consumer written in Java. OpenTelemetry SDKs propagate it by default, and, just as importantly, <a href="https://opentelemetry.io/docs/concepts/context-propagation/">context propagation</a> makes the current trace and span available to anything running inside the request, including your logger.</p>
+<p>That is the second step: stamp trace_id and span_id onto every log record. The OpenTelemetry <a href="https://opentelemetry.io/docs/specs/otel/logs/">logging specification</a> reserves fields for both, and most SDKs inject them automatically once logging is bridged. If your logs are already <a href="https://slo-education.com.au/blog/2026-05-25-structured-logs-your-sre-secret-weapon-for-faster-debugging">structured</a>, this is two extra keys; if they are not, this is the reason to fix that.</p>
+<h2>Exemplars: Metrics That Remember a Request</h2>
+<p>Metrics are aggregates, which is what makes them cheap and also what makes them forget every individual request that went into them. An exemplar is the fix: a single representative sample, tagged with a trace ID, attached to a histogram bucket or counter. The <a href="https://github.com/prometheus/OpenMetrics/blob/main/specification/OpenMetrics.md">OpenMetrics specification</a> defines them and caps the label payload at 128 characters, deliberately, so that nobody is tempted to smuggle whole events through the metrics pipeline.</p>
+<p>OpenTelemetry SDKs generate exemplars automatically: the default exemplar filter in the <a href="https://opentelemetry.io/docs/specs/otel/metrics/sdk/">metrics SDK</a> is trace-based, meaning a measurement recorded inside a sampled span becomes a candidate exemplar. On the storage side, Prometheus keeps them in an in-memory ring buffer once the exemplar-storage <a href="https://prometheus.io/docs/prometheus/latest/feature_flags/">feature flag</a> is enabled. <a href="https://grafana.com/docs/grafana/latest/fundamentals/exemplars/">Grafana</a> then draws each exemplar as a star on the graph, and clicking one opens the trace in Tempo. The spike at 14:07 becomes a request you can read.</p>
+<h2>Closing the Loop in the Other Direction</h2>
+<p>The link also runs backwards. Tempo's metrics-generator derives request, error and duration metrics from the spans it ingests and attaches exemplars to them as it goes, so services with tracing but no metrics instrumentation still get SLI-grade series with the trace links built in. Commercial platforms ship equivalents: Datadog's <a href="https://docs.datadoghq.com/tracing/other_telemetry/connect_logs_and_traces/">log and trace correlation</a> injects trace identifiers into logs and surfaces them in both views. The mechanism is the same everywhere; only the buttons differ.</p>
+<h2>A Rollout That Fits in a Sprint</h2>
+<ul>
+<li>Standardise propagation on W3C Trace Context at every boundary, including message queues and scheduled jobs, which are the places traces usually break.</li>
+<li>Inject trace and span IDs into logs, then confirm with one query that a trace ID in the log store returns exactly the lines from that request.</li>
+<li>Enable exemplars on the latency histograms and error counters that feed your SLIs. Those are the metrics you will be staring at during an incident.</li>
+<li>Configure the data source links in your dashboarding tool so the click-through actually works, and test it from a burn rate alert.</li>
+</ul>
+<p>One caveat matters. An exemplar is only useful if the trace it points to was kept, so sampling policy and exemplars have to be designed together. Tail-based sampling that always retains slow and failed requests, covered in <a href="https://slo-education.com.au/blog/2026-05-22-efficient-distributed-tracing-insights-on-a-budget">distributed tracing on a budget</a>, is the natural partner, because those are exactly the requests an exemplar will point to.</p>
+<h2>Why This Belongs in an SLO Programme</h2>
+<p>The payoff shows up in time to diagnosis. When a <a href="https://slo-education.com.au/blog/2026-08-10-burn-rate-alerts-catch-slo-breaches-before-they-land">burn rate alert</a> fires, the responder goes from the SLO panel to an exemplar, to a trace, to the logs of the failing span in three clicks, and the ten minutes of copy-and-paste become thirty seconds. Every minute saved there is error budget the service keeps. If you are still deciding which indicators deserve this treatment, start by <a href="https://slo-education.com.au/cuj-sli-slo-error-budget">mapping user journeys to SLIs</a>; the metrics that define your SLOs are the ones that most need a path back to a single request.</p>
+                </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of AI.</strong></p>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>

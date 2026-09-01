@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Traces show which service is slow; profiles show which line of code. Learn how Pyroscope, Parca and OpenTelemetry Profiles fit into an SRE toolkit.">
+    <meta name="keywords" content="continuous profiling, Grafana Pyroscope, Parca, eBPF profiling, OpenTelemetry Profiles, flame graphs, performance optimisation, observability">
+    <meta property="og:title" content="Continuous Profiling: Observability Down to the Line of Code - SLO Education Hub">
+    <meta property="og:description" content="Traces show which service is slow; profiles show which line of code. Learn how Pyroscope, Parca and OpenTelemetry Profiles fit into an SRE toolkit.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://slo-education.com.au/blog/2026-08-27-continuous-profiling-observability-down-to-the-line-of-code">
+    <meta property="article:published_time" content="2026-08-27">
+    <title>Continuous Profiling: Observability Down to the Line of Code - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/2026-08-27-continuous-profiling-observability-down-to-the-line-of-code">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Continuous Profiling: Observability Down to the Line of Code</h2>
+                <p class="hero-subtitle">Traces show which service is slow; profiles show which line of code. Learn how Pyroscope, Parca and OpenTelemetry Profiles fit into an SRE toolkit.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
+                <div class="blog-post-meta">
+                    <span>2026-08-27</span>
+                    <span class="blog-post-tag">Observability</span><span class="blog-post-tag">Performance</span><span class="blog-post-tag">OpenTelemetry</span>
+                </div>
+                <article class="blog-post-content">
+                    <h2>The Question a Trace Cannot Answer</h2>
+<p>A latency alert fires. The trace is unambiguous: a request spent 800 milliseconds inside the pricing service, and the span has no children. Metrics, logs and traces have done their job and pointed at the right box, and then they go quiet. Nothing in that trace says which function was running, whether the time went to a regular expression, a lock, a garbage collector pause or a JSON serialiser that someone called in a loop.</p>
+<p>That gap is where profiling lives. A profile is a statistical sample of what the code was actually executing, aggregated into a call tree and usually rendered as a flame graph. Developers have used profilers on laptops for decades. What changed is running them all the time, on every production host, and keeping the results.</p>
+<h2>From Occasional Tool to Always-On Signal</h2>
+<p>The idea is older than most of the tools implementing it. Google described its fleet-wide sampling profiler in the 2010 paper <a href="https://research.google/pubs/google-wide-profiling-a-continuous-profiling-infrastructure-for-data-centers/">Google-Wide Profiling</a>, showing that sampling a small rotating subset of machines produced accurate, stable profiles of the whole data centre with negligible overhead. Continuous profiling applies the same principle inside one organisation: sample stack traces a few dozen times per second on each CPU, ship them to a store, and index them by service, version and time so you can compare last Tuesday's deploy with today's.</p>
+<p>Because the data is sampled rather than instrumented, overhead is typically a low single-digit percentage of CPU, which is what makes leaving it switched on acceptable.</p>
+<h2>Collecting Profiles Without Touching Code</h2>
+<p>Two collection styles exist. Language SDKs, such as those shipped with <a href="https://grafana.com/oss/pyroscope/">Grafana Pyroscope</a>, run inside the process and can tag profiles with application context. The alternative is eBPF, where an agent on the host samples every process from the kernel without a restart or a code change. <a href="https://www.parca.dev/">Parca</a>, an open source project started by Polar Signals, pairs an eBPF agent that samples nineteen times per second per logical CPU with a store that queries profiles over time. The <a href="https://github.com/open-telemetry/opentelemetry-ebpf-profiler">OpenTelemetry eBPF profiler</a>, originally Elastic's Universal Profiling agent and donated to the project in 2024, unwinds stacks for C and C++, Go, Rust, Python, Java, Node.js, .NET, PHP, Ruby and Perl from a single agent. Both speak the widely supported <a href="https://github.com/google/pprof">pprof</a> format, so the tooling around them is interchangeable.</p>
+<h2>An Open Standard Arrives</h2>
+<p>Profiling has been called the fourth pillar of observability for years, but it lacked a shared wire format. OpenTelemetry formed a profiling working group in 2022, <a href="https://opentelemetry.io/blog/2024/profiling/">merged a profiling data model</a> in 2024, and in March 2026 announced that the <a href="https://opentelemetry.io/blog/2026/profiles-alpha/">Profiles signal had entered public alpha</a>. Pyroscope 2.0 ingests OTLP profiles natively, and the eBPF profiler above exports them. The most useful consequence is correlation: the signal is designed to carry links to and from traces, metrics and logs, so a slow span can point at the profile captured while it ran.</p>
+<h2>What SRE Teams Use It For</h2>
+<ul>
+<li>Regression triage: diff the profile of the current release against the previous one and the function that doubled its share of CPU stands out immediately, without a reproduction.</li>
+<li>Incident diagnosis: when a trace shows an unexplained gap, the span-linked profile shows the frames that filled it.</li>
+<li>Cost: sorting the whole fleet's CPU by function often reveals that a logging library or a compression step is the single most expensive line of code you run, which is an easy win to hand to a FinOps review.</li>
+<li>Capacity: knowing where cycles go turns capacity planning from extrapolation into engineering.</li>
+</ul>
+<h2>Getting Started Without a Big Project</h2>
+<p>Deploy an eBPF agent to one node pool and keep a week of retention. Managed platforms such as Datadog's <a href="https://docs.datadoghq.com/profiler/">Continuous Profiler</a> or Grafana Cloud Profiles remove the storage question entirely. Then add one habit: after every deploy that moves a latency SLI, open the profile diff before opening the code. Profiling does not replace <a href="https://slo-education.com.au/blog/2026-05-22-efficient-distributed-tracing-insights-on-a-budget">distributed tracing</a>; it picks up where the trace stops. When the <a href="https://slo-education.com.au/error-budget-calculator">error budget</a> is burning because of a slow code path, this is the signal that names the path.</p>
+                </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of AI.</strong></p>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>
