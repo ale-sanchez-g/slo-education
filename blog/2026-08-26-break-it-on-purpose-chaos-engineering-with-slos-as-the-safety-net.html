@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn how SLIs define the steady state, error budgets size the blast radius and burn rate alerts abort a chaos experiment before users notice.">
+    <meta name="keywords" content="chaos engineering, SLOs, error budget, steady state hypothesis, LitmusChaos, Chaos Mesh, AWS Fault Injection Service, game days">
+    <meta property="og:title" content="Break It on Purpose: Chaos Engineering with SLOs as the Safety Net - SLO Education Hub">
+    <meta property="og:description" content="Learn how SLIs define the steady state, error budgets size the blast radius and burn rate alerts abort a chaos experiment before users notice.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://slo-education.com.au/blog/2026-08-26-break-it-on-purpose-chaos-engineering-with-slos-as-the-safety-net">
+    <meta property="article:published_time" content="2026-08-26">
+    <title>Break It on Purpose: Chaos Engineering with SLOs as the Safety Net - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/2026-08-26-break-it-on-purpose-chaos-engineering-with-slos-as-the-safety-net">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Break It on Purpose: Chaos Engineering with SLOs as the Safety Net</h2>
+                <p class="hero-subtitle">Learn how SLIs define the steady state, error budgets size the blast radius and burn rate alerts abort a chaos experiment before users notice.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
+                <div class="blog-post-meta">
+                    <span>2026-08-26</span>
+                    <span class="blog-post-tag">Chaos Engineering</span><span class="blog-post-tag">SRE</span><span class="blog-post-tag">Reliability</span>
+                </div>
+                <article class="blog-post-content">
+                    <h2>Hope Is Not a Resilience Strategy</h2>
+<p>Every architecture diagram has a failover arrow on it. Far fewer teams have watched that arrow work under real traffic. Multi-zone databases, retry logic, circuit breakers and autoscaling policies are all bets on how a system will behave when something breaks, and most of those bets are never tested until an actual outage settles them at the worst possible moment.</p>
+<p>Chaos engineering is the practice of settling those bets on your own schedule. The <a href="https://principlesofchaos.org/">Principles of Chaos Engineering</a> describe it as running controlled experiments on a system in order to build confidence in its ability to withstand turbulent conditions. Netflix made the idea famous with <a href="https://netflix.github.io/chaosmonkey/">Chaos Monkey</a>, which randomly terminates production instances so that engineers have no choice but to design services that survive instance loss. The idea has since matured from a single blunt tool into a discipline, and SLOs are what make that discipline safe to practise.</p>
+<h2>Your SLI Is the Steady State</h2>
+<p>The principles start with a steady state: a measurable output that indicates the system is behaving normally. Teams new to chaos engineering often reach for infrastructure signals such as CPU or pod counts, but those describe the system rather than the user. The better answer is already sitting in your SLO definitions. If checkout availability and p95 latency are the indicators your users care about, they are the indicators an experiment should watch.</p>
+<p>That turns a vague intention into a falsifiable hypothesis: terminating one replica of the checkout service will keep availability above 99.9% and p95 latency under 400 milliseconds for the duration of the test. Either the hypothesis holds and you have earned real confidence, or it fails and you have found a weakness before a customer did. If your indicators do not yet map to user journeys, work through <a href="https://slo-education.com.au/cuj-sli-slo-error-budget">critical user journeys, SLIs and SLOs</a> first; experiments against a meaningless metric teach you nothing.</p>
+<h2>Size the Blast Radius With the Error Budget</h2>
+<p>An experiment that runs in production spends error budget, and it should. The budget exists precisely to fund calculated risks, and a chaos experiment is the most calculated risk there is. The remaining budget also gives you a principled answer to the question of how much chaos is acceptable this month. A service with 70% of its budget left can afford an availability-zone failure test. A service that burned through its budget last week should be fixing the causes, not adding new ones. The <a href="https://slo-education.com.au/error-budget-calculator">error budget calculator</a> converts a target into the minutes you actually have to spend.</p>
+<p>Start with the smallest blast radius that can still disprove the hypothesis: one pod, then one node, then one zone, then a dependency. Each step only proceeds if the previous one held.</p>
+<h2>Abort Conditions Come Free With Burn Rate Alerts</h2>
+<p>The scariest part of running experiments in production is the moment things go worse than expected. Good tooling handles this with automatic halts, and the trigger should be the same signal you already page on. <a href="https://docs.aws.amazon.com/fis/latest/userguide/what-is.html">AWS Fault Injection Service</a> ties experiments to stop conditions backed by CloudWatch alarms, so an alarm on your SLO burn rate rolls the fault back without a human in the loop. <a href="https://litmuschaos.io/">LitmusChaos</a> and <a href="https://chaos-mesh.org/">Chaos Mesh</a>, both CNCF incubating projects, support probes and status checks that fail an experiment when a metric crosses a threshold. If you have already built <a href="https://slo-education.com.au/blog/2026-08-10-burn-rate-alerts-catch-slo-breaches-before-they-land">multi-window burn rate alerts</a>, you have the abort condition ready to wire in.</p>
+<h2>Pick the Tool That Matches Your Platform</h2>
+<ul>
+<li>Kubernetes: LitmusChaos offers a hub of reusable experiments and chains them into workflows; Chaos Mesh defines faults as Kubernetes custom resources with a dashboard and workflow engine, and injects network delay, packet loss, pod kills and CPU or memory stress.</li>
+<li>AWS: Fault Injection Service runs managed experiments against EC2, EKS, RDS, Lambda and network paths from a template that declares targets, actions and stop conditions.</li>
+<li>Azure: <a href="https://learn.microsoft.com/en-us/azure/chaos-studio/chaos-studio-overview">Azure Chaos Studio</a> offers service-direct faults such as forced database failovers alongside agent-based faults inside virtual machines.</li>
+<li>Any environment: <a href="https://www.gremlin.com/">Gremlin</a> is a commercial platform with a library of scenarios and a halt button that reverts every attack immediately.</li>
+</ul>
+<h2>From Single Experiments to Game Days</h2>
+<p>Individual experiments verify components. Game days verify people. Google's annual disaster recovery testing programme, described in the ACM Queue article <a href="https://queue.acm.org/detail.cfm?id=2371516">Weathering the Unexpected</a>, deliberately breaks systems and business processes across the company so that responders, runbooks and escalation paths are exercised as well as code. You do not need Google's scale to copy the format: pick one scenario a quarter, tell the on-call engineer nothing beyond the time window, and run it as a real incident with a real <a href="https://slo-education.com.au/incident-management">incident management process</a>. Then write the post-incident review as if it had been unplanned. The failure you rehearsed on a Tuesday afternoon is the one that will not page you at 3 a.m.</p>
+                </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of AI.</strong></p>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>

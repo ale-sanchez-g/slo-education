@@ -185,4 +185,34 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://slo-education.com.au/blog/2026-08-26-break-it-on-purpose-chaos-engineering-with-slos-as-the-safety-net</loc>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://slo-education.com.au/blog/2026-08-27-continuous-profiling-observability-down-to-the-line-of-code</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://slo-education.com.au/blog/2026-08-28-from-spike-to-span-linking-metrics-logs-and-traces-with-exemplars</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://slo-education.com.au/blog/2026-08-31-fresh-complete-correct-setting-slos-for-data-pipelines</loc>
+    <lastmod>2026-08-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://slo-education.com.au/blog/2026-09-01-slos-as-code-version-controlled-reliability-with-openslo-sloth-and-pyrra</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
