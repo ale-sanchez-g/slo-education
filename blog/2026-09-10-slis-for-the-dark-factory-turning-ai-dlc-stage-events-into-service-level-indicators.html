@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A lights-out software factory still needs SLIs. Learn how to turn AI-DLC gate, sensor and bolt events into good-over-valid ratios your team can measure and defend.">
+    <meta name="keywords" content="SLI, SLO, AI-DLC, dark factory, autonomous delivery, gate first-pass rate, sensor pass rate, SRE metrics">
+    <meta property="og:title" content="SLIs for the Dark Factory: Turning AI-DLC Stage Events into Service Level Indicators - SLO Education Hub">
+    <meta property="og:description" content="A lights-out software factory still needs SLIs. Learn how to turn AI-DLC gate, sensor and bolt events into good-over-valid ratios your team can measure and defend.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://slo-education.com.au/blog/2026-09-10-slis-for-the-dark-factory-turning-ai-dlc-stage-events-into-service-level-indicators">
+    <meta property="article:published_time" content="2026-09-10">
+    <title>SLIs for the Dark Factory: Turning AI-DLC Stage Events into Service Level Indicators - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/2026-09-10-slis-for-the-dark-factory-turning-ai-dlc-stage-events-into-service-level-indicators">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>SLIs for the Dark Factory: Turning AI-DLC Stage Events into Service Level Indicators</h2>
+                <p class="hero-subtitle">A lights-out software factory still needs SLIs. Learn how to turn AI-DLC gate, sensor and bolt events into good-over-valid ratios your team can measure and defend.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
+                <div class="blog-post-meta">
+                    <span>2026-09-10</span>
+                    <span class="blog-post-tag">SLOs</span><span class="blog-post-tag">AI-DLC</span><span class="blog-post-tag">Observability</span>
+                </div>
+                <article class="blog-post-content">
+<p>Manufacturing has a name for a plant that runs without people in the building: the dark factory. The lights stay off because nothing on the floor needs to see. Humans set the tolerances, watch the instruments from somewhere else, and walk in only when something needs a decision a machine should not make.</p>
+<p>That is the shape a lot of software organisations are now building toward. Agents pick up an intent, elaborate the requirements, decompose the work, write the code, run the tests and open the pull request. The humans are still accountable — they are just not in the loop for every step. They are watching the instruments.</p>
+<p>Which is fine, right up until you ask what the instruments are actually showing.</p>
+<h2>Why: A Dark Factory With No Instruments Is Just a Dark Room</h2>
+<p>Before you take your hands off the controls, "working" has to mean something in numbers. And the numbers most teams have are the wrong ones.</p>
+<p>Velocity measures how much effort a team expended. It says nothing about whether the factory is producing changes anyone can trust, and it becomes actively misleading when the marginal cost of producing a story point collapses. The <a href="https://prod.d13rzhkk8cj2z0.amplifyapp.com/">AI-DLC method definition paper</a> raises exactly this doubt, asking whether velocity stays relevant at all when AI erases the boundary between simple, medium and hard tasks, and floating business value as the replacement.</p>
+<p>DORA metrics get closer, and if you already have them, keep them. Deployment frequency and lead time for change measure the pipeline honestly. But they were designed to measure a pipeline operated by humans, and two of the four assume a human author in ways that stop holding. Change failure rate is the closest cousin to what you need — it is the one metric in the set that a factory cannot game from inside itself — while mean time to restore says nothing about whether the thing you restored should have been built that way. DORA tells you the pipeline is fast. It does not tell you the agent is trustworthy, and those are now different questions.</p>
+<p>The replacement is the discipline we already teach for user-facing services: start from the <a href="https://slo-education.com.au/cuj-sli-slo-error-budget">critical user journey</a>, not from the metrics you happen to have lying around. The journey for a delivery factory is short to state and awkward to measure.</p>
+<blockquote><p>A developer describes an intent. Some time later, a reviewed, tested change is merged — and the developer did not have to rescue it along the way.</p></blockquote>
+<p>"Some time later" is your latency SLI. "Reviewed and tested" is your quality SLI. "Did not have to rescue it" is your autonomy SLI, and it is the one most teams skip, because it is the one that might return an uncomfortable answer.</p>
+<h2>What: The Method Already Asks for This</h2>
+<p>You are not inventing from scratch. AI-DLC puts a ritual called <strong>Mob Elaboration</strong> at the heart of its Inception phase — product owner, developers, QA and stakeholders in one room with a shared screen, AI proposing the breakdown of an Intent into user stories and Units while the humans correct whatever is over- or under-engineered. The paper claims this ritual condenses weeks of sequential work into a few hours, and lists what it must produce: a PRFAQ, user stories, non-functional requirement definitions, a description of risks matching the organisation's risk register, the suggested Bolts, and <em>"Measurement Criteria that traces to the business intent"</em>.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 342" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dt49d6f975 dd49d6f975"><title id="dt49d6f975">The AI-DLC artefact hierarchy</title><desc id="dd49d6f975">A vertical flow: an Intent decomposes into Units, each Unit is built across one or more Bolts, and the result is a tested Deployment Unit. A dashed arrow returns from the end to the start, labelled measurement criteria.</desc><defs><marker id="arw49d6f975" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3498db"/></marker></defs><rect x="70" y="14" width="394" height="56" rx="8" fill="#eaf3fb" stroke="#3498db" stroke-opacity="0.45"/><text x="88" y="38" font-size="15" fill="#2c3e50" font-weight="600" text-anchor="start">Intent</text><text x="88" y="57" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">a high-level statement of purpose</text><path d="M267.0,70 L267.0,96" stroke="#3498db" stroke-width="2" marker-end="url(#arw49d6f975)"/><rect x="70" y="100" width="394" height="56" rx="8" fill="#eaf3fb" stroke="#3498db" stroke-opacity="0.45"/><text x="88" y="124" font-size="15" fill="#2c3e50" font-weight="600" text-anchor="start">Units</text><text x="88" y="143" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">loosely coupled, independently deployable</text><path d="M267.0,156 L267.0,182" stroke="#3498db" stroke-width="2" marker-end="url(#arw49d6f975)"/><rect x="70" y="186" width="394" height="56" rx="8" fill="#eaf3fb" stroke="#3498db" stroke-opacity="0.45"/><text x="88" y="210" font-size="15" fill="#2c3e50" font-weight="600" text-anchor="start">Bolts</text><text x="88" y="229" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">the smallest iteration — hours, not weeks</text><path d="M267.0,242 L267.0,268" stroke="#3498db" stroke-width="2" marker-end="url(#arw49d6f975)"/><rect x="70" y="272" width="394" height="56" rx="8" fill="#eaf3fb" stroke="#3498db" stroke-opacity="0.45"/><text x="88" y="296" font-size="15" fill="#2c3e50" font-weight="600" text-anchor="start">Deployment Unit</text><text x="88" y="315" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">tested, operations-ready</text><path d="M70,300.0 L40,300.0 L40,42.0 L66,42.0" fill="none" stroke="#667eea" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arw49d6f975)"/><text x="34" y="171.0" font-size="12" fill="#667eea" font-weight="600" text-anchor="middle" transform="rotate(-90 34 171.0)">measurement criteria</text></svg>
+<figcaption>The factory's critical user journey, in the method's own vocabulary. Measure at every level.</figcaption>
+</figure>
+<p>That last item is an SLI in all but name, and it is demanded at exactly the right moment — while the humans are still in the room agreeing what the work is <em>for</em>, and before anyone has written code that would be awkward to instrument. Retrofitting measurement is expensive precisely because the decisions that make a system measurable are design decisions, and by the time the code exists they have all been made.</p>
+<p>So the failure mode is not that the method forgets to ask. It is what comes back when it does.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dt9754a1a8 dd9754a1a8"><title id="dt9754a1a8">Prose versus a measurable criterion</title><desc id="dd9754a1a8">Two columns contrasting vague measurement criteria written as prose with the same intent expressed as service level indicators that have thresholds, windows and denominators.</desc><rect x="16" y="14" width="218" height="154" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><rect x="16" y="14" width="218" height="34" rx="8" fill="#3498db" fill-opacity="0.16"/><text x="125.0" y="36" font-size="13.5" fill="#3498db" font-weight="700" text-anchor="middle">Measurement criteria as prose</text><text x="30" y="68" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• “Fast and reliable”</text><text x="30" y="98" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• “Good recommendation quality”</text><text x="30" y="128" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• “Minimal errors”</text><text x="30" y="158" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• “Scales well”</text><rect x="246" y="14" width="218" height="154" rx="8" fill="#f0f2ff" stroke="#cfe0f0"/><rect x="246" y="14" width="218" height="34" rx="8" fill="#667eea" fill-opacity="0.16"/><text x="355.0" y="36" font-size="13.5" fill="#667eea" font-weight="700" text-anchor="middle">Measurement criteria as an SLI</text><text x="260" y="68" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• p90 under 400ms, 28-day window</text><text x="260" y="98" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• 99.5% return a result</text><text x="260" y="128" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• CTR within 2pts of baseline</text><text x="260" y="158" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• a ratio with a denominator</text></svg>
+<figcaption>The method asks for measurement criteria. The left column is what teams actually write.</figcaption>
+</figure>
+<p>Everything on the left is a real thing a real team has written into a real requirements document, and none of it can be computed. The test is mechanical: <strong>can someone who was not in the room write a query that returns this number?</strong> If not, what you have is a shared feeling, and shared feelings do not survive the quarter.</p>
+<h2>How: Five Ratios You Can Collect Today</h2>
+<p>Good SLIs are ratios of good events over valid events, as the <a href="https://sre.google/workbook/implementing-slos/">SRE Workbook</a> puts it. If your harness writes a typed audit trail, you are not instrumenting anything — you are choosing which rows to count.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 338" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dt33186744 dd33186744"><title id="dt33186744">Five SLIs for an AI delivery factory</title><desc id="dd33186744">Five service level indicators, each expressed as a ratio of good events over valid events, labelled by the dimension it measures: quality, correctness, throughput or latency.</desc><rect x="16" y="14" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,14 L21,68" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="39" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Gate first-pass rate</text><text x="36" y="57" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">approved without revision ÷ all gate outcomes</text><text x="452" y="37" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">quality</text><rect x="16" y="78" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,78 L21,132" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="103" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Rework ratio</text><text x="36" y="121" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">STAGE_REVISING ÷ STAGE_COMPLETED</text><text x="452" y="101" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">quality</text><rect x="16" y="142" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,142 L21,196" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="167" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Sensor pass rate</text><text x="36" y="185" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">SENSOR_PASSED ÷ SENSOR_FIRED</text><text x="452" y="165" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">correctness</text><rect x="16" y="206" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,206 L21,260" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="231" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Unit convergence</text><text x="36" y="249" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">converged ÷ (converged + failed)</text><text x="452" y="229" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">throughput</text><rect x="16" y="270" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,270 L21,324" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="295" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Intent lead time</text><text x="36" y="313" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">WORKFLOW_STARTED → _COMPLETED, p50 and p90</text><text x="452" y="293" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">latency</text></svg>
+<figcaption>Every one is a ratio of good events over valid events. None of them needs a new agent to collect.</figcaption>
+</figure>
+<p><strong>Gate first-pass rate</strong> is the closest thing to a quality SLI the harness produces on its own, because the judge is a human who had to live with the result. When it falls, something upstream has degraded — a prompt change, a model change, an unfamiliar codebase — and you will know within a day rather than at the next retrospective. It also carries the sharpest measurement trap in the set. If you publish it as a team metric, humans learn to approve and then quietly fix, and your number improves while your factory does not. Pair it with the rework ratio, which counts the fixing, and watch the two together: a first-pass rate rising while rework rises is not an improvement, it is a reporting artefact.</p>
+<p><strong>Rework ratio</strong> is only useful broken down per stage. A factory-wide ratio of 0.2 sounds tolerable right up until you discover it is 0.9 concentrated entirely in domain design — at which point you have a specific, fixable problem instead of a vague sense that the agents are bad at architecture.</p>
+<p><strong>Sensor pass rate</strong> is the one number on the list with no model and no human in the judging seat, which makes it the most trustworthy and the least flattering. It moves when the code genuinely stops compiling or type-checking, and it is the first thing to look at after a provider ships a model update.</p>
+<p><strong>Unit convergence</strong> tells you whether parallelism is producing throughput or just expensive churn. Below about 0.9, the decomposition is wrong more often than the code is — which is a problem in Inception, not Construction, and no amount of retrying units will fix it.</p>
+<p><strong>Intent lead time</strong> should be split into machine time and human-wait time before you optimise anything. Most teams discover the harness is fast and the queue in front of a reviewer is not.</p>
+<p>One SLI is missing from that list on purpose, because it cannot come from the harness. <strong>Escaped defect rate</strong> — changes needing a fix within fourteen days of merge — is sourced from production rather than from the factory, which makes it the only measure in the set that the factory cannot flatter itself with. Every other number here is the system grading its own homework, honestly but from inside. Add this one as soon as you can attribute a fix back to the change that caused it, and treat disagreement between it and your internal numbers as the most interesting signal you have: a factory with excellent gate first-pass rates and a rising escaped defect rate is one where the reviews have stopped reviewing.</p>
+<p>Spend some care on the denominator. "Valid events" should exclude runs a human abandoned for reasons that have nothing to do with output quality — a changed priority, a meeting, an intent that turned out to be a duplicate. Leave those in and your SLIs will drift with your calendar. This is the same discipline as excluding synthetic traffic from an availability SLI, and it is the step most often skipped.</p>
+<p>Then set targets from evidence, not ambition. Run the factory for a few weeks collecting the SLIs and changing nothing, and set each objective just above observed performance, so the first month's error budget is tight but not already spent on day three. The <a href="https://slo-education.com.au/error-budget-calculator">error budget calculator</a> makes it concrete: a 95% gate first-pass SLO over 200 gates a month gives you ten rejections to spend before you have breached — a number a team can reason about, unlike "the AI should mostly get it right".</p>
+<p>Finally, write the definitions where they can be reviewed and argued with. The case for <a href="https://slo-education.com.au/blog/2026-09-01-slos-as-code-version-controlled-reliability-with-openslo-sloth-and-pyrra">SLOs as code</a> applies here with more force than it does to production services, because factory SLIs are newer, less standardised and far more contested. A definition living in one person's dashboard will drift the moment that person changes teams, and nobody will notice until the number stops meaning what everybody assumed.</p>
+<h2>What This Buys You</h2>
+<p>Instrumentation turns arguments into measurements. "The agents are getting worse" becomes a first-pass rate with a date on it. "We should add another approval gate" becomes a question about which stage actually carries the rework, answerable in an afternoon.</p>
+<p>And it produces the raw material for the harder decision waiting behind all of this: not whether the factory works, but how much autonomy it has earned — which is a question you can only answer with a budget, and a budget you can only build on numbers like these.</p>
+                </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of AI.</strong></p>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>

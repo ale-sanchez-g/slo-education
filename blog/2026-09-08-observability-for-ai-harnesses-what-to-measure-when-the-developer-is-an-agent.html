@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI coding harnesses are production infrastructure now. Learn which signals to collect from agent sessions, stages and tool calls, and how AI-DLC&#x27;s audit trail becomes telemetry.">
+    <meta name="keywords" content="AI observability, AI harness, AI-DLC, agent telemetry, OpenTelemetry, SRE, golden signals, audit trail">
+    <meta property="og:title" content="Observability for AI Harnesses: What to Measure When the Developer Is an Agent - SLO Education Hub">
+    <meta property="og:description" content="AI coding harnesses are production infrastructure now. Learn which signals to collect from agent sessions, stages and tool calls, and how AI-DLC&#x27;s audit trail becomes telemetry.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://slo-education.com.au/blog/2026-09-08-observability-for-ai-harnesses-what-to-measure-when-the-developer-is-an-agent">
+    <meta property="article:published_time" content="2026-09-08">
+    <title>Observability for AI Harnesses: What to Measure When the Developer Is an Agent - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/2026-09-08-observability-for-ai-harnesses-what-to-measure-when-the-developer-is-an-agent">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Observability for AI Harnesses: What to Measure When the Developer Is an Agent</h2>
+                <p class="hero-subtitle">AI coding harnesses are production infrastructure now. Learn which signals to collect from agent sessions, stages and tool calls, and how AI-DLC&#x27;s audit trail becomes telemetry.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
+                <div class="blog-post-meta">
+                    <span>2026-09-08</span>
+                    <span class="blog-post-tag">AI Reliability</span><span class="blog-post-tag">Observability</span><span class="blog-post-tag">AI-DLC</span>
+                </div>
+                <article class="blog-post-content">
+<p>For twenty years the software factory was boring in the best possible way. A commit landed, a runner picked it up, a fixed sequence of steps ran, and the answer was pass or fail. When something broke you read the log, and the log told you which step failed, because the steps never changed.</p>
+<p>An AI harness is not that. It is long-running, stateful and non-deterministic. It reads your repository, holds a conversation, dispatches sub-agents, writes files, runs commands and occasionally stops to ask permission. It has a working memory that fills up. It is, in every way that matters to an SRE, a distributed system that has been quietly promoted into the critical path of your delivery — and most teams are running it with no telemetry at all.</p>
+<h2>Why: The Old Feedback Loops Cannot Keep Up</h2>
+<p>Raja SP's <a href="https://prod.d13rzhkk8cj2z0.amplifyapp.com/">AI-DLC method definition paper</a> makes this case better than any monitoring vendor could. Traditional methods assumed iterations measured in weeks and months, and that assumption is exactly what made rituals like the standup and the retrospective viable — a human-paced feedback loop was fast enough to catch a human-paced process drifting. Properly applied AI, the paper argues, produces cycles measured in hours or days, which "needs continuous, real-time validation and feedback mechanisms, rendering many of the traditional rituals less relevant."</p>
+<p>That is an observability argument wearing methodology clothing. When the delivery loop turns over hourly, no ceremony staffed by humans reading transcripts will keep pace. The paper goes further and asks whether velocity survives as a useful metric at all. It is a fair question, and the SRE answer is a specific one: you replace metrics that count effort with metrics that are measured continuously and tied to outcomes.</p>
+<p>If that still sounds abstract, here are three questions teams running agents at scale ask within the first quarter, none of which a terminal transcript can answer. Why did every run on Tuesday afternoon stall at the same stage? Which of our forty repositories produces the most rework, and is it the codebase or the prompt? The provider shipped a model update on the seventeenth — did anything get worse, and can we prove it rather than argue about it?</p>
+<p>There is a fourth question, and it arrives with the invoice. Token spend is now a production cost that varies with how well the system is working: a run that thrashes costs several times what a clean run costs, so cost per merged change is a reliability signal wearing an accountant's coat. Teams that cannot attribute spend to a workflow discover this the month somebody enables parallel unit execution across forty repositories.</p>
+<h2>What: Four Layers Worth Instrumenting</h2>
+<p>Observability still answers the question it always answered — can you ask something new about the system's behaviour without shipping code to find out? For an agent harness that means four layers, and they differ enormously in volume and in what they cost to keep.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 274" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dta5c2e71f dda5c2e71f"><title id="dta5c2e71f">Four layers of AI harness telemetry</title><desc id="dda5c2e71f">A stack of four instrumentation layers, from coarse to fine: session, workflow and stage, tool call, and artifact and cost. Each row names what the layer covers and roughly how many events it produces per run.</desc><rect x="16" y="14" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,14 L21,68" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="39" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Session</text><text x="36" y="57" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">one human sitting down with one agent</text><text x="452" y="37" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">1 per sitting</text><rect x="16" y="78" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,78 L21,132" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="103" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Workflow and stage</text><text x="36" y="121" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">the unit of intent — where your SLIs live</text><text x="452" y="101" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">tens per run</text><rect x="16" y="142" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,142 L21,196" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="167" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Tool call</text><text x="36" y="185" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">every read, edit, command, sub-agent dispatch</text><text x="452" y="165" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">thousands per run</text><rect x="16" y="206" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,206 L21,260" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="231" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Artifact and cost</text><text x="36" y="249" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">what shipped, how many tokens, what it cost</text><text x="452" y="229" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">per deliverable</text></svg>
+<figcaption>Instrument coarse to fine. Most teams get the most value fastest from the stage layer.</figcaption>
+</figure>
+<p><strong>Start at the stage layer.</strong> It is where the equivalent of a "request" lives, it is the cheapest to collect, and it answers the question that is probably costing you the most today. A stage has a name, a lead, inputs, outputs, and an outcome of completed, revised or skipped. That is a span with a status, and almost every factory SLI worth having is a ratio over those outcomes.</p>
+<p>The <strong>session layer</strong> is thin but worth having early, because it carries the events that explain otherwise baffling behaviour — resumptions, and the compaction that marks the moment a conversation outgrew its window. A stage that succeeded before compaction and failed after it is telling you something specific.</p>
+<p>The <strong>tool-call layer</strong> is where you eventually see the difference between a model that is thinking and one that is thrashing: the same file read eleven times, an edit reverted and reapplied, a test suite run against unchanged code. It is also high-cardinality and expensive, so sample it. Keep every tool call for runs that failed or were rejected at a gate, and sample the successes at five or ten percent. You are keeping the evidence for the investigations you will actually run.</p>
+<p>The <strong>artifact and cost layer</strong> closes the loop between engineering and money, and it needs no sampling at all because there is one record per deliverable.</p>
+<p>One caution that will save you an awkward conversation. Agent telemetry contains prompts, and prompts contain source code, customer identifiers and occasionally credentials somebody pasted in. Decide before you start what is a metric, what is an attribute and what is a payload. Durations, outcomes and identifiers are safe to keep indefinitely. Prompt and completion bodies are a different asset class, and they belong behind the same controls as the repository they were drawn from, with a retention window measured in days rather than years.</p>
+<h2>How: Treat the Audit Trail as a Span Stream</h2>
+<p>You may not have to build the event stream at all. <a href="https://github.com/awslabs/aidlc-workflows">AI-DLC</a>, the AWS Labs implementation of that methodology, already writes one. Every intent carries an append-only audit trail, and the engine emits <strong>99 typed event types</strong> into it:</p>
+<pre><code>STAGE_STARTED     STAGE_REVISING    STAGE_COMPLETED
+GATE_APPROVED     GATE_REJECTED     HUMAN_TURN
+SENSOR_FIRED      SENSOR_PASSED     SENSOR_FAILED
+BOLT_STARTED      BOLT_COMPLETED    BOLT_FAILED
+SWARM_STARTED     SWARM_UNIT_FAILED RULE_LEARNED</code></pre>
+<p>That is not a log file, it is a schema. The names are stable, the transitions are paired, failures have their own types rather than being buried in prose, and every row carries an ISO timestamp. Which makes the translation mostly mechanical.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 274" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dt180eddb9 dd180eddb9"><title id="dt180eddb9">Mapping AI-DLC audit events onto OpenTelemetry</title><desc id="dd180eddb9">Four rows mapping categories of AI-DLC audit event to OpenTelemetry concepts: workflow events become a trace, phase and stage events become spans, gate and sensor events become span events, and identifiers become span attributes.</desc><rect x="16" y="14" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,14 L21,68" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="39" font-size="14.5" fill="#2980b9" font-weight="600" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">WORKFLOW_*</text><text x="36" y="57" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">one intent, start to finish</text><text x="452" y="37" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">Trace</text><rect x="16" y="78" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,78 L21,132" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="103" font-size="14.5" fill="#2980b9" font-weight="600" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">PHASE_* · STAGE_*</text><text x="36" y="121" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">nested, timed, named work</text><text x="452" y="101" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">Span</text><rect x="16" y="142" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,142 L21,196" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="167" font-size="14.5" fill="#2980b9" font-weight="600" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">GATE_* · SENSOR_*</text><text x="36" y="185" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">point-in-time outcomes</text><text x="452" y="165" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">Span event</text><rect x="16" y="206" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,206 L21,260" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="231" font-size="14.5" fill="#2980b9" font-weight="600" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">intent · unit · repo</text><text x="36" y="249" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">the identifiers you filter by</text><text x="452" y="229" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">Span attributes</text></svg>
+<figcaption>The audit trail is already a span stream. Translating it is mostly mechanical.</figcaption>
+</figure>
+<p>Send those spans to the backend that already holds your service traces, rather than buying a separate "AI observability" product on day one. The payoff is correlation, and it is worth more than any purpose-built dashboard: when a change ships and an SLO starts burning, the trace of the agent run that produced it sits one click away — the same move that <a href="https://slo-education.com.au/blog/2026-08-28-from-spike-to-span-linking-metrics-logs-and-traces-with-exemplars">exemplars</a> make between a metric spike and the span that caused it. Emit the event payloads as <a href="https://slo-education.com.au/blog/2026-05-25-structured-logs-your-sre-secret-weapon-for-faster-debugging">structured logs</a> rather than prose, and keep the field names identical to the audit event types so nobody maintains a translation table.</p>
+<p>Resist one temptation while you are wiring this up: do not start by building a bespoke "agent analytics" pipeline with its own storage and its own query language. Every team that does it ends up maintaining two observability stacks and correlating between them by hand at exactly the moment correlation matters most. The harness is a distributed system, you already run a backend for distributed systems, and the unglamorous choice is the one that still works in a year.</p>
+<p>Then restate the <a href="https://sre.google/sre-book/monitoring-distributed-systems/">golden signals</a> in the harness's own terms.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 274" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dt3fb160a8 dd3fb160a8"><title id="dt3fb160a8">The four golden signals restated for an agent harness</title><desc id="dd3fb160a8">The four golden signals mapped onto an AI harness: latency as stage duration, traffic as stages per day, errors including human gate rejections, and saturation as context-window headroom and concurrency.</desc><rect x="16" y="14" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,14 L21,68" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="39" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Latency</text><text x="36" y="57" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">stage duration, kept apart from time waiting at a gate</text><text x="452" y="37" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">p50 / p90</text><rect x="16" y="78" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,78 L21,132" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="103" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Traffic</text><text x="36" y="121" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">stages, units and workflows per day</text><text x="452" y="101" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">your denominator</text><rect x="16" y="142" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,142 L21,196" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="167" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Errors</text><text x="36" y="185" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">BOLT_FAILED · SENSOR_FAILED · GATE_REJECTED</text><text x="452" y="165" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">not just crashes</text><rect x="16" y="206" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,206 L21,260" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="231" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Saturation</text><text x="36" y="249" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">context headroom · agent slots · provider rate limits</text><text x="452" y="229" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">looks like forgetting</text></svg>
+<figcaption>Same four questions as any service. Only the nouns change.</figcaption>
+</figure>
+<p>Two of those have traps in them. <strong>Latency</strong> must separate machine time from time spent waiting at an approval gate, or your percentiles will measure your team's calendar rather than your system — and the fix for each is completely different. A slow stage is a prompt or context problem; a slow gate is a staffing problem, and no amount of model tuning will touch it.</p>
+<p><strong>Errors</strong> must include <code>GATE_REJECTED</code>, which is not a crash and will not appear in any error rate you inherit from a service. It is a human looking at the output and sending it back — the single most informative failure signal the system produces, because the judge had to live with the result.</p>
+<p><strong>Saturation</strong> deserves a note too, because it does not look like saturation. A saturated web server returns 503s. A saturated agent session simply forgets what it was doing: quality degrades smoothly and nothing anywhere reports an error. Context-window headroom before compaction is the closest thing to a queue depth you have, and it belongs on the dashboard next to the ones that look more familiar.</p>
+<h2>Start With One Question</h2>
+<p>You do not need all four layers this week, and a team that tries to build the complete picture before shipping anything usually ships nothing. Pick the question costing you the most — for most teams it is "how often does a run need human rework before it is accepted?" — and instrument only what answers it.</p>
+<p>That single ratio is the first SLI of your delivery factory. Once it is on a wall, the arguments change character: "the agents are getting worse" acquires a date and a number, and the case for the next layer of instrumentation tends to make itself.</p>
+<p>A sequence that works: stage events first, because they are cheap and they carry the SLIs. Then cost per merged change, because it is the number that buys you the budget for everything after it. Then sampled tool calls, once you have a specific investigation that needs them. Then prompt and completion capture, last and behind access controls, because by then you will know precisely which runs are worth keeping and for how long.</p>
+<p>The destination is not a wall of dashboards nobody reads. It is the ability to answer a question you have not thought of yet, about a system that is now writing a meaningful share of your software — and to answer it the same afternoon, rather than at a retrospective three weeks after it stopped mattering.</p>
+                </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of AI.</strong></p>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>

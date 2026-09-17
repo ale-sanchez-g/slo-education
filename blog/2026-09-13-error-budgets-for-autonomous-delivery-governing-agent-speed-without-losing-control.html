@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Autonomy should be earned, not assumed. Learn how an error budget policy decides when an AI-DLC run may skip approval gates and when the guardrails come back automatically.">
+    <meta name="keywords" content="error budget, autonomous delivery, AI-DLC, burn rate alerting, approval gates, SRE policy, agent autonomy">
+    <meta property="og:title" content="Error Budgets for Autonomous Delivery: Governing Agent Speed Without Losing Control - SLO Education Hub">
+    <meta property="og:description" content="Autonomy should be earned, not assumed. Learn how an error budget policy decides when an AI-DLC run may skip approval gates and when the guardrails come back automatically.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://slo-education.com.au/blog/2026-09-13-error-budgets-for-autonomous-delivery-governing-agent-speed-without-losing-control">
+    <meta property="article:published_time" content="2026-09-13">
+    <title>Error Budgets for Autonomous Delivery: Governing Agent Speed Without Losing Control - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/2026-09-13-error-budgets-for-autonomous-delivery-governing-agent-speed-without-losing-control">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Error Budgets for Autonomous Delivery: Governing Agent Speed Without Losing Control</h2>
+                <p class="hero-subtitle">Autonomy should be earned, not assumed. Learn how an error budget policy decides when an AI-DLC run may skip approval gates and when the guardrails come back automatically.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
+                <div class="blog-post-meta">
+                    <span>2026-09-13</span>
+                    <span class="blog-post-tag">Error Budgets</span><span class="blog-post-tag">AI-DLC</span><span class="blog-post-tag">SRE</span>
+                </div>
+                <article class="blog-post-content">
+<p>Most teams decide how much to trust an agent by temperament. The cautious lead keeps every approval gate switched on forever and wonders why the factory is slower than doing the work by hand. The bold one turns them all off after a good week, and finds out in production what the gates were for.</p>
+<p>Neither is measuring anything. Both are guessing — and the guess gets re-litigated every sprint, usually by the same two people, usually with the same two anecdotes.</p>
+<p>This is a solved problem. Not solved for AI specifically, but solved: SRE settled the equivalent argument about production change more than a decade ago, and the mechanism transfers with almost no modification.</p>
+<h2>Why: The Method Names the Tension But Not the Number</h2>
+<p>The <a href="https://prod.d13rzhkk8cj2z0.amplifyapp.com/">AI-DLC method definition paper</a> is unusually candid that this is a genuine trade-off rather than a free lunch. One of its stated principles is <em>"minimise stages, maximise flow"</em> — cut handoffs and transitions so work moves continuously, which is the entire promise of iterations measured in hours rather than weeks. A few lines later, the same principle insists that human validation stays critical so that AI-generated code "does not become rigid ('quick-cement') but stays adaptable for future iterations", describing those validation points as acting "like a loss function", identifying and pruning wasteful downstream effort before it occurs.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dtb1304813 ddb1304813"><title id="dtb1304813">The trade-off an error budget resolves</title><desc id="ddb1304813">Two columns. Removing gates buys flow and shorter iterations but risks rigid code. Keeping gates prunes errors early and keeps code adaptable but costs velocity.</desc><rect x="16" y="14" width="218" height="154" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><rect x="16" y="14" width="218" height="34" rx="8" fill="#3498db" fill-opacity="0.16"/><text x="125.0" y="36" font-size="13.5" fill="#3498db" font-weight="700" text-anchor="middle">Every gate you remove</text><text x="30" y="68" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• Faster flow</text><text x="30" y="98" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• Shorter Bolts</text><text x="30" y="128" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• Less waiting on humans</text><text x="30" y="158" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• Risk: &#x27;quick-cement&#x27;</text><rect x="246" y="14" width="218" height="154" rx="8" fill="#f0f2ff" stroke="#cfe0f0"/><rect x="246" y="14" width="218" height="34" rx="8" fill="#667eea" fill-opacity="0.16"/><text x="355.0" y="36" font-size="13.5" fill="#667eea" font-weight="700" text-anchor="middle">Every gate you keep</text><text x="260" y="68" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• Earlier error pruning</text><text x="260" y="98" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• Adaptable code</text><text x="260" y="128" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• Traceable decisions</text><text x="260" y="158" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• Risk: lost velocity</text></svg>
+<figcaption>The method asks for oversight that is "minimal but sufficient". A budget is what makes <em>sufficient</em> a number.</figcaption>
+</figure>
+<p>Both halves are right, which is precisely what makes the trade-off real rather than rhetorical. Strip out the gates and you get flow — and you also get code that nobody understood well enough to change three months later. Keep every gate and you get adaptable code that arrives too late to matter, produced by a factory costing more than the team it was supposed to accelerate.</p>
+<p>The paper resolves the tension with a phrase rather than a number: oversight should be "minimal but sufficient". Sufficient for what, judged how, on whose evidence, is left to the practitioner — and that gap is where most AI delivery programmes quietly come apart. Not because the principle is wrong, but because <em>sufficient</em>, without a measurement attached, is just the more persuasive person's opinion.</p>
+<p>It is worth being clear about why this is not a change advisory board with better branding. A CAB is a fixed tax: every change pays the same review cost regardless of evidence, and because nothing measures whether the reviews catch anything, the cost never comes down. An error budget inverts that. The tax floats, it is set by the factory's own recent track record, and a team that demonstrably produces clean work pays less of it. That is the difference between governance that decays into theatre and governance that stays honest.</p>
+<h2>What: Autonomy as a Governed Setting</h2>
+<p>The dials already exist. They are simply not connected to anything.</p>
+<p>An AI-DLC run declares a workflow profile that sets its stage route, artefact depth, test strategy and ceremony. The published profiles run from <code>express</code> at 10 of 33 stages with minimal depth and minimal tests, through <code>feature</code> at all 33 stages at standard depth, up to <code>enterprise</code> at all 33 at comprehensive depth — which deliberately retains the compliance, security, observability and incident-response work "because the cost of an undocumented decision is higher than the cost of the additional ceremony".</p>
+<p>Inside Construction there is a second dial. After the first approved stage, the engine fires a one-time <em>ladder prompt</em> asking whether the remainder of the run should be autonomous or gated. Autonomous skips the remaining per-stage gates; gated keeps them. The answer is recorded in state and honoured when the session resumes.</p>
+<p>So a run's autonomy is already a setting. On most teams today it is chosen by whoever happens to be at the keyboard, based on how the last one went. The proposal is only that you choose it from evidence instead.</p>
+<p>Four SLIs are enough to start, and you can collect all of them from a typed audit trail plus your existing version control:</p>
+<ul>
+<li><strong>Gate first-pass rate</strong> — approvals without revision, over all gate outcomes. Quality as judged by a human who had to live with the result.</li>
+<li><strong>Sensor pass rate</strong> — deterministic checks passed, over checks fired. Correctness with no model in the judging seat.</li>
+<li><strong>Rework ratio</strong> — stage revisions over stage completions, always broken down per stage.</li>
+<li><strong>Escaped defect rate</strong> — changes needing a fix within 14 days of merge. The only one sourced from production rather than the factory, and therefore the only one that cannot be gamed from inside it.</li>
+</ul>
+<p>Give each a target and a <strong>rolling</strong> 28-day budget — rolling rather than calendar-month, so a bad fortnight is not absolved by a date change. Then write the policy as an operations manual rather than an aspiration.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 274" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dt4be9caa4 dd4be9caa4"><title id="dt4be9caa4">An error budget policy for autonomous delivery</title><desc id="dd4be9caa4">Four budget states from healthy to exhausted, each granting a different level of agent autonomy: full speed above fifty percent remaining, narrowing through the middle bands, and a full stop when the budget is spent.</desc><rect x="16" y="14" width="448" height="54" rx="8" fill="#eaf7ef" stroke="#cfe0f0"/><path d="M21,14 L21,68" stroke="#27ae60" stroke-width="5" stroke-linecap="butt"/><text x="36" y="39" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Above 50% remaining</text><text x="36" y="57" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">autonomous construction · parallel batches · express profile</text><text x="452" y="37" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">full speed</text><rect x="16" y="78" width="448" height="54" rx="8" fill="#fdf2e6" stroke="#cfe0f0"/><path d="M21,78 L21,132" stroke="#e67e22" stroke-width="5" stroke-linecap="butt"/><text x="36" y="103" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">25% to 50%</text><text x="36" y="121" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">autonomous for bugfix and refactor only · features return to gated</text><text x="452" y="101" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">narrowed</text><rect x="16" y="142" width="448" height="54" rx="8" fill="#fdf2e6" stroke="#cfe0f0"/><path d="M21,142 L21,196" stroke="#e67e22" stroke-width="5" stroke-linecap="butt"/><text x="36" y="167" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Below 25%</text><text x="36" y="185" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">every profile gated · parallelism off · one unit at a time</text><text x="452" y="165" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">guarded</text><rect x="16" y="206" width="448" height="54" rx="8" fill="#fbeceb" stroke="#cfe0f0"/><path d="M21,206 L21,260" stroke="#c0392b" stroke-width="5" stroke-linecap="butt"/><text x="36" y="231" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Exhausted</text><text x="36" y="249" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">no new autonomous work until the factory&#x27;s own reliability is fixed</text><text x="452" y="229" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">stop</text></svg>
+<figcaption>Autonomy is earned and withdrawn automatically. Nobody has to win an argument to make the factory safer.</figcaption>
+</figure>
+<p>The thresholds are yours, and you should expect to tune them at least twice in the first quarter. What matters is that the decision now has an owner, a number and a trigger. Nobody has to win an argument to make the factory safer on a bad week, and nobody has to ask permission to go faster on a good one.</p>
+<p>One structural note. The platform team should own the policy; each delivery team should own its own budget. A single organisation-wide budget produces the worst outcome available — one team's bad fortnight throttles everybody, and no team ever feels the consequences of its own work.</p>
+<h2>How: Close the Loop, and Alert on the Burn</h2>
+<p>A monthly budget report tells you about a problem three weeks after it started. The policy above only does anything if budget state actually reaches the place where runs are configured, and reaches it quickly.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 342" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dt4707b147 dd4707b147"><title id="dt4707b147">The governance loop for an AI delivery factory</title><desc id="dd4707b147">A four-step cycle: measure the factory SLIs, compute the error budget state over a rolling 28-day window, set the next run&#x27;s profile, autonomy and parallelism from that state, and let the run emit the events that feed the next measurement.</desc><defs><marker id="arw4707b147" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3498db"/></marker></defs><rect x="70" y="14" width="394" height="56" rx="8" fill="#eaf3fb" stroke="#3498db" stroke-opacity="0.45"/><text x="88" y="38" font-size="15" fill="#2c3e50" font-weight="600" text-anchor="start">Measure</text><text x="88" y="57" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">gate pass · sensor pass · rework · escaped defects</text><path d="M267.0,70 L267.0,96" stroke="#3498db" stroke-width="2" marker-end="url(#arw4707b147)"/><rect x="70" y="100" width="394" height="56" rx="8" fill="#eaf3fb" stroke="#3498db" stroke-opacity="0.45"/><text x="88" y="124" font-size="15" fill="#2c3e50" font-weight="600" text-anchor="start">Compute budget state</text><text x="88" y="143" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">rolling 28-day window, per team</text><path d="M267.0,156 L267.0,182" stroke="#3498db" stroke-width="2" marker-end="url(#arw4707b147)"/><rect x="70" y="186" width="394" height="56" rx="8" fill="#eaf3fb" stroke="#3498db" stroke-opacity="0.45"/><text x="88" y="210" font-size="15" fill="#2c3e50" font-weight="600" text-anchor="start">Set run configuration</text><text x="88" y="229" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">profile · autonomy · parallelism</text><path d="M267.0,242 L267.0,268" stroke="#3498db" stroke-width="2" marker-end="url(#arw4707b147)"/><rect x="70" y="272" width="394" height="56" rx="8" fill="#eaf3fb" stroke="#3498db" stroke-opacity="0.45"/><text x="88" y="296" font-size="15" fill="#2c3e50" font-weight="600" text-anchor="start">Next run executes</text><text x="88" y="315" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">and emits the events you measure</text><path d="M70,300.0 L40,300.0 L40,42.0 L66,42.0" fill="none" stroke="#667eea" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arw4707b147)"/><text x="34" y="171.0" font-size="12" fill="#667eea" font-weight="600" text-anchor="middle" transform="rotate(-90 34 171.0)">every run feeds the next</text></svg>
+<figcaption>The policy only works if budget state actually reaches the run configuration. Close this loop or it is a wall poster.</figcaption>
+</figure>
+<p>Then apply <a href="https://slo-education.com.au/blog/2026-08-10-burn-rate-alerts-catch-slo-breaches-before-they-land">multi-window burn rate alerting</a> to the factory SLOs exactly as you would to a service: a fast window to catch an acute regression, a slow window to catch the drift that no single run would ever flag.</p>
+<p>The acute case is not hypothetical. A provider updates a model, or somebody edits a rule that ships in every prompt, and the sensor pass rate drops fifteen points within hours. A 14.4x burn rate over a one-hour window catches that the same afternoon, while the change responsible is still the most recent thing anyone touched. Without it, you find out a fortnight later, when a reviewer gets tired of rejecting things and mentions it in a retro.</p>
+<p>The slow case is subtler and considerably more common. A codebase grows past the point where the agent can hold enough of it in context, and the first-pass rate declines by a point a week. No single run looks wrong; every individual rejection has a plausible local explanation. A six-hour window evaluated over three days is what surfaces it.</p>
+<p>Budgets govern the aggregate, so you still need a fast local stop for the individual failure. AI-DLC's <em>halt-and-ask</em> is the right pattern: when a unit's code generation fails, Construction stops immediately — even in autonomous mode — and offers retry, skip or abort. If one unit in a parallel batch fails, the healthy units finish and keep their artefacts, and only the failed one raises a question. That is a circuit breaker with a human as the fallback path, and it is what makes the autonomous setting defensible at all. Autonomy that cannot stop itself is not autonomy; it is an unattended loop.</p>
+<p>Finally, decide in advance what exhaustion means, because that promise is what makes the rest of the policy credible. When the budget is spent, the factory's own reliability becomes the work: no new autonomous runs until somebody has read the audit trail for the failures, found the pattern, and fixed the rule, the sensor or the prompt that produced it. It is the equivalent of a production freeze, and it will be unpopular exactly once.</p>
+<h2>Why This Makes You Faster, Not Slower</h2>
+<p>The objection arrives immediately: this is bureaucracy with extra steps. It is the opposite, for the same reason error budgets make product teams faster in production.</p>
+<p>Without a budget, the only defensible posture is permanent caution, because no evidence would ever justify relaxing. Every gate you add is therefore forever, and the factory ratchets steadily back toward the ceremony it was built to remove. With a budget, caution is <em>priced</em>. A team that consistently produces clean runs accumulates headroom and spends it on speed — wider parallel batches, fewer gates, lighter profiles — and everyone can see exactly why they were allowed to. That is the flexibility half of the bargain. The resilience half is that the same mechanism claws the speed back automatically, without anyone having to be the villain.</p>
+<p>It also makes failure legible. A budget that is never spent does not mean the factory is excellent; it usually means the targets are too loose, or that the factory is running well below the speed it could sustain. A budget consumed steadily and deliberately is a factory operating at the edge of its designed envelope, which is where you want it.</p>
+<p>Start with one SLI. Take four weeks of gate first-pass data, set the target just above observed performance, and write two lines of policy: above target, Construction may run autonomous; below it, the gates come back. Run it for a month. You will spend a great deal less time arguing about whether the agents can be trusted, because you will be able to look it up.</p>
+<p>And the same discipline applies to the AI features you ship, not only to the ones that build them — our guide to <a href="https://slo-education.com.au/ai-slo-error-budget">AI SLOs and error budgets</a> covers the production side of that coin.</p>
+                </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of AI.</strong></p>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>

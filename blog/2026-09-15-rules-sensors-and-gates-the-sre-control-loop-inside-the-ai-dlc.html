@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rules feed forward, sensors feed back and gates hold the line. Learn how the AI-DLC control loop maps onto SRE practice and why deterministic checks beat model self-assessment.">
+    <meta name="keywords" content="AI-DLC, sensors, rules, approval gates, verification gate, control loop, deterministic verification, SRE">
+    <meta property="og:title" content="Rules, Sensors and Gates: The SRE Control Loop Inside the AI-DLC - SLO Education Hub">
+    <meta property="og:description" content="Rules feed forward, sensors feed back and gates hold the line. Learn how the AI-DLC control loop maps onto SRE practice and why deterministic checks beat model self-assessment.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://slo-education.com.au/blog/2026-09-15-rules-sensors-and-gates-the-sre-control-loop-inside-the-ai-dlc">
+    <meta property="article:published_time" content="2026-09-15">
+    <title>Rules, Sensors and Gates: The SRE Control Loop Inside the AI-DLC - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/2026-09-15-rules-sensors-and-gates-the-sre-control-loop-inside-the-ai-dlc">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Rules, Sensors and Gates: The SRE Control Loop Inside the AI-DLC</h2>
+                <p class="hero-subtitle">Rules feed forward, sensors feed back and gates hold the line. Learn how the AI-DLC control loop maps onto SRE practice and why deterministic checks beat model self-assessment.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
+                <div class="blog-post-meta">
+                    <span>2026-09-15</span>
+                    <span class="blog-post-tag">AI-DLC</span><span class="blog-post-tag">Reliability</span><span class="blog-post-tag">SRE Culture</span>
+                </div>
+                <article class="blog-post-content">
+<p>There is a failure mode every team building on agents discovers within about a fortnight. You ask the agent to check its own work, it reports that everything looks correct, and it is wrong.</p>
+<p>Not maliciously. It simply has no independent access to ground truth. The model that misread the requirement is the same model being asked whether the requirement was met, and it misreads it the same way twice — so self-assessment does not merely fail, it fails <em>confidently</em>, and in exactly the cases you most needed it to work. The errors are correlated, which is the one property that makes a check worthless.</p>
+<p>SRE has never trusted a component's opinion of its own health either. We do not ask a service whether it is up; we measure it from outside, with a probe that does not share its fate.</p>
+<h2>Why: A Loss Function Needs a Signal</h2>
+<p>The <a href="https://prod.d13rzhkk8cj2z0.amplifyapp.com/">AI-DLC method definition paper</a> describes human validation points as functioning "like a loss function" — catching and correcting errors early, before they snowball downstream. It is a good metaphor, and it repays being taken literally, because a loss function has a requirement the metaphor quietly hides. It needs a <em>measured error</em> to act on. Gradient descent without a loss value is just descent.</p>
+<p>A human reviewing output at an approval gate is computing that error term from whatever they can see in the time they have. At sprint cadence, that works — a fortnight of work, an afternoon of review, and the ratio is sustainable. At the hours-or-days cadence the paper is designing for, where a Bolt is the smallest iteration and Units are deliberately decoupled to run in parallel, the arithmetic inverts. Human attention becomes the scarcest input in the system, and spending it on things a program could have checked is the most expensive mistake available.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dte45994d7 dde45994d7"><title id="dte45994d7">Splitting the error term at a gate</title><desc id="dde45994d7">Two columns dividing the work of an approval gate. The machine checks objective, cheaply verifiable properties. The human judges intent, trade-offs and risk.</desc><rect x="16" y="14" width="218" height="154" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><rect x="16" y="14" width="218" height="34" rx="8" fill="#3498db" fill-opacity="0.16"/><text x="125.0" y="36" font-size="13.5" fill="#3498db" font-weight="700" text-anchor="middle">Machine computes</text><text x="30" y="68" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• Does it compile?</text><text x="30" y="98" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• Do the types check?</text><text x="30" y="128" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• Is a secret in the diff?</text><text x="30" y="158" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• Is the migration present?</text><rect x="246" y="14" width="218" height="154" rx="8" fill="#f0f2ff" stroke="#cfe0f0"/><rect x="246" y="14" width="218" height="34" rx="8" fill="#667eea" fill-opacity="0.16"/><text x="355.0" y="36" font-size="13.5" fill="#667eea" font-weight="700" text-anchor="middle">Human computes</text><text x="260" y="68" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• Is this the right thing?</text><text x="260" y="98" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• Does this trade-off hold?</text><text x="260" y="128" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• Is this risk acceptable?</text><text x="260" y="158" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">• Will we regret this?</text></svg>
+<figcaption>A gate where a senior engineer is checking formatting is a gate wasting a loss function.</figcaption>
+</figure>
+<p>Which reframes the usual design question. It is not "how many gates should we have". It is <strong>at each gate, which part of the error term is the machine computing, and which part is the human?</strong> Asked that way, a gate where a senior engineer is checking import ordering is not thoroughness. It is a loss function being spent on a rounding error.</p>
+<h2>What: Feedforward, Feedback, and the Loop Between Them</h2>
+<p>AI-DLC's documentation describes two mechanisms as the halves of a control loop, which is not language you often see in a developer tool.</p>
+<p><strong>Rules are the feedforward half.</strong> A persistent behavioural instruction — your logging standard, your naming conventions, the library you standardised on — authored once and pulled into context for every stage it covers. Rules resolve through a strictly additive chain of five layers.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 338" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dt4eb7c9e3 dd4eb7c9e3"><title id="dt4eb7c9e3">How rules resolve, layer by layer</title><desc id="dd4eb7c9e3">Five layers of behavioural rules resolving from organisation down to stage. Every applicable layer appears in context and narrower layers only add to broader ones, so an organisation-level rule can never be overridden.</desc><rect x="16" y="14" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,14 L21,68" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="39" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Organisation</text><text x="36" y="57" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">security, licensing, data handling</text><text x="452" y="37" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">never overridden</text><rect x="16" y="78" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,78 L21,132" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="103" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Team</text><text x="36" y="121" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">language, framework, review conventions</text><text x="452" y="101" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">adds</text><rect x="16" y="142" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,142 L21,196" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="167" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Project</text><text x="36" y="185" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">this repository&#x27;s libraries and patterns</text><text x="452" y="165" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">adds</text><rect x="16" y="206" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,206 L21,260" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="231" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Phase</text><text x="36" y="249" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">what applies throughout Construction</text><text x="452" y="229" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">adds</text><rect x="16" y="270" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,270 L21,324" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="295" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Stage</text><text x="36" y="313" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">narrowest scope: this stage only</text><text x="452" y="293" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">adds</text></svg>
+<figcaption>Strictly additive. A narrower layer can add to a broader one, never subtract from it.</figcaption>
+</figure>
+<p>Additive matters more than it sounds. Because broader layers are never overridden, only added to, a team cannot quietly opt out of an organisation-level security rule by writing a narrower one that contradicts it. Anyone who has watched a linting config get progressively disabled on the way down a directory tree will recognise what that design is preventing.</p>
+<p>It also creates a cost that nobody warns you about. <strong>Every rule consumes context</strong>, and context is the resource your agent needs for the code it is supposed to be reading. A rule set that has grown by accretion for a year — every past annoyance memorialised as an instruction — competes directly with the repository for the model's attention, and the symptom is a mysterious decline in output quality that correlates with nothing in your prompts. Rules deserve the same periodic deletion pass you would give a test suite. If you cannot point at a recent correction a rule prevented, it is a comment, not a control.</p>
+<p><strong>Sensors are the feedback half.</strong> A deterministic check defined by a manifest — a linter, a type check, a custom validator. Sensors fire on matching edits, or once per deliverable at the gate, recording <code>SENSOR_FIRED</code>, <code>SENSOR_PASSED</code> and <code>SENSOR_FAILED</code>. Bindings are advisory or blocking, and a blocking finding needs a correction or an explicit, audited override.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 342" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dt9ca624de dd9ca624de"><title id="dt9ca624de">The AI-DLC control loop</title><desc id="dd9ca624de">A four-step cycle: rules feed forward into stage execution, sensors feed back deterministic verification, and the learning loop promotes confirmed corrections into new rules or sensors, which returns to the start.</desc><defs><marker id="arw9ca624de" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3498db"/></marker></defs><rect x="70" y="14" width="394" height="56" rx="8" fill="#eaf3fb" stroke="#3498db" stroke-opacity="0.45"/><text x="88" y="38" font-size="15" fill="#2c3e50" font-weight="600" text-anchor="start">Rules — feedforward</text><text x="88" y="57" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">org → team → project → phase → stage, strictly additive</text><path d="M267.0,70 L267.0,96" stroke="#3498db" stroke-width="2" marker-end="url(#arw9ca624de)"/><rect x="70" y="100" width="394" height="56" rx="8" fill="#eaf3fb" stroke="#3498db" stroke-opacity="0.45"/><text x="88" y="124" font-size="15" fill="#2c3e50" font-weight="600" text-anchor="start">Stage executes</text><text x="88" y="143" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">the agent does the work in context</text><path d="M267.0,156 L267.0,182" stroke="#3498db" stroke-width="2" marker-end="url(#arw9ca624de)"/><rect x="70" y="186" width="394" height="56" rx="8" fill="#eaf3fb" stroke="#3498db" stroke-opacity="0.45"/><text x="88" y="210" font-size="15" fill="#2c3e50" font-weight="600" text-anchor="start">Sensors — feedback</text><text x="88" y="229" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">deterministic checks: advisory or blocking</text><path d="M267.0,242 L267.0,268" stroke="#3498db" stroke-width="2" marker-end="url(#arw9ca624de)"/><rect x="70" y="272" width="394" height="56" rx="8" fill="#eaf3fb" stroke="#3498db" stroke-opacity="0.45"/><text x="88" y="296" font-size="15" fill="#2c3e50" font-weight="600" text-anchor="start">Learning loop</text><text x="88" y="315" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">a confirmed correction becomes a rule or a new sensor</text><path d="M70,300.0 L40,300.0 L40,42.0 L66,42.0" fill="none" stroke="#667eea" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arw9ca624de)"/><text x="34" y="171.0" font-size="12" fill="#667eea" font-weight="600" text-anchor="middle" transform="rotate(-90 34 171.0)">promoted back into rules</text></svg>
+<figcaption>Rules are the golden path. Sensors are the monitoring. The learning loop is the action item that ships.</figcaption>
+</figure>
+<p>Read as an SRE, the mapping is immediate. Rules are your golden path and your platform defaults — the things you set up so the common case is correct by construction. Sensors are your monitoring and your assertions — the things that tell you the truth when the common case did not hold. A pipeline with only rules is a system with no monitoring: it will work until it does not, and you will find out from a customer. A pipeline with only sensors is a system with no platform engineering: you catch everything late and fix it by hand, forever.</p>
+<h2>How: Choose Blocking Carefully, and Always Leave the Door</h2>
+<p>Advisory versus blocking is the same decision as page versus ticket in alerting, and it goes wrong the same way. Make everything blocking and the agent halts on style opinions while humans learn to override reflexively — alert fatigue, destroying signal by exactly the same mechanism, and the override becomes muscle memory rather than a decision. Make everything advisory and nothing is enforced; findings scroll past in a transcript nobody reads.</p>
+<p>The rule of thumb that survives contact with reality: <strong>blocking sensors check things that are objectively wrong and cheaply verifiable.</strong> The code does not compile. The types do not check. A credential is in the diff. A required migration is missing. Taste, structure and preference start advisory, and are promoted only when the audit trail shows they are being ignored <em>and</em> that the ignoring is causing rework — two conditions, not one, because plenty of advisory findings are safely ignorable and promoting those is how you arrive at the fatigue problem from the other direction.</p>
+<p>A starting catalogue that earns its keep in most repositories: the formatter and linter you already run in CI, a type check, a secret scanner, a dependency licence check, and one project-specific validator for whatever your codebase gets wrong most often. That last one is worth more than the other five combined, and you already know what it is.</p>
+<p>The audited override matters as much as the block. A blocking check with no escape hatch gets disabled the first time it is wrong at 2am, and it stays disabled; one whose override leaves a row in the audit trail gets used correctly, because the escape is visible and attributable. It is the same design as an error budget policy exception — you can always ship anyway, and the decision is on the record with a name attached. Then review the overrides monthly. A sensor overridden ten times in a month is not protecting you, it is describing a rule you have not written.</p>
+<p>There is a third kind of check worth separating out, because it catches a failure the other two cannot. AI-DLC runs an automated <em>verification gate</em> at each phase boundary, validating that every required artefact from the completing phase exists, that traceability links are intact — every requirement maps to a story — and that there are no orphaned artefacts before downstream stages build on them. That is a referential integrity check, run where corruption becomes expensive.</p>
+<p>Long agent runs are unusually prone to quiet drift of exactly this kind. A requirement gets dropped three stages back, everything downstream remains internally consistent and entirely plausible, and nothing surfaces until a human reads the final diff closely enough to notice something missing — which is the reading people are worst at. A sensor will not catch it, because nothing is wrong with any individual artefact. Only a check that knows what should exist can find what does not.</p>
+<p>Then close the loop. During a stage, corrections are recorded; at the gate they are surfaced, the human confirms which to keep, and each becomes a durable practice or scaffolds a new sensor, recorded as <code>RULE_LEARNED</code> or <code>SENSOR_PROPOSED</code>. That is a <a href="https://slo-education.com.au/blog/2026-08-17-post-incident-reviews-that-fix-systems-not-people">blameless post-incident review</a> compressed into a single run — a correction is an incident, however small, and the valuable output is never the fix but the change that stops the class recurring.</p>
+<p>When a correction becomes a rule, ask whether it also deserves a sensor. Rules shape behaviour probabilistically; sensors verify deterministically. Anything you would be genuinely upset to ship needs both, because the rule makes the right outcome likely and only the sensor makes the wrong one impossible.</p>
+<p>Finally, treat rules and sensor manifests the way you treat <a href="https://slo-education.com.au/blog/2026-09-01-slos-as-code-version-controlled-reliability-with-openslo-sloth-and-pyrra">SLO definitions in version control</a>: in the repository, changed by pull request, reviewed by someone other than the author. A rule change alters the behaviour of every future run in its scope, which makes it a higher-blast-radius edit than most application code — and it is exactly the kind of change that gets made in a hurry, at the end of a frustrating session, by whoever was closest to the keyboard and most annoyed.</p>
+                </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of AI.</strong></p>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>

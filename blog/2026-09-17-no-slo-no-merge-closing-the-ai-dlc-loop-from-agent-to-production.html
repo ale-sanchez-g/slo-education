@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-DLC puts observability, incident response and SLO reporting inside the lifecycle. Learn how to make agents ship dashboards, alerts and error budgets alongside the code.">
+    <meta name="keywords" content="SLO, observability as code, AI-DLC Operation phase, incident response, runbooks, definition of done, SRE">
+    <meta property="og:title" content="No SLO, No Merge: Closing the AI-DLC Loop from Agent to Production - SLO Education Hub">
+    <meta property="og:description" content="AI-DLC puts observability, incident response and SLO reporting inside the lifecycle. Learn how to make agents ship dashboards, alerts and error budgets alongside the code.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://slo-education.com.au/blog/2026-09-17-no-slo-no-merge-closing-the-ai-dlc-loop-from-agent-to-production">
+    <meta property="article:published_time" content="2026-09-17">
+    <title>No SLO, No Merge: Closing the AI-DLC Loop from Agent to Production - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/2026-09-17-no-slo-no-merge-closing-the-ai-dlc-loop-from-agent-to-production">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>No SLO, No Merge: Closing the AI-DLC Loop from Agent to Production</h2>
+                <p class="hero-subtitle">AI-DLC puts observability, incident response and SLO reporting inside the lifecycle. Learn how to make agents ship dashboards, alerts and error budgets alongside the code.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
+                <div class="blog-post-meta">
+                    <span>2026-09-17</span>
+                    <span class="blog-post-tag">SLOs</span><span class="blog-post-tag">AI-DLC</span><span class="blog-post-tag">Incident Management</span>
+                </div>
+                <article class="blog-post-content">
+<p>An AI factory that ends at "the tests pass" has not finished the job. It has moved the unfinished part somewhere less convenient.</p>
+<p>Somebody still has to answer a page about the service the agent built, and that somebody will be a human with no memory of writing it, reading code they have never seen, at an hour when nobody reads carefully. Everything that would normally make that survivable — the author is in the building, someone remembers the trade-off, the design is still in somebody's head — has quietly been removed.</p>
+<h2>Why: Generation Outran Operational Readiness</h2>
+<p>This is the failure that will define the next couple of years of AI-assisted delivery. Capacity to produce code has raced ahead; capacity to operate it has not moved at all. The teams who get through it will be the ones who treat observability as a deliverable of the build rather than a follow-up ticket that never reaches the top of a backlog — and the ones who do not will accumulate services nobody can explain, faster than they ever could before.</p>
+<p>The <a href="https://prod.d13rzhkk8cj2z0.amplifyapp.com/">AI-DLC method definition paper</a> gets the architecture right and the vocabulary wrong, in a way worth naming precisely. Its Operations phase has AI analyse metrics, logs and traces to detect patterns, identify anomalies and "predict potential SLA violations", integrate with predefined incident runbooks, propose actions such as resource scaling, performance tuning or fault isolation, and execute those resolutions once developers approve. Developers "serve as validators, ensuring AI-generated insights and proposed actions align with SLAs and compliance requirements".</p>
+<p>Every structural decision there is correct. The noun is not.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 274" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dt962ef7ee dd962ef7ee"><title id="dt962ef7ee">Why an SLO is not an SLA</title><desc id="dd962ef7ee">Four bands from one hundred percent down to a contractual service level agreement. The internal service level objective sits above the agreement, and the error budget is the headroom between them.</desc><rect x="16" y="14" width="448" height="54" rx="8" fill="#f6f7f9" stroke="#cfe0f0"/><path d="M21,14 L21,68" stroke="#7f8c8d" stroke-width="5" stroke-linecap="butt"/><text x="36" y="39" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">100%</text><text x="36" y="57" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">nobody ships this, and pricing it is how budgets get blown</text><text x="452" y="37" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">unattainable</text><rect x="16" y="78" width="448" height="54" rx="8" fill="#eaf7ef" stroke="#cfe0f0"/><path d="M21,78 L21,132" stroke="#27ae60" stroke-width="5" stroke-linecap="butt"/><text x="36" y="103" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">99.95% — your internal SLO</text><text x="36" y="121" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">the target you steer by, and what the agent reasons about</text><text x="452" y="101" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">steer here</text><rect x="16" y="142" width="448" height="54" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,142 L21,196" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="167" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Error budget: about 22 minutes a month</text><text x="36" y="185" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">the headroom between the two — this is the signal</text><text x="452" y="165" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">spend it</text><rect x="16" y="206" width="448" height="54" rx="8" fill="#fbeceb" stroke="#cfe0f0"/><path d="M21,206 L21,260" stroke="#c0392b" stroke-width="5" stroke-linecap="butt"/><text x="36" y="231" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">99.9% — the contractual SLA</text><text x="36" y="249" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">below this line the conversation is about service credits</text><text x="452" y="229" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">the cliff</text></svg>
+<figcaption>An agent that reasons about the middle band has something to trade off. One watching the bottom line has an alarm.</figcaption>
+</figure>
+<p>An SLA is a contract with a penalty attached — a lagging, legal artefact. By the time you are predicting a violation of one, you are already in a conversation about service credits, and your options have narrowed to the expensive ones. An SLO is the internal target you steer by, set deliberately tighter, and the error budget is the headroom between them.</p>
+<p>That distinction changes what an agent can usefully do, which is why it is worth more than a terminology quibble. "Predict an SLA violation" is a binary alarm that fires late and offers nothing to trade off — the answer is always the same, and it is always urgent. "This Unit has burned 60% of its 28-day budget in nine days, and at the current rate it exhausts on the 21st" is a continuous signal with proportionality built in. It supports a small response now or a large one later, and it distinguishes between them.</p>
+<p>If you are handing an agent the authority to propose — let alone execute — scaling and fault isolation, that proportionality is the whole safety argument. An agent reasoning about a cliff edge has exactly one move and will make it every time. An agent reasoning about burn rate can tell the difference between a blip worth noting and a trend worth acting on, which is the difference between an assistant and an incident generator. Our <a href="https://slo-education.com.au/cuj-sli-slo-error-budget">CUJ to SLI to SLO walkthrough</a> covers the ladder from journey to target if that distinction is new to your team.</p>
+<h2>What: Operations Belongs Inside the Lifecycle</h2>
+<p>The structural answer is to make operations a phase, not an afterthought. AI-DLC does this explicitly: the Operation phase owns the deployment pipeline and rollback runbook, environment provisioning, deployment execution with smoke tests and health checks, <strong>observability setup — dashboards, alarms and SLO config</strong>, incident response runbooks and an escalation matrix, performance validation against the NFRs, and finally an SLO report and cost analysis.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 342" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dtc92fbc82 ddc92fbc82"><title id="dtc92fbc82">Where reliability enters the AI-DLC lifecycle</title><desc id="ddc92fbc82">A vertical lifecycle: Inception produces measurement criteria, Construction captures observability non-functional requirements, Operations produces dashboards, alarms, SLO config and runbooks, and the SLO report feeds back into the next Intent.</desc><defs><marker id="arwc92fbc82" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3498db"/></marker></defs><rect x="70" y="14" width="394" height="56" rx="8" fill="#eaf3fb" stroke="#3498db" stroke-opacity="0.45"/><text x="88" y="38" font-size="15" fill="#2c3e50" font-weight="600" text-anchor="start">Inception</text><text x="88" y="57" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">Mob Elaboration → measurement criteria per Unit</text><path d="M267.0,70 L267.0,96" stroke="#3498db" stroke-width="2" marker-end="url(#arwc92fbc82)"/><rect x="70" y="100" width="394" height="56" rx="8" fill="#eaf3fb" stroke="#3498db" stroke-opacity="0.45"/><text x="88" y="124" font-size="15" fill="#2c3e50" font-weight="600" text-anchor="start">Construction</text><text x="88" y="143" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">NFRs include observability, per Unit</text><path d="M267.0,156 L267.0,182" stroke="#3498db" stroke-width="2" marker-end="url(#arwc92fbc82)"/><rect x="70" y="186" width="394" height="56" rx="8" fill="#eaf3fb" stroke="#3498db" stroke-opacity="0.45"/><text x="88" y="210" font-size="15" fill="#2c3e50" font-weight="600" text-anchor="start">Operations</text><text x="88" y="229" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">dashboards · alarms · SLO config · runbooks</text><path d="M267.0,242 L267.0,268" stroke="#3498db" stroke-width="2" marker-end="url(#arwc92fbc82)"/><rect x="70" y="272" width="394" height="56" rx="8" fill="#eaf3fb" stroke="#3498db" stroke-opacity="0.45"/><text x="88" y="296" font-size="15" fill="#2c3e50" font-weight="600" text-anchor="start">SLO report</text><text x="88" y="315" font-size="12.5" fill="#5a6c7d" font-weight="400" text-anchor="start">error budget burn, cost, what to build next</text><path d="M70,300.0 L40,300.0 L40,42.0 L66,42.0" fill="none" stroke="#667eea" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arwc92fbc82)"/><text x="34" y="171.0" font-size="12" fill="#667eea" font-weight="600" text-anchor="middle" transform="rotate(-90 34 171.0)">becomes the next Intent</text></svg>
+<figcaption>Reliability is not a phase at the end. It is specified at the start and it feeds the next cycle.</figcaption>
+</figure>
+<p>Note that SLO config is listed as an artefact of the run, sitting beside the dashboards and alarms — a thing the lifecycle is expected to produce, not a thing a team gets around to. And it does not start at the end. During Construction, each Unit gathers non-functional requirements covering performance, security, scalability, reliability and <em>observability</em>, so the instrumentation requirement is captured while the design is still being made and while changing it is still cheap.</p>
+<p>There is a catch worth naming, because it is where this breaks in practice. Every Operation stage is conditional, and the whole phase is skipped for the MVP and proof-of-concept profiles. That is a defensible default — a PoC genuinely does not need an escalation matrix, and forcing one would guarantee the profile goes unused. But it is also precisely how unobserved services reach production, because a PoC that survives contact with real users gets promoted by somebody in a hurry, on a good day, with a demo behind them and no time to re-run anything.</p>
+<p>Tooling will not stop them. The organisational rule has to: <strong>a profile that skips Operation may not serve production traffic until it has been re-run through one that does not.</strong> Write it down before you need it, because the argument is unwinnable once there is a customer on the other end.</p>
+<h2>How: Make "No SLO, No Merge" a Real Gate</h2>
+<p>Requiring observability as an artefact only means something if something checks. The practical version is a deterministic sensor, or simply a required CI job, that fails a change when the Unit it belongs to has no reliability definition attached.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 318" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dta8d5154f dda8d5154f"><title id="dta8d5154f">Definition of Done for a Unit of work</title><desc id="dda8d5154f">A six-item checklist: name the user journey, define the SLI as a ratio, emit it from the code in this change, commit the target and window, route a burn rate alert to a named owner, and write a runbook.</desc><rect x="16" y="14" width="448" height="40" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,14 L21,54" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="39" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">The user journey this Unit serves is named</text><text x="452" y="39" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">from Inception</text><rect x="16" y="64" width="448" height="40" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,64 L21,104" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="89" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">An SLI is defined as good ÷ valid events</text><text x="452" y="89" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">a ratio, not prose</text><rect x="16" y="114" width="448" height="40" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,114 L21,154" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="139" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">The code in this change emits that SLI</text><text x="452" y="139" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">not inferred later</text><rect x="16" y="164" width="448" height="40" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,164 L21,204" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="189" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">Target and rolling window are in the repo</text><text x="452" y="189" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">reviewable</text><rect x="16" y="214" width="448" height="40" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,214 L21,254" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="239" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">A burn rate alert routes to a named owner</text><text x="452" y="239" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">a person</text><rect x="16" y="264" width="448" height="40" rx="8" fill="#eaf3fb" stroke="#cfe0f0"/><path d="M21,264 L21,304" stroke="#3498db" stroke-width="5" stroke-linecap="butt"/><text x="36" y="289" font-size="14.5" fill="#2c3e50" font-weight="600" text-anchor="start">A runbook says what to do first</text><text x="452" y="289" font-size="12" fill="#7f8c8d" font-weight="400" text-anchor="end">at 3am</text></svg>
+<figcaption>The Inception measurement criteria, promoted into something that executes.</figcaption>
+</figure>
+<p>Read that against what the method already collects and most of it is a promotion rather than an addition. Mob Elaboration is supposed to produce "Measurement Criteria that traces to the business intent" for every Unit at the very start of the lifecycle. The checklist above is simply that artefact made executable — the same criterion, expressed as a query that runs, a target committed to the repository, and an alert with a name on it. If your Inception ritual produces measurement criteria that cannot become those three things by the end of Construction, what it produced was prose.</p>
+<p>The SLI line matters most, and it is the one most often fudged. An SLO written against a metric the service does not emit is a wish, and it will read as 100% forever — which is worse than having no SLO at all, because it actively reassures. Require that the instrumentation ships in the same change as the objective, so a reviewer sees the target and the query that feeds it side by side.</p>
+<p>Agents are unusually good at producing the rest of this. The cost of a runbook was always tedium rather than difficulty, and tedium is exactly what they remove; the same goes for dashboard definitions, alert rules and the first draft of an escalation matrix. What they cannot supply is the judgement about <em>what the target should be</em> and <em>who gets woken up</em>. Both are business decisions wearing technical clothing — the first prices reliability against velocity, the second commits a named human's nights — and neither should be inferred from a codebase. Keep those two at the approval gate and let the machine do the typing.</p>
+<h2>Incident Response When the Author Is an Agent</h2>
+<p>Incident response leans on context that is quietly disappearing: somewhere in the building is a person who remembers why the code is like that. When the author was an agent, provenance has to replace them — and it can, provided you kept it. An audit trail recording which Intent and which Unit produced a change lets an investigation walk back from the failing deployment to the requirements, the design decisions and the gates behind it. That is a better trail than most human-authored code leaves; the qualifier is that it only exists if somebody decided to retain it before they needed it.</p>
+<p>Your <a href="https://slo-education.com.au/incident-management">escalation matrix</a> then needs an honest row for AI-generated components: who is the accountable human owner, and what is the fallback when nobody understands the code well enough to fix it safely under time pressure? Usually that fallback is the rollback runbook from the deployment pipeline stage — which is a strong argument for making sure that artefact is real and rehearsed, rather than a heading in a document generated at the end of a run nobody read.</p>
+<p>Then run the <a href="https://slo-education.com.au/blog/2026-08-17-post-incident-reviews-that-fix-systems-not-people">post-incident review</a> as you always would, blamelessly, with one addition: ask whether the lifecycle should have caught it. A missing NFR at the Construction stage, a sensor that should have been blocking rather than advisory, a rule that would have prevented the pattern entirely. In an AI factory the highest-leverage action item is rarely the code fix — it is the change to the loop that prevents the whole class of problem from being generated again next week, at speed, across every repository.</p>
+<h2>Close the Loop</h2>
+<p>The final stage produces an SLO report and a cost analysis, and its output feeds back to the start of the lifecycle as input to the next Intent. That arrow is the entire argument in one line: production reliability data is not the end of the pipeline, it is the beginning of the next one.</p>
+<p>A factory that runs in the dark and never reads its own instruments will drift until something expensive happens. One that feeds SLO reports and error budget burn back into what it builds next is doing what SRE has always been for — using evidence about how the system behaves in the real world to decide what to change. That the builder is now a machine does not change the discipline. It only raises the cost of not having it.</p>
+                </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of AI.</strong></p>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>
