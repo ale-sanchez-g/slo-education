@@ -252,7 +252,7 @@
 }
 
 .blog-post-content a:hover {
-    color: var(--color-hover);
+    color: var(--color-primary);
 }
 
 /* Code: a darker technical surface that still reads as brand green. */

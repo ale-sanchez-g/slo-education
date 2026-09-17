@@ -711,7 +711,7 @@
 .urgency-badge.critical { background: var(--color-risk-bg); color: var(--color-risk); }
 .urgency-badge.high     { background: var(--color-caution-bg); color: var(--color-caution); }
 .urgency-badge.medium   { background: var(--color-caution-bg); color: var(--color-caution); }
-.urgency-badge.low      { background: var(--color-info-bg); color: var(--color-hover); }
+.urgency-badge.low      { background: var(--color-info-bg); color: var(--color-info); }
 
 .table-note {
     margin-top: 1rem;

@@ -478,7 +478,7 @@
 }
 
 .reset-btn:hover:not(:disabled) {
-    background: var(--color-hover);
+    background: var(--color-primary);
     transform: translateY(-1px);
     box-shadow: 0 4px 10px rgba(102, 126, 234, 0.35);
 }
@@ -796,7 +796,7 @@
 }
 
 .reading-list a:hover {
-    color: var(--color-accent);
+    color: var(--color-primary);
     text-decoration: underline;
 }
 

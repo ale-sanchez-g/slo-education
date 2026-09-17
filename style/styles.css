@@ -24,6 +24,9 @@
 
     /* Structure */
     --color-border: #E0E4E0;
+    /* #40916C is 3.83:1 on white: fine for borders, focus rings and
+       other non-text UI (3:1), but it must never carry text or sit
+       behind white text. Text hover darkens to --color-primary. */
     --color-hover: #40916C;
 
     /* Signature gradient — a brand device, used sparingly */
@@ -520,7 +523,7 @@ pre, code {
 }
 
 .resource-card a:hover {
-    color: var(--color-accent);
+    color: var(--color-primary);
     text-decoration: underline;
 }
 
@@ -757,7 +760,7 @@ footer {
 }
 
 .cookie-accept:hover {
-    background-color: var(--color-hover);
+    background-color: var(--color-primary);
     transform: translateY(-2px);
 }
 
@@ -831,7 +834,7 @@ footer {
 }
 
 .privacy-content a:hover {
-    color: var(--color-accent);
+    color: var(--color-primary);
 }
 
 .privacy-content strong {
@@ -1271,4 +1274,61 @@ footer {
     vertical-align: -3px;
     margin-right: 0.5rem;
     color: var(--color-accent);
+}
+
+/* =========================================================
+   Navigation states — accessibility
+   The inherited rules coloured the current-page link
+   primary-mid on the primary navbar: 1.73:1, effectively
+   invisible. Hover also *reduced* contrast from white, so
+   pointing at a link made it harder to read.
+
+   Both states now keep text at or above 6.5:1 and carry a
+   rule underneath, so the cue is shape as well as colour.
+   ========================================================= */
+
+.nav-links a {
+    padding-bottom: 4px;
+    /* Reserved so the underline appearing causes no layout shift. */
+    border-bottom: 2px solid transparent;
+    transition: color var(--transition), border-color var(--transition);
+}
+
+.nav-links a:hover,
+.nav-links a:focus-visible {
+    color: #fff;
+    border-bottom-color: var(--color-accent-light);
+}
+
+.nav-links a.active {
+    color: var(--color-accent-light);
+    border-bottom-color: var(--color-accent-light);
+}
+
+/* The legacy absolutely-positioned underline is superseded by the
+   border above; keeping both would draw two rules. */
+.nav-links a.active::after {
+    display: none;
+}
+
+/* Footer links: same treatment, same reasoning. */
+.footer-section ul li a,
+.footer-bottom a {
+    transition: color var(--transition);
+}
+
+.footer-section ul li a:hover,
+.footer-section ul li a:focus-visible,
+.footer-bottom a:hover,
+.footer-bottom a:focus-visible {
+    color: var(--color-accent-light);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* A solid brand button lightens one step on hover rather than using
+   --color-hover, which would put white text at 3.83:1. */
+.section .cta-button:hover,
+.bg-light .cta-button:hover {
+    background-color: var(--color-primary-mid);
 }
