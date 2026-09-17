@@ -215,4 +215,34 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://slo-education.com.au/blog/2026-09-08-observability-for-ai-harnesses-what-to-measure-when-the-developer-is-an-agent</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://slo-education.com.au/blog/2026-09-10-slis-for-the-dark-factory-turning-ai-dlc-stage-events-into-service-level-indicators</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://slo-education.com.au/blog/2026-09-13-error-budgets-for-autonomous-delivery-governing-agent-speed-without-losing-control</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://slo-education.com.au/blog/2026-09-15-rules-sensors-and-gates-the-sre-control-loop-inside-the-ai-dlc</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://slo-education.com.au/blog/2026-09-17-no-slo-no-merge-closing-the-ai-dlc-loop-from-agent-to-production</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rules feed forward, sensors feed back and gates hold the line. Learn how the AI-DLC control loop maps onto SRE practice and why deterministic checks beat model self-assessment.">
+    <meta name="keywords" content="AI-DLC, sensors, rules, approval gates, verification gate, control loop, deterministic verification, SRE">
+    <meta property="og:title" content="Rules, Sensors and Gates: The SRE Control Loop Inside the AI-DLC - SLO Education Hub">
+    <meta property="og:description" content="Rules feed forward, sensors feed back and gates hold the line. Learn how the AI-DLC control loop maps onto SRE practice and why deterministic checks beat model self-assessment.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://slo-education.com.au/blog/2026-09-15-rules-sensors-and-gates-the-sre-control-loop-inside-the-ai-dlc">
+    <meta property="article:published_time" content="2026-09-15">
+    <title>Rules, Sensors and Gates: The SRE Control Loop Inside the AI-DLC - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/2026-09-15-rules-sensors-and-gates-the-sre-control-loop-inside-the-ai-dlc">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Rules, Sensors and Gates: The SRE Control Loop Inside the AI-DLC</h2>
+                <p class="hero-subtitle">Rules feed forward, sensors feed back and gates hold the line. Learn how the AI-DLC control loop maps onto SRE practice and why deterministic checks beat model self-assessment.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
+                <div class="blog-post-meta">
+                    <span>2026-09-15</span>
+                    <span class="blog-post-tag">AI-DLC</span><span class="blog-post-tag">Reliability</span><span class="blog-post-tag">SRE Culture</span>
+                </div>
+                <article class="blog-post-content">
+<h2>Asking the Model If It Did a Good Job</h2>
+<p>There is a failure mode that every team building on agents discovers within about a fortnight. You ask the agent to check its own work, it reports that everything looks correct, and it is wrong. Not maliciously — it simply has no independent access to ground truth. Self-assessment inherits every error in the work it is assessing.</p>
+<p>SRE has never trusted a component's opinion of its own health either. We do not ask a service whether it is up; we measure it from outside, with a probe that does not share its fate. The same instinct is what makes an AI delivery pipeline trustworthy, and the most interesting thing about the <a href="https://github.com/awslabs/aidlc-workflows">AI-DLC</a> implementation is that it builds that instinct into the engine rather than leaving it to prompt discipline.</p>
+<h2>A Control Loop, Named as Such</h2>
+<p>AI-DLC's documentation describes two mechanisms as the two halves of a control loop, which is not language you often see in a developer tool.</p>
+<p><strong>Rules are the feedforward half.</strong> A rule is a persistent behavioural instruction — your company's logging standard, your naming conventions, the library you have standardised on — authored once and pulled into context for every stage it covers. Rules resolve through a strict-additive chain of five layers: organisation, team, project, phase, stage. Broader layers are never overridden, only added to, so a team cannot quietly opt out of an org-level security rule by writing a narrower one.</p>
+<p><strong>Sensors are the feedback half.</strong> A sensor is a deterministic verification check defined by a manifest — a linter, a type check, a custom validator. Sensors fire on matching write and edit calls, or once per deliverable at the approval gate, and they record <code>SENSOR_FIRED</code>, <code>SENSOR_PASSED</code> and <code>SENSOR_FAILED</code> events. Bindings can be advisory or blocking, and blocking findings require either a correction or an explicit, audited override.</p>
+<p>Read that as an SRE and the mapping is immediate. Rules are your golden path and your platform defaults: the things you set up so the common case is correct by construction. Sensors are your monitoring and your assertions: the things that tell you the truth when the common case did not hold. A pipeline with only rules is a system with no monitoring. A pipeline with only sensors is a system with no platform engineering — you catch everything late and fix it by hand.</p>
+<h2>Advisory, Blocking, and the Audited Override</h2>
+<p>The advisory-versus-blocking distinction deserves more attention than it usually gets, because it is the same decision as page-versus-ticket in alerting, and it goes wrong in the same way.</p>
+<p>Make everything blocking and the agent grinds to a halt on style opinions while the humans learn to override reflexively — which is exactly how alert fatigue works, and it destroys the signal in precisely the same manner. Make everything advisory and nothing is actually enforced; findings scroll past in a transcript nobody reads.</p>
+<p>The rule of thumb that survives contact with reality: <strong>blocking sensors check things that are objectively wrong and cheaply verifiable</strong> — the code does not compile, the types do not check, a secret is in the diff, a required migration is missing. Everything about taste, structure or preference starts advisory and gets promoted only when you have evidence from the audit trail that it is being ignored and causing rework.</p>
+<p>The audited override matters as much as the block. A blocking check with no escape hatch gets disabled the first time it is wrong at 2am. A blocking check with an override that leaves a row in the audit trail gets used correctly, because the escape is available and visible. This is the same design as an error budget policy exception: you can always ship anyway, and the decision is on the record with a name attached.</p>
+<h2>Gates Are Not Ceremony, They Are Consistency Checks</h2>
+<p>AI-DLC puts a human approval gate after each stage, and an automated <em>verification gate</em> at each phase boundary. The verification gate is the one an SRE should find familiar: it checks that every required artefact from the completing phase exists, that traceability links are intact — every requirement maps to a story — and that there are no orphaned artefacts or dangling references before downstream stages build on them.</p>
+<p>That is a referential integrity check, run at the boundary where corruption becomes expensive. It is the same reason we validate config before rollout instead of discovering the typo through a 500 rate. Long agent runs are especially prone to quiet drift: a requirement gets dropped three stages back, everything downstream still looks plausible, and nothing surfaces until a human reads the final diff closely. Boundary verification is what turns that from a discovery into a detection.</p>
+<h2>The Learning Loop Is a Blameless Retro</h2>
+<p>The third piece closes the loop. During a stage, corrections get recorded as observations; at the approval gate, they are surfaced, the human confirms which to keep, and each confirmed learning is written as a durable practice — or scaffolds a new sensor — so it applies to the next workflow. The events are <code>RULE_LEARNED</code> and <code>SENSOR_PROPOSED</code>.</p>
+<p>This is a <a href="https://slo-education.com.au/blog/2026-08-17-post-incident-reviews-that-fix-systems-not-people">blameless post-incident review</a> compressed into a single run. A correction is an incident, however small. The valuable output is not the fix — the fix already happened — but the change to the system that stops the class of problem recurring. A team that files corrections only as chat messages is a team relearning the same lesson every sprint. Promoting a correction into a rule, and a repeated correction into a sensor, is the agent-era version of "turn the action item into a test".</p>
+<p>The instinct to check: when a correction becomes a rule, does it also deserve a sensor? Rules shape behaviour probabilistically. Sensors verify deterministically. Anything you would be genuinely upset to ship needs both.</p>
+<h2>Version the Loop, Review the Loop</h2>
+<p>Rules and sensor manifests are files. Treat them the way you would treat <a href="https://slo-education.com.au/blog/2026-09-01-slos-as-code-version-controlled-reliability-with-openslo-sloth-and-pyrra">SLO definitions in version control</a>: in the repository, changed by pull request, reviewed by someone other than the author. A rule change alters the behaviour of every future run in its scope, which makes it a higher-blast-radius edit than most application code — and it is exactly the kind of change that tends to be made in a hurry, at the end of a frustrating session, by whoever was closest to the keyboard.</p>
+                </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of AI.</strong></p>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>

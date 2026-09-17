@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Autonomy should be earned, not assumed. Learn how an error budget policy decides when an AI-DLC run may skip approval gates and when the guardrails come back automatically.">
+    <meta name="keywords" content="error budget, autonomous delivery, AI-DLC, burn rate alerting, approval gates, SRE policy, agent autonomy">
+    <meta property="og:title" content="Error Budgets for Autonomous Delivery: Governing Agent Speed Without Losing Control - SLO Education Hub">
+    <meta property="og:description" content="Autonomy should be earned, not assumed. Learn how an error budget policy decides when an AI-DLC run may skip approval gates and when the guardrails come back automatically.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://slo-education.com.au/blog/2026-09-13-error-budgets-for-autonomous-delivery-governing-agent-speed-without-losing-control">
+    <meta property="article:published_time" content="2026-09-13">
+    <title>Error Budgets for Autonomous Delivery: Governing Agent Speed Without Losing Control - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/2026-09-13-error-budgets-for-autonomous-delivery-governing-agent-speed-without-losing-control">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Error Budgets for Autonomous Delivery: Governing Agent Speed Without Losing Control</h2>
+                <p class="hero-subtitle">Autonomy should be earned, not assumed. Learn how an error budget policy decides when an AI-DLC run may skip approval gates and when the guardrails come back automatically.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
+                <div class="blog-post-meta">
+                    <span>2026-09-13</span>
+                    <span class="blog-post-tag">Error Budgets</span><span class="blog-post-tag">AI-DLC</span><span class="blog-post-tag">SRE</span>
+                </div>
+                <article class="blog-post-content">
+<h2>The Wrong Way to Decide How Much to Trust an Agent</h2>
+<p>Most teams answer the autonomy question with temperament. The cautious lead keeps every approval gate switched on forever and wonders why the factory is slower than doing it by hand. The bold one turns them all off after a good week and finds out in production what the gates were for. Neither is measuring anything; both are guessing, and the guess gets re-litigated every sprint.</p>
+<p>SRE solved this argument for production changes a long time ago, and the mechanism transfers directly. An error budget is a quantity of failure you have agreed to tolerate, and the policy attached to it decides what the organisation is allowed to do while that budget is healthy or spent. Applied to a delivery factory, it stops being a debate about trust and becomes a control law: <strong>autonomy is earned, continuously, and it is withdrawn automatically.</strong></p>
+<h2>The Throttle Already Exists</h2>
+<p><a href="https://github.com/awslabs/aidlc-workflows">AI-DLC</a> is a useful model here because it exposes the throttle explicitly rather than hiding it. A run declares a workflow profile — the engine calls it a scope — and the profile sets the stage route, the artefact depth, the test strategy and how much ceremony applies. The published profiles run from <code>express</code> at 10 of 33 stages with minimal depth and minimal tests, through <code>feature</code> at all 33 stages at standard depth, up to <code>enterprise</code> at all 33 at comprehensive depth, retaining compliance, security, observability and incident-response work "because the cost of an undocumented decision is higher than the cost of the additional ceremony".</p>
+<p>Inside Construction there is a second throttle. After the first approved stage, AI-DLC fires a one-time <em>ladder prompt</em> asking whether the rest of the run should be autonomous or gated. Autonomous skips the remaining per-stage gates; gated keeps them. The answer is recorded in state and honoured when the session resumes.</p>
+<p>So the dials are there. What is usually missing is anything connecting the dials to evidence.</p>
+<h2>An Error Budget Policy for the Factory</h2>
+<p>Take the SLIs from your factory — gate first-pass rate, sensor pass rate, rework ratio, escaped-defect rate in the first 14 days after merge — and give each a target and a 28-day budget. Then write a policy that reads like an operations manual, not an aspiration:</p>
+<ul>
+<li><strong>Budget above 50% remaining</strong>: autonomous Construction is permitted. Parallel unit batches are permitted. Express profile is available for well-understood work. Gates apply only at phase boundaries.</li>
+<li><strong>Budget between 25% and 50%</strong>: autonomous runs are permitted for bugfix and refactor profiles only. Feature work returns to gated, stage-by-stage execution.</li>
+<li><strong>Budget below 25%</strong>: every profile drops to gated. Parallelism is disabled — one unit at a time, so a failure has one cause. The next retrospective reviews the audit trail before any new feature intent is started.</li>
+<li><strong>Budget exhausted</strong>: no new autonomous work. The factory's own reliability becomes the priority the same way a service freeze does.</li>
+</ul>
+<p>The point is not the specific thresholds, which you will tune. The point is that the decision has an owner, a number and a trigger, so nobody has to win an argument to make the factory safer on a bad week.</p>
+<h2>Why This Makes You Faster, Not Slower</h2>
+<p>The objection lands immediately: this is just bureaucracy with extra steps. It is the opposite, for the same reason error budgets make product teams faster in production.</p>
+<p>Without a budget, the only safe posture is permanent caution, because there is no evidence that would ever justify relaxing. Every gate you add is forever. With a budget, caution is <em>priced</em>. A team that consistently produces clean runs accumulates headroom and spends it on speed — wider parallel batches, fewer gates, lighter profiles — and everyone can see why they were allowed to. That is the flexibility half of the bargain. The resilience half is that the same mechanism claws the speed back without anyone needing to be the villain.</p>
+<p>It also reframes failure honestly. A budget that is never spent means the targets are too loose or the factory is running far below the speed it could sustain. A budget consumed steadily and deliberately is a factory operating at the edge of its designed envelope, which is exactly where you want it.</p>
+<h2>Alert on the Burn, Not the Breach</h2>
+<p>A monthly budget report tells you about a problem three weeks after it started. Apply <a href="https://slo-education.com.au/blog/2026-08-10-burn-rate-alerts-catch-slo-breaches-before-they-land">multi-window burn rate alerting</a> to the factory SLOs exactly as you would to a service: a fast window to catch an acute regression — a model or prompt change that broke something — and a slow window to catch the gradual drift that no single run would flag.</p>
+<p>The acute case is real and common. A provider updates a model, or someone edits a rule that ships in every prompt, and the sensor pass rate falls by fifteen points within hours. A 14.4x burn rate over one hour catches that the same afternoon. Without it, you find out when a reviewer gets tired of rejecting things.</p>
+<h2>Circuit Breakers Below the Budget</h2>
+<p>Error budgets govern the aggregate. You still need a fast local stop, and AI-DLC's <em>halt-and-ask</em> behaviour is the right pattern: when a unit's code generation fails, Construction stops immediately — even in autonomous mode — and offers retry, skip or abort. A failure in one unit of a parallel batch lets the healthy units finish, preserves their artefacts and asks about the failed one only.</p>
+<p>That is a circuit breaker with a human as the fallback path, and it is what makes the autonomous setting defensible in the first place. Autonomy that cannot stop itself is not autonomy, it is an unattended loop.</p>
+<h2>Where to Start</h2>
+<p>Pick one SLI — gate first-pass rate is the usual choice — set a target from four weeks of observed data, and write a two-line policy: above target, Construction may run autonomous; below it, gates come back. Run it for a month. You will spend less time arguing about whether the agents can be trusted, because you will be able to look it up.</p>
+<p>The same thinking applies to the AI features you ship, not just the ones that build them. Our guide to <a href="https://slo-education.com.au/ai-slo-error-budget">AI SLOs and error budgets</a> covers the production side of that coin.</p>
+                </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of AI.</strong></p>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>
