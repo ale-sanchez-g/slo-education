@@ -168,3 +168,28 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ─── In-article diagrams ─── */
+
+.blog-figure {
+    margin: 1.75rem auto;
+    max-width: 560px;
+    text-align: center;
+}
+
+/* font-family sits on the svg, not on text: an inherited value still lets a
+   text element's own font-family attribute win (e.g. monospace event names). */
+.blog-figure svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-family: inherit;
+}
+
+.blog-figure figcaption {
+    margin-top: 0.7rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #7f8c8d;
+    text-align: center;
+}
