@@ -106,19 +106,19 @@ document.addEventListener('DOMContentLoaded', function() {
         if (burnRate < 2) {
             statusText = '✅ Slow Burn (Healthy) - Safe to deploy and experiment';
             statusClass = 'slow';
-            burnRateValue.style.color = '#28a745';
+            burnRateValue.style.color = 'var(--color-success)';
         } else if (burnRate >= 2 && burnRate < 5) {
             statusText = '⚠️ Medium Burn (Caution) - Be thoughtful about deployments';
             statusClass = 'medium';
-            burnRateValue.style.color = '#ffc107';
+            burnRateValue.style.color = 'var(--color-caution)';
         } else if (burnRate >= 5 && burnRate < 10) {
             statusText = '🔴 Fast Burn (Alert) - Minimize risky changes';
             statusClass = 'fast';
-            burnRateValue.style.color = '#fd7e14';
+            burnRateValue.style.color = 'var(--color-caution)';
         } else {
             statusText = '🚨 Critical Burn (Emergency) - Focus on stability only';
             statusClass = 'critical';
-            burnRateValue.style.color = '#dc3545';
+            burnRateValue.style.color = 'var(--color-risk)';
         }
 
         burnRateStatus.textContent = statusText;

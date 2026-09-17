@@ -225,7 +225,7 @@ test.describe('CTA Button Functionality', () => {
     await expect(ctaButton).toBeVisible();
     
     // Verify hero section contains expected elements
-    await expect(heroSection.locator('h2')).toContainText('Welcome to Your SLO Education Journey');
+    await expect(heroSection.locator('h2')).toContainText('Learn how reliable systems are actually measured');
     await expect(heroSection.locator('.hero-subtitle')).toBeVisible();
   });
 

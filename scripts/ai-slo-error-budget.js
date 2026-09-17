@@ -213,7 +213,7 @@
         ]).map(function (r) { return '<li>' + r + '</li>'; }).join('');
 
         var noteHtml = useCaseData.notes
-            ? '<p style="margin-bottom:0.75rem; color:#555; font-size:0.9rem;">' + useCaseData.notes + '</p>'
+            ? '<p style="margin-bottom:0.75rem; color:var(--color-text-muted); font-size:0.9rem;">' + useCaseData.notes + '</p>'
             : '';
 
         document.getElementById('slo-recommendations').innerHTML = [

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A central hub for teams to join the SLO education journey">
     <title>SLO Education Hub</title>
+    <link rel="stylesheet" href="style/inter.css">
     <link rel="stylesheet" href="style/styles.css">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <script src="scripts/grafana.js" defer></script>
@@ -37,34 +38,48 @@
     <main>
         <section class="hero">
             <div class="container">
-                <h2>Welcome to Your SLO Education Journey</h2>
-                <p class="hero-subtitle">A central hub for teams to learn about Service Level Objectives</p>
-                <a href="#get-started" class="cta-button">Start Learning</a>
+                <p class="eyebrow">Reliability Engineering</p>
+                <h2>Learn how reliable systems are actually measured</h2>
+                <p class="hero-subtitle">Service level objectives, error budgets and the alerting that depends on them — explained with worked examples, interactive tools and the trade-offs you will meet in production.</p>
+                <div class="hero-actions">
+                    <a href="#get-started" class="cta-button">Start Learning</a>
+                    <a href="#what-are-slos" class="hero-link">Explore the fundamentals</a>
+                </div>
             </div>
         </section>
 
         <section id="about" class="section">
             <div class="container">
-                <h2>About This Hub</h2>
-                <p>This is a central hub for teams to join the SLO education journey with pages and agents to support your learning. Whether you're new to SLOs or looking to deepen your understanding, you'll find resources here to help you succeed.</p>
+                <p class="section-label">Why this exists</p>
+                <h2>Reliability is a measurement problem before it is an engineering one</h2>
+                <p class="section-intro">Most teams know their service should be reliable. Far fewer can say what that means in numbers, or how much unreliability they can afford before it costs them users. This hub covers the measurement side: choosing indicators that reflect real user experience, setting targets you can defend, and spending the budget those targets create.</p>
+                <p class="section-intro">Everything here is built around worked examples rather than definitions. Read the fundamentals, then use the calculators to test the numbers against your own service.</p>
             </div>
         </section>
 
         <section id="what-are-slos" class="section bg-light">
             <div class="container">
-                <h2>What are SLOs?</h2>
+                <p class="section-label">01 — Foundations</p>
+                <h2>What an SLO actually is</h2>
+                <p class="section-intro">Three ideas do most of the work. Understand these and the rest of the practice follows.</p>
                 <div class="cards">
                     <div class="card">
                         <h3>Service Level Objectives</h3>
                         <p>A <strong>Service Level Indicator (SLI)</strong> measures a specific aspect of your service — like request success rate or response time. A <strong>Service Level Objective (SLO)</strong> sets the target for that measure — for example, "99.9% of requests succeed". Together they define what good looks like for your users.</p>
+                    
+                        <p class="card-meta"><span><strong>Level</strong> Introductory</span><span><strong>Read</strong> 3 min</span></p>
                     </div>
                     <div class="card">
                         <h3>Why SLOs Matter</h3>
                         <p>SLOs help teams balance reliability with innovation, make data-driven decisions, and establish clear expectations with stakeholders about service quality.</p>
+                    
+                        <p class="card-meta"><span><strong>Level</strong> Introductory</span><span><strong>Read</strong> 3 min</span></p>
                     </div>
                     <div class="card">
                         <h3>Key Benefits</h3>
                         <p>Better incident response, improved prioritization, clearer communication with customers, and a shared understanding of acceptable reliability levels.</p>
+                    
+                        <p class="card-meta"><span><strong>Level</strong> Introductory</span><span><strong>Read</strong> 3 min</span></p>
                     </div>
                 </div>
             </div>
@@ -72,8 +87,9 @@
 
         <section id="examples" class="section">
             <div class="container">
-                <h2>SLO Examples in Practice</h2>
-                <p class="section-intro">Good SLOs describe a promise you make to users. Start with a familiar situation, then apply the same thinking to your service.</p>
+                <p class="section-label">02 — Worked examples</p>
+                <h2>The same idea, in two languages</h2>
+                <p class="section-intro">An SLO describes a promise you make to users. Each card states that promise in everyday terms, then again as an indicator and target you could put in a dashboard. Select a card to turn it over.</p>
                 <div class="examples-grid">
                     <!-- Card 1: Availability -->
                     <div class="flip-card" tabindex="0" role="button" aria-pressed="false" aria-label="Availability example — click to flip">
@@ -165,22 +181,24 @@
 
         <section id="get-started" class="section bg-light">
             <div class="container">
-                <h2>Get Started</h2>
+                <p class="section-label">03 — Apply it</p>
+                <h2>Three steps, in order</h2>
+                <p class="section-intro">Each step depends on the one before it. Skipping the first is the most common reason an SLO programme stalls.</p>
                 <div class="getting-started">
                     <div class="step">
                         <div class="step-number">1</div>
                         <h3>Learn the Basics</h3>
-                        <p>Start by understanding what SLOs, SLIs, and error budgets are and how they work together.</p>
+                        <p>Understand what SLIs, SLOs and error budgets are, and how the three depend on each other. Start with the fundamentals above.</p>
                     </div>
                     <div class="step">
                         <div class="step-number">2</div>
                         <h3>Define Your SLOs</h3>
-                        <p>Identify the key user journeys and define meaningful SLIs and SLOs for your services.</p>
+                        <p>Map the critical user journeys your service supports, then define indicators that measure what those users actually experience.</p>
                     </div>
                     <div class="step">
                         <div class="step-number">3</div>
                         <h3>Monitor and Iterate</h3>
-                        <p>Implement monitoring, track your error budget, and continuously refine your SLOs based on real-world data.</p>
+                        <p>Instrument the indicator, track the budget it produces, and revise the target once real traffic tells you whether it was right.</p>
                     </div>
                 </div>
             </div>

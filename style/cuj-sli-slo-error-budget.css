@@ -12,8 +12,8 @@
 
 .flow-step {
     background: white;
-    border: 2px solid #e8e8e8;
-    border-top: 4px solid #667eea;
+    border: 2px solid var(--color-border);
+    border-top: 4px solid var(--color-primary-mid);
     border-radius: 8px;
     padding: 1.5rem 1.25rem;
     text-align: center;
@@ -37,19 +37,19 @@
 .flow-label {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #667eea;
+    color: var(--color-primary-mid);
     margin-bottom: 0.5rem;
 }
 
 .flow-desc {
     font-size: 0.8rem;
-    color: #666;
+    color: var(--color-text-muted);
     line-height: 1.4;
 }
 
 .flow-arrow {
     font-size: 2rem;
-    color: #667eea;
+    color: var(--color-primary-mid);
     font-weight: 700;
     flex-shrink: 0;
 }
@@ -67,11 +67,11 @@
     padding: 1.75rem;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    border-left: 4px solid #667eea;
+    border-left: 4px solid var(--color-primary-mid);
 }
 
 .cuj-card h3 {
-    color: #2c3e50;
+    color: var(--color-primary);
     margin-bottom: 1rem;
     font-size: 1.15rem;
 }
@@ -82,21 +82,21 @@
 
 .cuj-card li {
     margin-bottom: 0.5rem;
-    color: #555;
+    color: var(--color-text-muted);
     line-height: 1.5;
 }
 
 .cuj-card p {
-    color: #555;
+    color: var(--color-text-muted);
     line-height: 1.6;
     margin-bottom: 0.75rem;
 }
 
 /* ===== Interactive Demo Blocks ===== */
 .demo-block {
-    background: #f8f9fa;
-    border: 1px solid #e8e8e8;
-    border-radius: 10px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
     padding: 2rem;
     margin-bottom: 1.5rem;
 }
@@ -109,7 +109,7 @@
 }
 
 .demo-step-number {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-brand);
     color: white;
     font-size: 0.75rem;
     font-weight: 700;
@@ -123,7 +123,7 @@
 
 .demo-step-header h3 {
     font-size: 1.25rem;
-    color: #2c3e50;
+    color: var(--color-primary);
     margin: 0;
 }
 
@@ -142,7 +142,7 @@
     gap: 0.5rem;
     padding: 1.25rem 1rem;
     background: white;
-    border: 2px solid #e8e8e8;
+    border: 2px solid var(--color-border);
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -151,21 +151,21 @@
 }
 
 .journey-card:hover {
-    border-color: #667eea;
+    border-color: var(--color-primary-mid);
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
     transform: translateY(-2px);
 }
 
 .journey-card.active,
 .journey-card[aria-pressed="true"] {
-    border-color: #667eea;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: var(--color-primary-mid);
+    background: var(--gradient-brand);
     color: white;
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.35);
 }
 
 .journey-card:focus {
-    outline: 2px solid #667eea;
+    outline: 2px solid var(--color-primary-mid);
     outline-offset: 3px;
 }
 
@@ -191,7 +191,7 @@
 
 .journey-description {
     font-size: 0.95rem;
-    color: #555;
+    color: var(--color-text-muted);
     font-style: italic;
     margin: 0;
     min-height: 1.4em;
@@ -210,7 +210,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #667eea;
+    color: var(--color-primary-mid);
     margin-bottom: 0.25rem;
     margin-top: 1rem;
 }
@@ -222,12 +222,12 @@
 .sli-name {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #2c3e50;
+    color: var(--color-primary);
     margin-bottom: 0.25rem;
 }
 
 .sli-description {
-    color: #555;
+    color: var(--color-text-muted);
     font-size: 0.9rem;
     line-height: 1.5;
     margin: 0 0 0.25rem;
@@ -235,12 +235,12 @@
 
 .sli-formula {
     display: block;
-    background: #f0f2ff;
-    border: 1px solid #d0d8f5;
+    background: var(--color-success-bg);
+    border: 1px solid var(--color-accent-light);
     border-radius: 4px;
     padding: 0.5rem 0.75rem;
     font-size: 0.82rem;
-    color: #444;
+    color: var(--color-text);
     word-break: break-word;
     line-height: 1.5;
 }
@@ -257,12 +257,12 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #999;
+    color: var(--color-text-muted);
     margin-bottom: 0.75rem;
 }
 
 .sli-bar-wrapper {
-    background: #e8e8e8;
+    background: var(--color-border);
     border-radius: 6px;
     height: 18px;
     overflow: hidden;
@@ -272,22 +272,22 @@
 .sli-bar {
     height: 100%;
     border-radius: 6px;
-    background: #27ae60;
+    background: var(--color-success);
     transition: width 0.5s ease, background-color 0.3s ease;
 }
 
 .sli-bar.sli-critical {
-    background: #e74c3c;
+    background: var(--color-risk);
 }
 
 .sli-bar.sli-healthy {
-    background: #27ae60;
+    background: var(--color-success);
 }
 
 .sli-value {
     font-size: 1.75rem;
     font-weight: 700;
-    color: #2c3e50;
+    color: var(--color-primary);
     font-variant-numeric: tabular-nums;
     text-align: right;
 }
@@ -310,14 +310,14 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #999;
+    color: var(--color-text-muted);
     margin-bottom: 0.5rem;
 }
 
 .slo-target-badge {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #667eea;
+    color: var(--color-primary-mid);
     font-variant-numeric: tabular-nums;
     line-height: 1;
     margin-bottom: 0.75rem;
@@ -332,13 +332,13 @@
 }
 
 .slo-status.slo-met {
-    background: #d4edda;
-    color: #155724;
+    background: var(--color-success-bg);
+    color: var(--color-success);
 }
 
 .slo-status.slo-breached {
-    background: #f8d7da;
-    color: #721c24;
+    background: var(--color-risk-bg);
+    color: var(--color-risk);
 }
 
 .slo-details {
@@ -347,7 +347,7 @@
 }
 
 .slo-details p {
-    color: #555;
+    color: var(--color-text-muted);
     margin-bottom: 0.5rem;
     font-size: 0.95rem;
     line-height: 1.5;
@@ -355,7 +355,7 @@
 
 .slo-budget-preview {
     font-weight: 600;
-    color: #2c3e50 !important;
+    color: var(--color-primary) !important;
 }
 
 /* ===== Budget Panel ===== */
@@ -377,12 +377,12 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #999;
+    color: var(--color-text-muted);
     margin-bottom: 0.75rem;
 }
 
 .budget-bar-wrapper {
-    background: #e8e8e8;
+    background: var(--color-border);
     border-radius: 8px;
     height: 24px;
     overflow: hidden;
@@ -392,24 +392,24 @@
 .budget-bar {
     height: 100%;
     border-radius: 8px;
-    background: #27ae60;
+    background: var(--color-success);
     transition: width 0.6s ease, background-color 0.3s ease;
 }
 
 .budget-bar.budget-healthy {
-    background: #27ae60;
+    background: var(--color-success);
 }
 
 .budget-bar.budget-caution {
-    background: #f39c12;
+    background: var(--color-caution);
 }
 
 .budget-bar.budget-critical {
-    background: #e74c3c;
+    background: var(--color-risk);
 }
 
 .budget-bar.budget-exhausted {
-    background: #c0392b;
+    background: var(--color-risk);
     width: 0% !important;
 }
 
@@ -423,13 +423,13 @@
 .budget-percentage {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #2c3e50;
+    color: var(--color-primary);
     font-variant-numeric: tabular-nums;
 }
 
 .budget-hours {
     font-size: 0.85rem;
-    color: #666;
+    color: var(--color-text-muted);
 }
 
 /* ===== Budget Controls ===== */
@@ -454,38 +454,38 @@
 }
 
 .simulate-btn {
-    background: #e74c3c;
+    background: var(--color-risk);
     color: white;
 }
 
 .simulate-btn:hover:not(:disabled) {
-    background: #c0392b;
+    background: var(--color-risk);
     transform: translateY(-1px);
     box-shadow: 0 4px 10px rgba(231, 76, 60, 0.35);
 }
 
 .simulate-btn:disabled {
-    background: #ccc;
-    color: #888;
+    background: var(--color-border);
+    color: var(--color-text-muted);
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
 }
 
 .reset-btn {
-    background: #667eea;
+    background: var(--color-primary-mid);
     color: white;
 }
 
 .reset-btn:hover:not(:disabled) {
-    background: #5567d5;
+    background: var(--color-primary);
     transform: translateY(-1px);
     box-shadow: 0 4px 10px rgba(102, 126, 234, 0.35);
 }
 
 .reset-btn:disabled {
-    background: #ccc;
-    color: #888;
+    background: var(--color-border);
+    color: var(--color-text-muted);
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
@@ -493,48 +493,48 @@
 
 .simulate-btn:focus,
 .reset-btn:focus {
-    outline: 2px solid #667eea;
+    outline: 2px solid var(--color-primary-mid);
     outline-offset: 3px;
 }
 
 /* ===== Budget Decision Box ===== */
 .budget-decision {
     background: white;
-    border: 2px solid #27ae60;
+    border: 2px solid var(--color-success);
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
     transition: border-color 0.3s ease;
 }
 
 .budget-decision.decision-healthy {
-    border-color: #27ae60;
-    background: #f0faf4;
+    border-color: var(--color-success);
+    background: var(--color-success-bg);
 }
 
 .budget-decision.decision-caution {
-    border-color: #f39c12;
-    background: #fffbf0;
+    border-color: var(--color-caution);
+    background: var(--color-caution-bg);
 }
 
 .budget-decision.decision-critical {
-    border-color: #e74c3c;
-    background: #fff5f5;
+    border-color: var(--color-risk);
+    background: var(--color-risk-bg);
 }
 
 .budget-decision.decision-exhausted {
-    border-color: #c0392b;
-    background: #fff0f0;
+    border-color: var(--color-risk);
+    background: var(--color-risk-bg);
 }
 
 .decision-title {
     font-size: 0.95rem;
-    color: #2c3e50;
+    color: var(--color-primary);
     margin-bottom: 0.5rem;
 }
 
 .decision-text {
     font-size: 0.95rem;
-    color: #555;
+    color: var(--color-text-muted);
     margin: 0;
     line-height: 1.5;
 }
@@ -552,17 +552,17 @@
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    border-top: 3px solid #667eea;
+    border-top: 3px solid var(--color-primary-mid);
 }
 
 .sli-type-card h4 {
-    color: #2c3e50;
+    color: var(--color-primary);
     margin-bottom: 0.5rem;
     font-size: 1rem;
 }
 
 .sli-type-card p {
-    color: #666;
+    color: var(--color-text-muted);
     font-size: 0.875rem;
     margin-bottom: 0.75rem;
     line-height: 1.4;
@@ -570,11 +570,11 @@
 
 .sli-type-card code {
     display: block;
-    background: #f0f2ff;
+    background: var(--color-success-bg);
     border-radius: 4px;
     padding: 0.4rem 0.6rem;
     font-size: 0.78rem;
-    color: #444;
+    color: var(--color-text);
     word-break: break-word;
     line-height: 1.5;
 }
@@ -582,15 +582,15 @@
 /* ===== Key Concept Box ===== */
 .key-concept {
     background: white;
-    border: 1px solid #e8e8e8;
-    border-left: 4px solid #667eea;
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--color-primary-mid);
     border-radius: 0 8px 8px 0;
     padding: 1.5rem;
     margin-top: 2rem;
 }
 
 .key-concept h3 {
-    color: #2c3e50;
+    color: var(--color-primary);
     margin-bottom: 1rem;
     font-size: 1.1rem;
 }
@@ -600,7 +600,7 @@
 }
 
 .key-concept li {
-    color: #555;
+    color: var(--color-text-muted);
     margin-bottom: 0.5rem;
     line-height: 1.5;
 }
@@ -614,14 +614,14 @@
 }
 
 .slo-guidance-card {
-    background: #f8f9fa;
+    background: var(--color-bg);
     padding: 1.5rem;
     border-radius: 8px;
-    border: 1px solid #e8e8e8;
+    border: 1px solid var(--color-border);
 }
 
 .slo-guidance-card h3 {
-    color: #2c3e50;
+    color: var(--color-primary);
     margin-bottom: 1rem;
     font-size: 1.05rem;
 }
@@ -632,14 +632,14 @@
 }
 
 .slo-guidance-card li {
-    color: #555;
+    color: var(--color-text-muted);
     margin-bottom: 0.5rem;
     line-height: 1.5;
     font-size: 0.9rem;
 }
 
 .slo-guidance-card p {
-    color: #555;
+    color: var(--color-text-muted);
     font-size: 0.9rem;
     line-height: 1.6;
     margin-bottom: 0.75rem;
@@ -653,15 +653,15 @@
 
 .mini-table td {
     padding: 0.4rem 0.5rem;
-    border-bottom: 1px solid #e8e8e8;
-    color: #555;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-muted);
     vertical-align: top;
 }
 
 .mini-table td:first-child {
     font-weight: 700;
     white-space: nowrap;
-    color: #2c3e50;
+    color: var(--color-primary);
     width: 60px;
 }
 
@@ -700,27 +700,27 @@
 }
 
 .budget-use-healthy {
-    background: #f0faf4;
-    border-color: #27ae60;
-    color: #1a5c32;
+    background: var(--color-success-bg);
+    border-color: var(--color-success);
+    color: var(--color-success);
 }
 
 .budget-use-caution {
-    background: #fffbf0;
-    border-color: #f39c12;
-    color: #7a5000;
+    background: var(--color-caution-bg);
+    border-color: var(--color-caution);
+    color: var(--color-caution);
 }
 
 .budget-use-critical {
-    background: #fff5f5;
-    border-color: #e74c3c;
-    color: #7a1c1c;
+    background: var(--color-risk-bg);
+    border-color: var(--color-risk);
+    color: var(--color-risk);
 }
 
 .budget-use-exhausted {
-    background: #fff0f0;
-    border-color: #c0392b;
-    color: #6b0f0f;
+    background: var(--color-risk-bg);
+    border-color: var(--color-risk);
+    color: var(--color-risk);
 }
 
 /* ===== Pipeline Steps ===== */
@@ -734,7 +734,7 @@
     align-items: flex-start;
     gap: 1.25rem;
     background: white;
-    border: 1px solid #e8e8e8;
+    border: 1px solid var(--color-border);
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
@@ -747,7 +747,7 @@
     width: 36px;
     height: 36px;
     min-width: 36px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-brand);
     color: white;
     border-radius: 50%;
     font-weight: 700;
@@ -760,13 +760,13 @@
 
 .pipeline-content h3 {
     font-size: 1rem;
-    color: #667eea;
+    color: var(--color-primary-mid);
     margin-bottom: 0.35rem;
 }
 
 .pipeline-content p {
     font-size: 0.9rem;
-    color: #555;
+    color: var(--color-text-muted);
     margin: 0;
     line-height: 1.5;
 }
@@ -774,7 +774,7 @@
 .pipeline-arrow {
     text-align: center;
     font-size: 1.5rem;
-    color: #ccc;
+    color: var(--color-border);
     padding: 0.25rem 0;
 }
 
@@ -789,14 +789,14 @@
 }
 
 .reading-list a {
-    color: #667eea;
+    color: var(--color-primary-mid);
     text-decoration: none;
     font-size: 1rem;
     transition: color 0.2s ease;
 }
 
 .reading-list a:hover {
-    color: #764ba2;
+    color: var(--color-primary);
     text-decoration: underline;
 }
 
@@ -845,4 +845,30 @@
     .pipeline-step {
         padding: 1rem;
     }
+}
+
+/* ── Design system alignment ──
+   This sheet loads after styles.css, so the shared left-aligned
+   heading rhythm is restated here rather than fought with
+   specificity. Centred text is kept only inside result panels,
+   where it belongs. */
+.section h2 {
+    text-align: left;
+    max-width: 28ch;
+    font-size: clamp(1.75rem, 3.4vw, 2.35rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+}
+
+.section .section-intro {
+    text-align: left;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 62ch;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+@media (max-width: 768px) {
+    .section h2 { max-width: none; }
 }

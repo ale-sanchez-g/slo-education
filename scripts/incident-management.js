@@ -255,7 +255,7 @@ function initCUJMapper() {
         const escapedCujs = cujs.map(c => `<li>${escapeHtml(c.label)}</li>`).join('');
 
         let summaryHTML = `
-            <h5 style="color: #667eea; margin-bottom: 1rem;">Incident Impact Summary</h5>
+            <h5 style="color: var(--color-primary-mid); margin-bottom: 1rem;">Incident Impact Summary</h5>
             <p><strong>Affected Service:</strong> ${escapedService}</p>
             <p><strong>Impacted Critical User Journeys (${cujs.length}):</strong></p>
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">

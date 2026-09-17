@@ -13,18 +13,18 @@
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-top: 4px solid #667eea;
+    border-top: 4px solid var(--color-primary-mid);
 }
 
 .theory-card h3 {
-    color: #667eea;
+    color: var(--color-primary-mid);
     margin-bottom: 1rem;
     font-size: 1.5rem;
 }
 
 .theory-card p {
     line-height: 1.7;
-    color: #555;
+    color: var(--color-text-muted);
     margin-bottom: 1rem;
 }
 
@@ -36,7 +36,7 @@
 .theory-card li {
     margin-bottom: 0.75rem;
     line-height: 1.6;
-    color: #555;
+    color: var(--color-text-muted);
 }
 
 /* Best Practices Section */
@@ -45,7 +45,7 @@
 }
 
 .best-practices-section h3 {
-    color: #2c3e50;
+    color: var(--color-primary);
     margin-bottom: 2rem;
     font-size: 1.8rem;
 }
@@ -57,21 +57,21 @@
 }
 
 .practice-item {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-border) 100%);
     padding: 1.5rem;
     border-radius: 8px;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid var(--color-primary-mid);
 }
 
 .practice-item h4 {
-    color: #667eea;
+    color: var(--color-primary-mid);
     margin-bottom: 0.75rem;
     font-size: 1.2rem;
 }
 
 .practice-item p {
     line-height: 1.7;
-    color: #555;
+    color: var(--color-text-muted);
 }
 
 /* Calculator Card */
@@ -84,7 +84,7 @@
 }
 
 .calculator-card h3 {
-    color: #667eea;
+    color: var(--color-primary-mid);
     margin-bottom: 2rem;
     font-size: 2rem;
 }
@@ -105,7 +105,7 @@
 .input-group label {
     font-weight: 600;
     margin-bottom: 0.5rem;
-    color: #2c3e50;
+    color: var(--color-primary);
 }
 
 .severity-select,
@@ -113,7 +113,7 @@
     width: 100%;
     padding: 0.75rem 1rem;
     font-size: 1rem;
-    border: 2px solid #e0e0e0;
+    border: 2px solid var(--color-border);
     border-radius: 8px;
     background: white;
     cursor: pointer;
@@ -123,17 +123,17 @@
 .severity-select:focus,
 .text-input:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: var(--color-primary-mid);
 }
 
 .severity-select:hover,
 .text-input:hover {
-    border-color: #667eea;
+    border-color: var(--color-primary-mid);
 }
 
 .calculate-btn {
     padding: 0.75rem 2rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-brand);
     color: white;
     border: none;
     border-radius: 8px;
@@ -150,13 +150,13 @@
 }
 
 .calculate-btn:focus-visible {
-    outline: 2px solid #667eea;
+    outline: 2px solid var(--color-primary-mid);
     outline-offset: 2px;
 }
 
 /* Severity Result */
 .severity-result {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-border) 100%);
     padding: 2rem;
     border-radius: 12px;
     text-align: center;
@@ -173,14 +173,14 @@
 }
 
 .severity-result h4 {
-    color: #2c3e50;
+    color: var(--color-primary);
     font-size: 1.8rem;
     margin-bottom: 1rem;
 }
 
 .severity-result p {
     font-size: 1.1rem;
-    color: #555;
+    color: var(--color-text-muted);
     margin-bottom: 1.5rem;
     line-height: 1.7;
 }
@@ -194,7 +194,7 @@
 }
 
 .severity-actions h5 {
-    color: #667eea;
+    color: var(--color-primary-mid);
     margin-bottom: 1rem;
 }
 
@@ -214,7 +214,7 @@
     content: "→";
     position: absolute;
     left: 0;
-    color: #667eea;
+    color: var(--color-primary-mid);
     font-weight: 700;
 }
 
@@ -230,22 +230,22 @@
 
 .severity-badge.p0,
 .severity-badge-large.p0 {
-    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    background: linear-gradient(135deg, var(--color-risk) 0%, var(--color-risk) 100%);
 }
 
 .severity-badge.p1,
 .severity-badge-large.p1 {
-    background: linear-gradient(135deg, #fd7e14 0%, #e8590c 100%);
+    background: linear-gradient(135deg, var(--color-caution) 0%, var(--color-caution) 100%);
 }
 
 .severity-badge.p2,
 .severity-badge-large.p2 {
-    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+    background: linear-gradient(135deg, var(--color-caution) 0%, var(--color-caution) 100%);
 }
 
 .severity-badge.p3,
 .severity-badge-large.p3 {
-    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    background: linear-gradient(135deg, var(--color-success) 0%, var(--color-hover) 100%);
 }
 
 /* Severity Table */
@@ -254,7 +254,7 @@
 }
 
 .severity-reference h3 {
-    color: #2c3e50;
+    color: var(--color-primary);
     margin-bottom: 1.5rem;
 }
 
@@ -268,7 +268,7 @@
 }
 
 .severity-table thead {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-brand);
     color: white;
 }
 
@@ -286,7 +286,7 @@
 }
 
 .severity-table tbody tr {
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .severity-table tbody tr:last-child {
@@ -294,7 +294,7 @@
 }
 
 .severity-table tbody tr:hover {
-    background: #f8f9fa;
+    background: var(--color-bg);
 }
 
 /* Tool Filters */
@@ -309,7 +309,7 @@
 .tool-filters label {
     display: block;
     margin-bottom: 1rem;
-    color: #2c3e50;
+    color: var(--color-primary);
 }
 
 .filter-buttons {
@@ -320,9 +320,9 @@
 
 .filter-btn {
     padding: 0.6rem 1.5rem;
-    border: 2px solid #667eea;
+    border: 2px solid var(--color-primary-mid);
     background: white;
-    color: #667eea;
+    color: var(--color-primary-mid);
     border-radius: 20px;
     font-weight: 600;
     cursor: pointer;
@@ -330,18 +330,18 @@
 }
 
 .filter-btn:hover {
-    background: #667eea;
+    background: var(--color-primary-mid);
     color: white;
 }
 
 .filter-btn.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-brand);
     color: white;
-    border-color: #667eea;
+    border-color: var(--color-primary-mid);
 }
 
 .filter-btn:focus-visible {
-    outline: 2px solid #667eea;
+    outline: 2px solid var(--color-primary-mid);
     outline-offset: 2px;
 }
 
@@ -369,7 +369,7 @@
 }
 
 .tools-table thead {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-brand);
     color: white;
 }
 
@@ -387,7 +387,7 @@
 }
 
 .tools-table tbody tr {
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--color-border);
     transition: background 0.3s ease;
 }
 
@@ -396,7 +396,7 @@
 }
 
 .tools-table tbody tr:hover {
-    background: #f8f9fa;
+    background: var(--color-bg);
 }
 
 .tools-table tbody tr.hidden {
@@ -409,7 +409,7 @@
 }
 
 .tool-decision-framework h3 {
-    color: #2c3e50;
+    color: var(--color-primary);
     margin-bottom: 2rem;
     font-size: 1.8rem;
 }
@@ -425,11 +425,11 @@
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-top: 4px solid #667eea;
+    border-top: 4px solid var(--color-primary-mid);
 }
 
 .decision-card h4 {
-    color: #667eea;
+    color: var(--color-primary-mid);
     margin-bottom: 1rem;
     font-size: 1.3rem;
 }
@@ -442,7 +442,7 @@
 .decision-card li {
     margin-bottom: 0.75rem;
     line-height: 1.6;
-    color: #555;
+    color: var(--color-text-muted);
 }
 
 /* CUJ Sections */
@@ -455,7 +455,7 @@
 .cuj-what h3,
 .cuj-why h3,
 .cuj-playbook h3 {
-    color: #2c3e50;
+    color: var(--color-primary);
     margin-bottom: 1.5rem;
     font-size: 1.8rem;
 }
@@ -472,8 +472,8 @@
 .cuj-examples li {
     margin-bottom: 1rem;
     padding: 1rem;
-    border-left: 4px solid #667eea;
-    background: #f8f9fa;
+    border-left: 4px solid var(--color-primary-mid);
+    background: var(--color-bg);
     border-radius: 4px;
 }
 
@@ -490,17 +490,17 @@
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    border-top: 3px solid #667eea;
+    border-top: 3px solid var(--color-primary-mid);
 }
 
 .benefit-card h4 {
-    color: #667eea;
+    color: var(--color-primary-mid);
     margin-bottom: 0.75rem;
     font-size: 1.2rem;
 }
 
 .benefit-card p {
-    color: #555;
+    color: var(--color-text-muted);
     line-height: 1.6;
 }
 
@@ -519,7 +519,7 @@
     flex-shrink: 0;
     width: 50px;
     height: 50px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-brand);
     color: white;
     border-radius: 50%;
     display: flex;
@@ -534,13 +534,13 @@
 }
 
 .step-content h4 {
-    color: #667eea;
+    color: var(--color-primary-mid);
     margin-bottom: 1rem;
     font-size: 1.3rem;
 }
 
 .step-content p {
-    color: #555;
+    color: var(--color-text-muted);
     line-height: 1.7;
     margin-bottom: 1rem;
 }
@@ -554,14 +554,14 @@
     margin-bottom: 0.5rem;
     padding-left: 1.5rem;
     position: relative;
-    color: #555;
+    color: var(--color-text-muted);
 }
 
 .step-content li:before {
     content: "•";
     position: absolute;
     left: 0;
-    color: #667eea;
+    color: var(--color-primary-mid);
     font-weight: 700;
 }
 
@@ -580,14 +580,14 @@
     display: flex;
     align-items: center;
     padding: 0.75rem;
-    background: #f8f9fa;
+    background: var(--color-bg);
     border-radius: 6px;
     cursor: pointer;
     transition: background 0.3s ease;
 }
 
 .checkbox-label:hover {
-    background: #e9ecef;
+    background: var(--color-border);
 }
 
 .cuj-checkbox {
@@ -599,13 +599,13 @@
 
 /* CUJ Result */
 .cuj-result {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-border) 100%);
     padding: 2rem;
     border-radius: 12px;
 }
 
 .cuj-result h4 {
-    color: #2c3e50;
+    color: var(--color-primary);
     margin-bottom: 1.5rem;
     font-size: 1.5rem;
 }
@@ -615,18 +615,18 @@
     padding: 1.5rem;
     border-radius: 8px;
     margin-bottom: 1.5rem;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid var(--color-primary-mid);
 }
 
 .cuj-recommendations {
     background: white;
     padding: 1.5rem;
     border-radius: 8px;
-    border-left: 4px solid #28a745;
+    border-left: 4px solid var(--color-success);
 }
 
 .cuj-recommendations h5 {
-    color: #28a745;
+    color: var(--color-success);
     margin-bottom: 1rem;
 }
 
@@ -646,7 +646,7 @@
     content: "✓";
     position: absolute;
     left: 0;
-    color: #28a745;
+    color: var(--color-success);
     font-weight: 700;
 }
 
@@ -656,7 +656,7 @@
 }
 
 .cuj-example h3 {
-    color: #2c3e50;
+    color: var(--color-primary);
     margin-bottom: 1.5rem;
 }
 
@@ -672,7 +672,7 @@
 }
 
 .info-table thead {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-brand);
     color: white;
 }
 
@@ -690,7 +690,7 @@
 }
 
 .info-table tbody tr {
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .info-table tbody tr:last-child {
@@ -698,7 +698,7 @@
 }
 
 .info-table tbody tr:hover {
-    background: #f8f9fa;
+    background: var(--color-bg);
 }
 
 /* FAQ */
@@ -713,16 +713,16 @@
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     margin-bottom: 1.5rem;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid var(--color-primary-mid);
 }
 
 .faq-item h4 {
-    color: #667eea;
+    color: var(--color-primary-mid);
     margin-bottom: 0.75rem;
 }
 
 .faq-item p {
-    color: #555;
+    color: var(--color-text-muted);
     line-height: 1.7;
 }
 
@@ -799,7 +799,7 @@
         padding: 1.25rem;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         border: none;
-        border-left: 4px solid #667eea;
+        border-left: 4px solid var(--color-primary-mid);
     }
 
     .tools-table td,
@@ -816,7 +816,7 @@
     .info-table td:before {
         content: attr(data-label);
         font-weight: 700;
-        color: #667eea;
+        color: var(--color-primary-mid);
         display: block;
         margin-bottom: 0.25rem;
         font-size: 0.85rem;
@@ -828,7 +828,7 @@
     .tools-table td:first-child {
         font-size: 1.3rem; /* Moderate size for tool names as card titles */
         padding-bottom: 1rem;
-        border-bottom: 2px solid #e0e0e0;
+        border-bottom: 2px solid var(--color-border);
         margin-bottom: 0.75rem;
     }
 
@@ -840,7 +840,7 @@
     .severity-table td:first-child {
         text-align: center;
         padding: 1rem 0;
-        border-bottom: 2px solid #e0e0e0;
+        border-bottom: 2px solid var(--color-border);
         margin-bottom: 0.75rem;
     }
 
@@ -857,9 +857,9 @@
     .info-table td:first-child {
         font-size: 1.1rem; /* Slightly larger for incident names as descriptive titles */
         font-weight: 600;
-        color: #2c3e50;
+        color: var(--color-primary);
         padding-bottom: 0.75rem;
-        border-bottom: 2px solid #e0e0e0;
+        border-bottom: 2px solid var(--color-border);
         margin-bottom: 0.75rem;
     }
 
@@ -899,7 +899,7 @@
 
 /* Additional Utility Classes */
 .bg-light {
-    background-color: #f8f9fa;
+    background-color: var(--color-bg);
 }
 
 .section {
@@ -907,8 +907,34 @@
 }
 
 .section h2 {
-    color: #2c3e50;
+    color: var(--color-primary);
     margin-bottom: 2rem;
     font-size: 2.5rem;
     text-align: center;
+}
+
+/* ── Design system alignment ──
+   This sheet loads after styles.css, so the shared left-aligned
+   heading rhythm is restated here rather than fought with
+   specificity. Centred text is kept only inside result panels,
+   where it belongs. */
+.section h2 {
+    text-align: left;
+    max-width: 28ch;
+    font-size: clamp(1.75rem, 3.4vw, 2.35rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+}
+
+.section .section-intro {
+    text-align: left;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 62ch;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+@media (max-width: 768px) {
+    .section h2 { max-width: none; }
 }
