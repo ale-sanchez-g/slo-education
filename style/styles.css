@@ -1,3 +1,64 @@
+/* =========================================================
+   SLO Education Hub — Design System
+   Contemporary Green Engineering
+
+   Canonical brand tokens. Components below reference these
+   rather than literal values, so the palette has one source
+   of truth. Do not reintroduce literal colours.
+   ========================================================= */
+
+:root {
+    /* Brand */
+    --color-primary: #1B4332;
+    --color-primary-mid: #2D6A4F;
+    --color-accent: #52B788;
+    --color-accent-light: #95D5B2;
+
+    /* Surfaces */
+    --color-bg: #F4F6F4;
+    --color-surface: #FFFFFF;
+
+    /* Text */
+    --color-text: #1C1C1E;
+    --color-text-muted: #5A5A6E;
+
+    /* Structure */
+    --color-border: #E0E4E0;
+    --color-hover: #40916C;
+
+    /* Signature gradient — a brand device, used sparingly */
+    --gradient-brand: linear-gradient(135deg, #1B4332 0%, #2D6A4F 60%, #52B788 100%);
+
+    /* Functional colours. Muted on purpose: these carry meaning,
+       they never compete with the green brand identity. */
+    --color-info: #2C6E9B;
+    --color-info-bg: #EDF3F8;
+    --color-caution: #9A6114;
+    --color-caution-bg: #FBF3E7;
+    --color-risk: #A23B32;
+    --color-risk-bg: #FAEEED;
+    --color-success: var(--color-primary-mid);
+    --color-success-bg: #E9F4EE;
+    --color-on-primary: #E8F1EB;  /* pale mint text on the dark green surface */
+
+    /* Type */
+    --font-main: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+    /* Radii */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-pill: 100px;
+
+    /* Elevation — restrained. Borders do most of the structural work. */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+    --shadow-lg: 0 8px 28px rgba(0,0,0,0.12);
+
+    --transition: 200ms ease;
+}
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -6,11 +67,14 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #fff;
+    font-family: var(--font-main);
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--color-text);
+    background-color: var(--color-bg);
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
 
 /* Prevent pre/code elements from breaking mobile layouts */
@@ -29,7 +93,7 @@ pre, code {
 
 /* Navigation */
 .navbar {
-    background-color: #2c3e50;
+    background-color: var(--color-primary);
     color: white;
     padding: 1rem 0;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -54,7 +118,7 @@ pre, code {
 }
 
 .logo a:hover {
-    color: #b39ddb;
+    color: var(--color-accent-light);
 }
 
 .nav-links {
@@ -72,11 +136,11 @@ pre, code {
 }
 
 .nav-links a:hover {
-    color: #3498db;
+    color: var(--color-primary-mid);
 }
 
 .nav-links a.active {
-    color: #3498db;
+    color: var(--color-primary-mid);
 }
 
 .nav-links a.active::after {
@@ -86,7 +150,7 @@ pre, code {
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: #3498db;
+    background-color: var(--color-primary-mid);
 }
 
 /* Hamburger Menu */
@@ -106,7 +170,7 @@ pre, code {
 }
 
 .hamburger:focus {
-    outline: 2px solid #3498db;
+    outline: 2px solid var(--color-primary-mid);
     outline-offset: 4px;
 }
 
@@ -133,7 +197,7 @@ pre, code {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-brand);
     color: white;
     padding: 6rem 0;
     text-align: center;
@@ -153,8 +217,8 @@ pre, code {
 
 .cta-button {
     display: inline-block;
-    background-color: #fff;
-    color: #667eea;
+    background-color: var(--color-surface);
+    color: var(--color-primary);
     padding: 1rem 2.5rem;
     border-radius: 50px;
     text-decoration: none;
@@ -178,11 +242,11 @@ pre, code {
     font-size: 2.5rem;
     margin-bottom: 2rem;
     text-align: center;
-    color: #2c3e50;
+    color: var(--color-primary);
 }
 
 .bg-light {
-    background-color: #f8f9fa;
+    background-color: var(--color-bg);
 }
 
 /* Cards */
@@ -207,13 +271,13 @@ pre, code {
 }
 
 .card h3 {
-    color: #667eea;
+    color: var(--color-primary-mid);
     margin-bottom: 1rem;
     font-size: 1.5rem;
 }
 
 .card p {
-    color: #555;
+    color: var(--color-text-muted);
     line-height: 1.7;
 }
 
@@ -233,7 +297,7 @@ pre, code {
     display: inline-block;
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-brand);
     color: white;
     border-radius: 50%;
     line-height: 60px;
@@ -243,20 +307,20 @@ pre, code {
 }
 
 .step h3 {
-    color: #2c3e50;
+    color: var(--color-primary);
     margin-bottom: 1rem;
     font-size: 1.5rem;
 }
 
 .step p {
-    color: #555;
+    color: var(--color-text-muted);
     line-height: 1.7;
 }
 
 /* Examples Section */
 .section-intro {
     text-align: center;
-    color: #555;
+    color: var(--color-text-muted);
     font-size: 1.1rem;
     max-width: 700px;
     margin: 0 auto 3rem;
@@ -276,7 +340,7 @@ pre, code {
 }
 
 .flip-card:focus {
-    outline: 2px solid #667eea;
+    outline: 2px solid var(--color-primary-mid);
     outline-offset: 4px;
     border-radius: 8px;
 }
@@ -298,8 +362,8 @@ pre, code {
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     background: white;
-    border: 1px solid #e8e8e8;
-    border-top: 4px solid #667eea;
+    border: 1px solid var(--color-border);
+    border-top: 4px solid var(--color-primary-mid);
     border-radius: 8px;
     padding: 2rem;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
@@ -316,7 +380,7 @@ pre, code {
     padding-top: 1.25rem;
     font-size: 0.8rem;
     font-weight: 600;
-    color: #667eea;
+    color: var(--color-primary-mid);
     opacity: 0.7;
 }
 
@@ -338,22 +402,22 @@ pre, code {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #667eea;
+    color: var(--color-primary-mid);
     margin-bottom: 0.5rem;
 }
 
 .slo-target {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #2c3e50;
+    color: var(--color-primary);
     font-variant-numeric: tabular-nums;
     margin-bottom: 1.5rem;
     line-height: 1.1;
 }
 
 .example-analogy {
-    background: #f0f2ff;
-    border-left: 3px solid #667eea;
+    background: var(--color-bg);
+    border-left: 3px solid var(--color-primary-mid);
     border-radius: 0 4px 4px 0;
     padding: 0.75rem 1rem;
     margin-bottom: 1.25rem;
@@ -365,12 +429,12 @@ pre, code {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #667eea;
+    color: var(--color-primary-mid);
     margin-bottom: 0.35rem;
 }
 
 .example-analogy p {
-    color: #444;
+    color: var(--color-text);
     font-size: 0.9rem;
     line-height: 1.55;
     margin: 0;
@@ -381,7 +445,7 @@ pre, code {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #999;
+    color: var(--color-text-muted);
     margin-bottom: 0.5rem;
 }
 
@@ -393,7 +457,7 @@ pre, code {
 
 .example-detail dt {
     font-weight: 700;
-    color: #2c3e50;
+    color: var(--color-primary);
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -401,7 +465,7 @@ pre, code {
 }
 
 .example-detail dd {
-    color: #555;
+    color: var(--color-text-muted);
     font-size: 0.95rem;
     line-height: 1.5;
     margin: 0;
@@ -411,11 +475,11 @@ pre, code {
 .resources p {
     font-size: 1.1rem;
     margin-bottom: 1rem;
-    color: #555;
+    color: var(--color-text-muted);
 }
 
 .resources strong {
-    color: #2c3e50;
+    color: var(--color-primary);
 }
 
 /* Resources Grid (used by the central resources module) */
@@ -431,11 +495,11 @@ pre, code {
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-top: 4px solid #667eea;
+    border-top: 4px solid var(--color-primary-mid);
 }
 
 .resource-card h4 {
-    color: #667eea;
+    color: var(--color-primary-mid);
     margin-bottom: 1.5rem;
     font-size: 1.3rem;
 }
@@ -450,19 +514,19 @@ pre, code {
 }
 
 .resource-card a {
-    color: #667eea;
+    color: var(--color-primary-mid);
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .resource-card a:hover {
-    color: #764ba2;
+    color: var(--color-accent);
     text-decoration: underline;
 }
 
 /* Footer */
 footer {
-    background-color: #2c3e50;
+    background-color: var(--color-primary);
     color: white;
     padding: 3rem 0 1.5rem;
 }
@@ -492,7 +556,7 @@ footer {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #94a3b8;
+    color: var(--color-text-muted);
     margin-bottom: 1rem;
 }
 
@@ -512,7 +576,7 @@ footer {
 }
 
 .footer-section ul li a:hover {
-    color: #667eea;
+    color: var(--color-primary-mid);
 }
 
 .footer-bottom {
@@ -532,7 +596,7 @@ footer {
 }
 
 .footer-bottom a:hover {
-    color: #667eea;
+    color: var(--color-primary-mid);
 }
 
 /* Responsive Design - Mobile First (max-width: 768px) */
@@ -558,7 +622,7 @@ footer {
         right: -100%;
         width: 280px;
         height: 100vh;
-        background-color: #2c3e50;
+        background-color: var(--color-primary);
         flex-direction: column;
         gap: 0;
         padding: 80px 2rem 2rem;
@@ -639,7 +703,7 @@ footer {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: #2c3e50;
+    background-color: var(--color-primary);
     color: white;
     padding: 1.5rem;
     box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
@@ -688,12 +752,12 @@ footer {
 }
 
 .cookie-accept {
-    background-color: #3498db;
+    background-color: var(--color-primary-mid);
     color: white;
 }
 
 .cookie-accept:hover {
-    background-color: #2980b9;
+    background-color: var(--color-hover);
     transform: translateY(-2px);
 }
 
@@ -732,14 +796,14 @@ footer {
 }
 
 .privacy-content h3 {
-    color: #2c3e50;
+    color: var(--color-primary);
     margin-top: 2rem;
     margin-bottom: 1rem;
     font-size: 1.5rem;
 }
 
 .privacy-content h4 {
-    color: #34495e;
+    color: var(--color-primary);
     margin-top: 1.5rem;
     margin-bottom: 0.75rem;
     font-size: 1.2rem;
@@ -747,7 +811,7 @@ footer {
 
 .privacy-content p {
     margin-bottom: 1rem;
-    color: #555;
+    color: var(--color-text-muted);
 }
 
 .privacy-content ul,
@@ -758,20 +822,20 @@ footer {
 
 .privacy-content li {
     margin-bottom: 0.5rem;
-    color: #555;
+    color: var(--color-text-muted);
 }
 
 .privacy-content a {
-    color: #667eea;
+    color: var(--color-primary-mid);
     text-decoration: underline;
 }
 
 .privacy-content a:hover {
-    color: #764ba2;
+    color: var(--color-accent);
 }
 
 .privacy-content strong {
-    color: #2c3e50;
+    color: var(--color-primary);
     font-weight: 600;
 }
 
@@ -790,4 +854,421 @@ footer {
     .footer-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* =========================================================
+   Brand refinements
+   Overrides above where the legacy component needed bringing
+   onto the design system. Ordered last so equal-specificity
+   rules win without an !important anywhere.
+   ========================================================= */
+
+/* ── Focus: visible everywhere, never removed ── */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4 {
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--color-text);
+}
+
+.section h2 {
+    font-size: clamp(1.75rem, 3.4vw, 2.35rem);
+    font-weight: 600;
+    color: var(--color-primary);
+    text-align: left;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.025em;
+}
+
+/* Small technical labels: the metadata voice of the brand.
+   Uppercase is reserved for this role and nothing else. */
+.eyebrow,
+.section-label {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-primary-mid);
+    margin-bottom: 1rem;
+}
+
+.section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    max-width: 96px;
+    background: var(--color-border);
+}
+
+.section-intro {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    max-width: 62ch;
+    margin-bottom: 2.5rem;
+}
+
+/* ── Navigation ── */
+.navbar {
+    background-color: var(--color-primary);
+    box-shadow: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logo {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+}
+
+.nav-links a {
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: color var(--transition);
+}
+
+.nav-links a:hover {
+    color: var(--color-accent-light);
+}
+
+.nav-links a.active::after {
+    background-color: var(--color-accent);
+}
+
+/* ── Hero ── */
+.hero {
+    background: var(--gradient-brand);
+    padding: 5rem 0 4.5rem;
+    text-align: left;
+}
+
+.hero h2 {
+    font-size: clamp(2.1rem, 5vw, 3.1rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+    max-width: 20ch;
+    color: #fff;
+    text-wrap: balance;
+}
+
+.hero .eyebrow {
+    color: var(--color-accent-light);
+    margin-bottom: 1.25rem;
+}
+
+.hero .eyebrow::after {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    line-height: 1.65;
+    opacity: 1;
+    color: rgba(255, 255, 255, 0.88);
+    max-width: 60ch;
+    margin-top: 1.1rem;
+}
+
+/* ── Buttons ── */
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 2rem;
+}
+
+.cta-button {
+    background-color: var(--color-surface);
+    color: var(--color-primary);
+    padding: 0.85rem 1.75rem;
+    border-radius: var(--radius-pill);
+    font-size: 1rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    box-shadow: var(--shadow-sm);
+    transition: background-color var(--transition), color var(--transition),
+                transform var(--transition), box-shadow var(--transition);
+}
+
+.cta-button:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+    background-color: var(--color-accent-light);
+    color: var(--color-primary);
+}
+
+.cta-button.cta-secondary {
+    background-color: transparent;
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.45);
+    box-shadow: none;
+}
+
+.cta-button.cta-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: #fff;
+    color: #fff;
+}
+
+/* On light surfaces the primary action is solid brand green. */
+.section .cta-button,
+.bg-light .cta-button {
+    background-color: var(--color-primary);
+    color: #fff;
+}
+
+.section .cta-button:hover,
+.bg-light .cta-button:hover {
+    background-color: var(--color-hover);
+    color: #fff;
+}
+
+/* ── Cards ── */
+.card,
+.resource-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition), box-shadow var(--transition),
+                border-color var(--transition);
+}
+
+.card:hover,
+.resource-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-accent-light);
+}
+
+.card h3 {
+    color: var(--color-primary);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+}
+
+.card p {
+    color: var(--color-text-muted);
+    font-size: 0.97rem;
+}
+
+/* Card metadata row: level, format, time. */
+.card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.1rem;
+    margin-top: 1.1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+.card-meta span strong {
+    font-weight: 500;
+    color: var(--color-primary-mid);
+}
+
+/* ── Numbered pathway steps ── */
+.step-number {
+    background: var(--color-primary);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.step h3 {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.step p {
+    color: var(--color-text-muted);
+}
+
+/* ── Surfaces ── */
+.bg-light {
+    background-color: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* ── Footer ── */
+footer {
+    background-color: var(--color-primary);
+    border-top: none;
+}
+
+.footer-section ul li a:hover,
+.footer-bottom a:hover {
+    color: var(--color-accent-light);
+}
+
+/* ── Motion preference ── */
+@media (prefers-reduced-motion: reduce) {
+    .card,
+    .resource-card,
+    .cta-button {
+        transition: none;
+    }
+    .card:hover,
+    .resource-card:hover,
+    .cta-button:hover {
+        transform: none;
+    }
+}
+
+/* ── Mobile: recompose rather than shrink ── */
+@media (max-width: 768px) {
+    .hero {
+        padding: 3.25rem 0 3rem;
+    }
+    .hero h2 {
+        max-width: none;
+    }
+    .hero-actions .cta-button {
+        flex: 1 1 100%;
+        text-align: center;
+    }
+    .section-label::after {
+        max-width: 40px;
+    }
+}
+
+/* Secondary hero action. Deliberately not .cta-button: the page has one
+   primary action, and this sits beside it as a quieter alternative. */
+.hero-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.85rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: var(--radius-pill);
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color var(--transition), border-color var(--transition);
+}
+
+.hero-link:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: #fff;
+}
+
+@media (max-width: 768px) {
+    .hero-link {
+        flex: 1 1 100%;
+        justify-content: center;
+    }
+}
+
+/* =========================================================
+   Layout corrections
+   The legacy stylesheet centred supporting text while the
+   redesign left-aligns headings. Align everything to the
+   same left edge so the eye tracks one column.
+   ========================================================= */
+
+.section-intro {
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* Headings hold a comfortable measure rather than running
+   the full container width. */
+.section h2 {
+    max-width: 28ch;
+}
+
+.section-intro + .cards,
+.section-intro + .getting-started,
+.section-intro + .examples-grid {
+    margin-top: 2.5rem;
+}
+
+/* Cards share a row height, so the metadata rule lines up
+   across the row instead of floating at each card's own end. */
+.cards {
+    align-items: stretch;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+}
+
+/* The metadata row is also a <p>, so exclude it from the
+   grow rule or it stretches instead of pinning to the base. */
+.card p:not(.card-meta) {
+    flex: 1;
+}
+
+.card .card-meta {
+    flex: 0 0 auto;
+    margin-top: auto;
+}
+
+/* Numbered pathway: left-aligned, with the number reading as
+   a step index rather than a badge. */
+.step {
+    text-align: left;
+    padding-left: 1.25rem;
+    border-left: 2px solid var(--color-border);
+}
+
+.step-number {
+    margin: 0 0 1rem;
+}
+
+.step h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Resources module picks up the same section rhythm. */
+#resources-section .section h2,
+.resources h2 {
+    max-width: 28ch;
+}
+
+.resource-card h4 {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .section h2 {
+        max-width: none;
+    }
+    .step {
+        padding-left: 1rem;
+    }
+}
+
+/* Resource category icons: line only, inheriting the heading colour. */
+.resource-icon {
+    width: 18px;
+    height: 18px;
+    vertical-align: -3px;
+    margin-right: 0.5rem;
+    color: var(--color-accent);
 }

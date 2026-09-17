@@ -13,7 +13,7 @@
     /** Centralised resource data relevant to the SLO Education landing page. */
     var RESOURCES = [
         {
-            icon: '📚',
+            icon: '<svg class="resource-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H10a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H5.5A1.5 1.5 0 0 1 4 15.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H14a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h4.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg>',
             title: 'Documentation',
             items: [
                 { text: 'Google SRE Book', url: 'https://sre.google/sre-book/table-of-contents/', external: true },
@@ -21,14 +21,14 @@
             ]
         },
         {
-            icon: '💬',
+            icon: '<svg class="resource-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/></svg>',
             title: 'Community',
             items: [
                 { text: 'SRE Discord Community', url: 'https://discord.gg/YdG26M8P', external: true },
             ]
         },
         {
-            icon: '🛠️',
+            icon: '<svg class="resource-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5a3.5 3.5 0 0 0 4.6 4.6L21 12l-9 9-3-3 9-9z"/><path d="M6 6l3 3"/><path d="M3.5 10.5l4-4"/></svg>',
             title: 'Tools',
             items: [
                 { text: 'OPM - Open Prompt Manager', url: 'https://opm-dx1.com', external: true },
@@ -51,7 +51,9 @@
         var html = [
             '<section class="section">',
             '  <div class="container">',
+            '    <p class="section-label">04 &mdash; Reference</p>',
             '    <h2>Resources</h2>',
+            '    <p class="section-intro">Primary sources and tools worth keeping open while you work. External links open in a new tab.</p>',
             '    <div class="resources-grid">'
         ];
 
