@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SLOs turn reliability from an argument into a trade. How a single agreed number changes ship decisions, prioritisation and the conversation between engineering, product and customers.">
+    <meta name="keywords" content="why SLOs matter, error budget, reliability versus velocity, data-driven decisions, stakeholder expectations, SRE culture">
+    <meta property="og:title" content="Why SLOs Matter: What Changes When Reliability Has a Number - SLO Education Hub">
+    <meta property="og:description" content="SLOs turn reliability from an argument into a trade. How a single agreed number changes ship decisions, prioritisation and the conversation between engineering, product and customers.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://slo-education.com.au/blog/2026-09-18-why-slos-matter-what-changes-when-reliability-has-a-number">
+    <meta property="article:published_time" content="2026-09-18">
+    <title>Why SLOs Matter: What Changes When Reliability Has a Number - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/inter.css">
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/2026-09-18-why-slos-matter-what-changes-when-reliability-has-a-number">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Why SLOs Matter: What Changes When Reliability Has a Number</h2>
+                <p class="hero-subtitle">SLOs turn reliability from an argument into a trade. How a single agreed number changes ship decisions, prioritisation and the conversation between engineering, product and customers.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
+                <div class="blog-post-meta">
+                    <span>2026-09-18</span>
+                    <span class="blog-post-tag">SLOs</span><span class="blog-post-tag">Fundamentals</span><span class="blog-post-tag">SRE Culture</span>
+                </div>
+                <article class="blog-post-content">
+<p>Every engineering team has a version of the same stalled conversation. Someone wants to ship. Someone else thinks the system has been fragile this week. Both are arguing from the same absence of evidence, and whoever is more senior, or simply more tired, tends to win.</p>
+<p>A service level objective does not make that conversation friendlier. It makes it shorter, because there is finally something to point at.</p>
+<h2>They turn a standoff into a trade</h2>
+<p>Reliability and speed get framed as opposing camps, which is exactly why the argument never resolves — nobody can be against either one in the abstract.</p>
+<p>An SLO reframes it. If you have agreed 99.9%, you have also agreed to tolerate 0.1% failure. That remainder is an <a href="https://slo-education.com.au/blog/2026-09-18-slis-and-slos-what-good-looks-like-in-numbers">error budget</a>, and a budget turns a disagreement about values into a decision about a resource. Is there budget left? Then the risky migration is affordable this week. Is it gone? Then it is not, and the next work is stabilising rather than shipping.</p>
+<p>Nobody has to win the argument that reliability matters. It has a price, and the price is visible to everyone.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dt3a661d99 dd3a661d99"><title id="dt3a661d99">The same decision, with and without an objective</title><desc id="dd3a661d99">Two columns contrasting how a ship-or-hold decision is made. Without an objective the inputs are impressions and the loudest voice decides. With one, the inputs are budget figures and the number decides.</desc><rect x="16" y="14" width="218" height="154" rx="8" fill="#E9F4EE" stroke="#E0E4E0"/><rect x="16" y="14" width="218" height="34" rx="8" fill="#2D6A4F" fill-opacity="0.16"/><text x="125.0" y="36" font-size="13.5" fill="#2D6A4F" font-weight="700" text-anchor="middle">Without an SLO</text><text x="30" y="68" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">• “It feels fragile”</text><text x="30" y="98" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">• “It&#x27;s been fine for me”</text><text x="30" y="128" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">• Loudest voice decides</text><text x="30" y="158" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">• Re-argued every release</text><rect x="246" y="14" width="218" height="154" rx="8" fill="#EDF7F1" stroke="#E0E4E0"/><rect x="246" y="14" width="218" height="34" rx="8" fill="#52B788" fill-opacity="0.16"/><text x="355.0" y="36" font-size="13.5" fill="#52B788" font-weight="700" text-anchor="middle">With an SLO</text><text x="260" y="68" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">• 68% of budget left</text><text x="260" y="98" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">• Spent mostly on checkout</text><text x="260" y="128" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">• The number decides</text><text x="260" y="158" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">• Re-checked, not re-argued</text></svg>
+<figcaption>The argument does not get friendlier. It gets shorter, because there is something to point at.</figcaption>
+</figure>
+<h2>They replace impressions with evidence</h2>
+<p>"The service has felt flaky lately" is a real observation and a nearly useless input. It cannot be checked, compared against last month, or acted on proportionately.</p>
+<p>The same concern measured against an SLO becomes: <em>we have spent 60% of this month's budget in nine days, almost all of it in the checkout journey.</em> That sentence says there is a problem, roughly how large, where it lives, and how urgent it is — before anyone has opened a dashboard.</p>
+<p>It works in the other direction too, which teams consistently underrate. An objective that is met comfortably for two quarters running is also telling you something: either the target is too loose to be informative, or you are buying reliability nobody asked for and could spend that effort somewhere it would be noticed.</p>
+<p>Both readings are only available because a number exists. Without one, a good quarter and a lucky quarter look identical.</p>
+<h2>They give everyone the same sentence</h2>
+<p>The quiet benefit is organisational. Engineering, product, support and customers usually describe service quality in four different vocabularies, and most reliability arguments are really translation failures between them.</p>
+<p>An SLO is a single statement each group can read for its own purposes.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 274" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dt29d000ef dd29d000ef"><title id="dt29d000ef">One number, four audiences</title><desc id="dd29d000ef">A service level objective read by four different groups: engineers see how much risk the week can carry, product sees when to spend a cycle on reliability, support sees whether today is unusual, and customers see what the service commits to.</desc><rect x="16" y="14" width="448" height="54" rx="8" fill="#E9F4EE" stroke="#E0E4E0"/><path d="M21,14 L21,68" stroke="#2D6A4F" stroke-width="5" stroke-linecap="butt"/><text x="36" y="39" font-size="14.5" fill="#1B4332" font-weight="600" text-anchor="start">Engineers</text><text x="36" y="57" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">how much risk this week&#x27;s work can carry</text><text x="452" y="37" font-size="12" fill="#5A5A6E" font-weight="400" text-anchor="end">budget remaining</text><rect x="16" y="78" width="448" height="54" rx="8" fill="#E9F4EE" stroke="#E0E4E0"/><path d="M21,78 L21,132" stroke="#2D6A4F" stroke-width="5" stroke-linecap="butt"/><text x="36" y="103" font-size="14.5" fill="#1B4332" font-weight="600" text-anchor="start">Product</text><text x="36" y="121" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">when to spend a cycle on reliability instead of features</text><text x="452" y="101" font-size="12" fill="#5A5A6E" font-weight="400" text-anchor="end">burn rate</text><rect x="16" y="142" width="448" height="54" rx="8" fill="#E9F4EE" stroke="#E0E4E0"/><path d="M21,142 L21,196" stroke="#2D6A4F" stroke-width="5" stroke-linecap="butt"/><text x="36" y="167" font-size="14.5" fill="#1B4332" font-weight="600" text-anchor="start">Support</text><text x="36" y="185" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">whether today is unusual or business as usual</text><text x="452" y="165" font-size="12" fill="#5A5A6E" font-weight="400" text-anchor="end">current status</text><rect x="16" y="206" width="448" height="54" rx="8" fill="#E9F4EE" stroke="#E0E4E0"/><path d="M21,206 L21,260" stroke="#2D6A4F" stroke-width="5" stroke-linecap="butt"/><text x="36" y="231" font-size="14.5" fill="#1B4332" font-weight="600" text-anchor="start">Customers</text><text x="36" y="249" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">what the service commits to, without reading a dashboard</text><text x="452" y="229" font-size="12" fill="#5A5A6E" font-weight="400" text-anchor="end">the target</text></svg>
+<figcaption>The same objective answers a different question for each group — which is why it ends arguments between them.</figcaption>
+</figure>
+<p>This is also what makes an objective safer than a promise. A team that says "we take reliability seriously" has committed to nothing and can still be accused of anything. A team that says "99.9% of checkout requests succeed over 28 days, and here is the current figure" has committed to something specific — and, crucially, has also stated what it is <em>not</em> promising. Both halves protect you.</p>
+<h2>What actually changes</h2>
+<p>Three things, in roughly this order.</p>
+<p><strong>Escalation gets calmer.</strong> A single bad hour stops being an emergency by default. You check what it cost against the budget, and most of the time the honest answer is "not much" — which is a far better conversation than arguing about how bad it felt.</p>
+<p><strong>Prioritisation gets easier.</strong> Reliability work competes with feature work on the same evidence rather than on advocacy. "We are burning budget in this journey" is a roadmap argument that product can actually evaluate.</p>
+<p><strong>Targets start getting revised.</strong> This is the sign the practice has taken hold. A team that has never changed an SLO is not using it; a team that tightens one because the old target stopped being informative, or loosens one because it was costing more than it returned, is.</p>
+<p>None of this requires adopting a methodology. It requires one journey, one indicator, one number, and the willingness to look at it when the argument starts. If you have not set the first one yet, the <a href="https://slo-education.com.au/blog/2026-09-18-slis-and-slos-what-good-looks-like-in-numbers">introduction to SLIs and SLOs</a> covers the mechanics, and the <a href="https://slo-education.com.au/error-budget-calculator">error budget calculator</a> shows what a given target commits you to in minutes.</p>
+                </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of AI.</strong></p>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>
