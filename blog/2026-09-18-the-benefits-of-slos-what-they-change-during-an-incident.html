@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Better incident response, clearer prioritisation and honest customer updates all come from the same place — a number everyone agreed on before anything broke.">
+    <meta name="keywords" content="SLO benefits, incident response, burn rate alerting, severity classification, post-incident review, customer communication, SRE">
+    <meta property="og:title" content="The Benefits of SLOs: What They Change During an Incident - SLO Education Hub">
+    <meta property="og:description" content="Better incident response, clearer prioritisation and honest customer updates all come from the same place — a number everyone agreed on before anything broke.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://slo-education.com.au/blog/2026-09-18-the-benefits-of-slos-what-they-change-during-an-incident">
+    <meta property="article:published_time" content="2026-09-18">
+    <title>The Benefits of SLOs: What They Change During an Incident - SLO Education Hub</title>
+    <link rel="stylesheet" href="../style/inter.css">
+    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/blog.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://slo-education.com.au/blog/2026-09-18-the-benefits-of-slos-what-they-change-during-an-incident">
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-banner-content">
+            <p>
+                <strong>We value your privacy</strong><br>
+                We use cookies and analytics tools to improve your experience and understand how you use our site.
+                By clicking "Accept", you consent to the use of Google Analytics.
+                <a href="/privacy-policy" style="color: #fff; text-decoration: underline;">Learn more</a>
+            </p>
+            <div class="cookie-banner-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+                <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><a href="/">SLO Education</a></h1>
+                <ul class="nav-links"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>The Benefits of SLOs: What They Change During an Incident</h2>
+                <p class="hero-subtitle">Better incident response, clearer prioritisation and honest customer updates all come from the same place — a number everyone agreed on before anything broke.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <a href="/blog/" class="blog-back-link">← Back to Blog</a>
+                <div class="blog-post-meta">
+                    <span>2026-09-18</span>
+                    <span class="blog-post-tag">SLOs</span><span class="blog-post-tag">Fundamentals</span><span class="blog-post-tag">Incident Management</span>
+                </div>
+                <article class="blog-post-content">
+<p>It is 3am and something is wrong. The dashboard is amber in four places. Two alerts have fired, one of which fires most weeks and has never mattered.</p>
+<p>The question the on-call engineer actually needs answered is not "what is broken". It is <em>how much does this matter, and does it matter enough to wake anyone else</em>. Without an agreed number, that judgement gets made by a tired person under pressure, and it gets made differently each time.</p>
+<h2>Detection stops being about thresholds</h2>
+<p>Most alerting starts life as a set of thresholds on machine state — CPU above 80%, memory climbing, a queue getting long. These are useful for diagnosis and poor for waking people, because they answer the wrong question. A saturated CPU that nobody notices is not an incident. A healthy CPU while checkout fails is.</p>
+<p>An SLO moves the trigger to the thing users experience. You are no longer asking whether a machine is unhappy. You are asking how fast the budget is being spent, which is called the <strong>burn rate</strong>.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 274" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dtf3e97810 ddf3e97810"><title id="dtf3e97810">Burn rate decides the response</title><desc id="ddf3e97810">Four burn rates and the response each warrants: 14.4 times for one hour and 6 times for six hours both page someone, 3 times for a day raises a ticket, and 1 times sustained is spending exactly as planned.</desc><rect x="16" y="14" width="448" height="54" rx="8" fill="#FAEEED" stroke="#E0E4E0"/><path d="M21,14 L21,68" stroke="#A23B32" stroke-width="5" stroke-linecap="butt"/><text x="36" y="39" font-size="14.5" fill="#1B4332" font-weight="600" text-anchor="start">14.4x for 1 hour</text><text x="36" y="57" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">2% of the month gone — wake someone</text><text x="452" y="37" font-size="12" fill="#5A5A6E" font-weight="400" text-anchor="end">page</text><rect x="16" y="78" width="448" height="54" rx="8" fill="#FAEEED" stroke="#E0E4E0"/><path d="M21,78 L21,132" stroke="#A23B32" stroke-width="5" stroke-linecap="butt"/><text x="36" y="103" font-size="14.5" fill="#1B4332" font-weight="600" text-anchor="start">6x for 6 hours</text><text x="36" y="121" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">5% of the month gone — still urgent</text><text x="452" y="101" font-size="12" fill="#5A5A6E" font-weight="400" text-anchor="end">page</text><rect x="16" y="142" width="448" height="54" rx="8" fill="#FBF3E7" stroke="#E0E4E0"/><path d="M21,142 L21,196" stroke="#9A6114" stroke-width="5" stroke-linecap="butt"/><text x="36" y="167" font-size="14.5" fill="#1B4332" font-weight="600" text-anchor="start">3x for 1 day</text><text x="36" y="185" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">10% gone — handle it in hours, not minutes</text><text x="452" y="165" font-size="12" fill="#5A5A6E" font-weight="400" text-anchor="end">ticket</text><rect x="16" y="206" width="448" height="54" rx="8" fill="#E9F4EE" stroke="#E0E4E0"/><path d="M21,206 L21,260" stroke="#2D6A4F" stroke-width="5" stroke-linecap="butt"/><text x="36" y="231" font-size="14.5" fill="#1B4332" font-weight="600" text-anchor="start">1x for 3 days</text><text x="36" y="249" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">spending exactly as planned</text><text x="452" y="229" font-size="12" fill="#5A5A6E" font-weight="400" text-anchor="end">no action</text></svg>
+<figcaption>Burn rate is how fast you are spending the budget. 1x means you end the month exactly on target.</figcaption>
+</figure>
+<p>Burn rate is simply pace. At 1x you are consuming the budget exactly as fast as the month allows, and will finish precisely on target. At 14.4x you will burn 2% of a month in an hour, which is worth someone's sleep. At 3x you have a real problem that can wait until morning. The <a href="https://slo-education.com.au/blog/2026-08-10-burn-rate-alerts-catch-slo-breaches-before-they-land">multi-window approach</a> combines a fast and a slow window so that brief spikes do not page and slow decay does not go unnoticed.</p>
+<p>The practical effect is fewer pages that turn out not to matter, which is the single biggest determinant of whether people trust their alerts at all.</p>
+<h2>Severity stops being a debate</h2>
+<p>Most severity scales are prose — "significant customer impact", "degraded experience" — and prose gets argued about at exactly the moment nobody has time. Budget spent gives you a number instead: an incident that consumed a fifth of the month is not the same event as one that consumed a twentieth, whatever either felt like in the room.</p>
+<p>That matters most for the incidents in the middle. The catastrophic ones declare themselves. The genuinely ambiguous ones are where consistent classification saves the most time, and where a shared number does the most work. Our <a href="https://slo-education.com.au/incident-management">incident management guide</a> goes further into severity and escalation.</p>
+<h2>Customer updates get concrete</h2>
+<p>"We are investigating elevated error rates" tells a customer nothing they can act on. It is also, quietly, a promise you have not defined — elevated compared to what?</p>
+<p>A team with a published objective can be specific: what the commitment is, where the service currently sits against it, and what that means for the customer today. The value is not transparency for its own sake. It is that you have stated in advance what normal looks like, so an incident update is a comparison rather than an adjective. And because the objective also states what you are <em>not</em> promising, a bad hour inside budget does not have to be reported as a crisis.</p>
+<h2>The review argues about the number</h2>
+<p>The most durable benefit arrives after everything is fixed.</p>
+<p>A post-incident review without an SLO tends to circle the same questions: was this bad enough to act on, and who should have caught it. With one, the first question already has an answer — the incident cost a measurable share of the budget — so the conversation moves to what to change, and the ranking against other work is evidence rather than advocacy.</p>
+<figure class="blog-figure">
+<svg viewBox="0 0 480 342" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dt96c18a05 dd96c18a05"><title id="dt96c18a05">An SLO through the life of an incident</title><desc id="dd96c18a05">Four stages of an incident with the objective involved at each: detection alerts on user impact, triage uses budget spent to set severity, communication states status against the commitment, and the review measures what the incident cost.</desc><defs><marker id="arw96c18a05" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2D6A4F"/></marker></defs><rect x="16" y="14" width="448" height="56" rx="8" fill="#E9F4EE" stroke="#2D6A4F" stroke-opacity="0.45"/><text x="34" y="38" font-size="15" fill="#1B4332" font-weight="600" text-anchor="start">Detect</text><text x="34" y="57" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">the alert fires on user impact, not on CPU</text><path d="M240.0,70 L240.0,96" stroke="#2D6A4F" stroke-width="2" marker-end="url(#arw96c18a05)"/><rect x="16" y="100" width="448" height="56" rx="8" fill="#E9F4EE" stroke="#2D6A4F" stroke-opacity="0.45"/><text x="34" y="124" font-size="15" fill="#1B4332" font-weight="600" text-anchor="start">Triage</text><text x="34" y="143" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">budget spent so far sets the severity</text><path d="M240.0,156 L240.0,182" stroke="#2D6A4F" stroke-width="2" marker-end="url(#arw96c18a05)"/><rect x="16" y="186" width="448" height="56" rx="8" fill="#E9F4EE" stroke="#2D6A4F" stroke-opacity="0.45"/><text x="34" y="210" font-size="15" fill="#1B4332" font-weight="600" text-anchor="start">Communicate</text><text x="34" y="229" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">status stated against the commitment</text><path d="M240.0,242 L240.0,268" stroke="#2D6A4F" stroke-width="2" marker-end="url(#arw96c18a05)"/><rect x="16" y="272" width="448" height="56" rx="8" fill="#E9F4EE" stroke="#2D6A4F" stroke-opacity="0.45"/><text x="34" y="296" font-size="15" fill="#1B4332" font-weight="600" text-anchor="start">Review</text><text x="34" y="315" font-size="12.5" fill="#5A5A6E" font-weight="400" text-anchor="start">what it cost, and what to fix first</text></svg>
+<figcaption>The same number carries through all four. That continuity is most of the benefit.</figcaption>
+</figure>
+<p>That continuity is most of the benefit. The same number detects the problem, sizes it, describes it to customers and ranks the fix — so four groups who would otherwise reason in four vocabularies are looking at one thing.</p>
+<p>None of this requires a large programme. It requires one journey, one indicator and one agreed number. If you have not set that yet, start with the <a href="https://slo-education.com.au/blog/2026-09-18-slis-and-slos-what-good-looks-like-in-numbers">introduction to SLIs and SLOs</a>, then use the <a href="https://slo-education.com.au/error-budget-calculator">error budget calculator</a> to see what a target commits you to before you commit to it.</p>
+                </article>
+                <p class="blog-ai-notice"><strong>This article was generated with the help of AI.</strong></p>
+            </div>
+        </section>
+
+        <div id="resources-section"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Cookie Consent & Analytics Script -->
+    <script>
+        const CONSENT_KEY = 'slo-education-analytics-consent';
+        const consentBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const declineBtn = document.getElementById('cookie-decline');
+
+        function checkConsent() {
+            const consent = localStorage.getItem(CONSENT_KEY);
+            if (consent === null) {
+                consentBanner.style.display = 'block';
+            } else if (consent === 'accepted') {
+                initializeAnalytics();
+            }
+        }
+
+        function initializeAnalytics() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0XTFS0T3Y0';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function(){ dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-0XTFS0T3Y0', { 'anonymize_ip': true });
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            consentBanner.style.display = 'none';
+            initializeAnalytics();
+        });
+
+        declineBtn.addEventListener('click', function() {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            consentBanner.style.display = 'none';
+        });
+
+        checkConsent();
+    </script>
+
+    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/resources.js" defer></script>
+    <script src="../scripts/footer.js" defer></script>
+</body>
+</html>

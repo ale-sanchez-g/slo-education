@@ -1332,3 +1332,26 @@ footer {
 .bg-light .cta-button:hover {
     background-color: var(--color-primary-mid);
 }
+
+/* Card call to action. Sits above the metadata rule so the card reads
+   description → action → metadata, and the link is not mistaken for a tag. */
+.card-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--color-primary-mid);
+    font-weight: 600;
+    font-size: 0.93rem;
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.card-link:hover,
+.card-link:focus-visible {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.card .card-link + .card-meta {
+    margin-top: 1rem;
+}
