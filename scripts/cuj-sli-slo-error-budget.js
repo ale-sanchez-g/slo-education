@@ -17,8 +17,7 @@
             },
             slo: {
                 target: 99.5,
-                window: '30 days',
-                budgetHours: 3.65
+                window: '30 days'
             }
         },
         checkin: {
@@ -32,8 +31,7 @@
             },
             slo: {
                 target: 99.9,
-                window: '30 days',
-                budgetHours: 0.73
+                window: '30 days'
             }
         },
         operations: {
@@ -47,11 +45,16 @@
             },
             slo: {
                 target: 99.95,
-                window: '30 days',
-                budgetHours: 0.365
+                window: '30 days'
             }
         }
     };
+
+    // Error budget in hours for each journey's 30-day window: (100% − SLO) × 720h
+    Object.keys(JOURNEYS).forEach(function (key) {
+        var slo = JOURNEYS[key].slo;
+        slo.budgetHours = (100 - slo.target) / 100 * 30 * 24;
+    });
 
     // Track remaining budget per journey (resets when switching)
     var budgetRemaining = {};
@@ -125,7 +128,7 @@
         statusEl.className = 'slo-status ' + (isMet ? 'slo-met' : 'slo-breached');
 
         explanationEl.textContent = 'Target: ' + journey.slo.target + '% success rate over ' + journey.slo.window;
-        budgetPreviewEl.textContent = 'Total error budget: ' + formatHours(journey.slo.budgetHours) + '/month';
+        budgetPreviewEl.textContent = 'Total error budget: ' + formatHours(journey.slo.budgetHours) + ' per ' + journey.slo.window;
     }
 
     function updateBudgetSection(journeyKey) {

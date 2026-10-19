@@ -145,8 +145,9 @@ test.describe('CUJ → SLI → SLO → Error Budget Page', () => {
     });
 
     test('should display budget hours for booking journey', async ({ page }) => {
+      // (100% − 99.5%) × 720h in a 30-day window
       const budgetHours = page.locator('#budget-hours');
-      await expect(budgetHours).toContainText('3.65h');
+      await expect(budgetHours).toContainText('3.60h');
     });
 
     test('should display decision text after journey selection', async ({ page }) => {
@@ -212,14 +213,14 @@ test.describe('CUJ → SLI → SLO → Error Budget Page', () => {
     });
 
     test('should update budget hours when switching journeys', async ({ page }) => {
-      // Booking has 3.65h budget
+      // Booking: (100% − 99.5%) × 720h = 3.60h budget per 30 days
       const budgetHours = page.locator('#budget-hours');
-      await expect(budgetHours).toContainText('3.65h');
+      await expect(budgetHours).toContainText('3.60h');
 
-      // Check-in has 0.73h = 43.8 min
+      // Check-in: (100% − 99.9%) × 720h = 0.72h = 43.2 min
       const checkinCard = page.locator('.journey-card[data-journey="checkin"]');
       await checkinCard.click();
-      await expect(budgetHours).toContainText('min');
+      await expect(budgetHours).toContainText('43.2 min');
     });
   });
 
