@@ -56,18 +56,18 @@
                         <div class="metrics-grid">
                             <div class="metric-card">
                                 <div class="metric-label">Downtime</div>
-                                <div class="metric-value" id="downtime-minutes">43.8</div>
-                                <div class="metric-unit" id="downtime-minutes-unit">min / mo</div>
+                                <div class="metric-value" id="downtime-minutes">43.2</div>
+                                <div class="metric-unit" id="downtime-minutes-unit">min / 30 days</div>
                             </div>
                             <div class="metric-card">
                                 <div class="metric-label">In Hours</div>
-                                <div class="metric-value" id="downtime-hours">0.73</div>
-                                <div class="metric-unit">hrs / mo</div>
+                                <div class="metric-value" id="downtime-hours">0.72</div>
+                                <div class="metric-unit">hrs / 30 days</div>
                             </div>
                             <div class="metric-card">
                                 <div class="metric-label">Failure Rate</div>
                                 <div class="metric-value" id="failure-rate">0.1%</div>
-                                <div class="metric-unit">per month</div>
+                                <div class="metric-unit">allowed</div>
                             </div>
                         </div>
                     </div>
@@ -75,18 +75,23 @@
                     <div class="calc-panel burn-rate-section">
                         <div class="calc-section-label">Burn Rate</div>
                         <div class="burn-rate-input">
-                            <label for="actual-downtime">Actual downtime this month (minutes)</label>
+                            <label for="actual-downtime">Downtime so far in this 30-day window (minutes)</label>
                             <div class="burn-rate-input-row">
-                                <input type="text" id="actual-downtime" inputmode="decimal" placeholder="e.g. 1.5" autocomplete="off">
+                                <input type="text" id="actual-downtime" inputmode="decimal" placeholder="e.g. 5" autocomplete="off">
+                            </div>
+                            <label for="days-elapsed">Days elapsed in the window</label>
+                            <div class="burn-rate-input-row">
+                                <input type="text" id="days-elapsed" inputmode="decimal" placeholder="1 to 30" autocomplete="off">
                                 <button id="calculate-burn" class="calculate-btn">Calculate</button>
                             </div>
                         </div>
                         <div id="burn-rate-result" class="burn-rate-result" style="display: none;" aria-live="polite" aria-atomic="true">
-                            <div class="burn-rate-value" id="burn-rate-value">0%</div>
+                            <div class="burn-rate-value" id="burn-rate-value">0×</div>
+                            <div class="burn-rate-detail" id="burn-rate-detail"></div>
                             <div class="burn-rate-status" id="burn-rate-status"></div>
                         </div>
                         <div id="burn-rate-placeholder" class="burn-rate-placeholder">
-                            <span>🕐 Enter downtime above and click Calculate to see your burn rate and status.</span>
+                            <span>🕐 Enter the downtime so far and how many days into the window you are, then click Calculate.</span>
                         </div>
                     </div>
                 </div>
@@ -102,7 +107,7 @@
                 <div class="key-concept">
                     <h3>Key Concept</h3>
                     <ul>
-                        <li><strong>SLO = 99.9%</strong> means you can afford <strong>43.8 minutes of downtime per month</strong></li>
+                        <li><strong>SLO = 99.9%</strong> means you can afford <strong>43.2 minutes of downtime in a 30-day window</strong></li>
                         <li>This is your "budget" to spend on experiments, deployments, and maintenance</li>
                         <li>When you've used up your budget, focus on stability instead of new features</li>
                     </ul>
@@ -121,7 +126,7 @@
                     <h4>1. SLO Target Selection</h4>
                     <p>Choose from preset SLO targets:</p>
                     <ul>
-                        <li><strong>99%</strong> - Large consumer services (okay with ~7 hours downtime/month)</li>
+                        <li><strong>99%</strong> - Large consumer services (okay with ~7.2 hours of downtime per 30 days)</li>
                         <li><strong>99.5%</strong> - Most enterprise services</li>
                         <li><strong>99.9%</strong> - Critical business services</li>
                         <li><strong>99.95%</strong> - Very critical services</li>
@@ -142,7 +147,7 @@
                         <tbody>
                             <tr>
                                 <td data-label="Metric"><strong>Allowed Downtime</strong></td>
-                                <td data-label="What It Means">Minutes you can be down per month</td>
+                                <td data-label="What It Means">Minutes you can be down in a 30-day window</td>
                                 <td data-label="Use Case">Budget planning</td>
                             </tr>
                             <tr>
@@ -152,7 +157,7 @@
                             </tr>
                             <tr>
                                 <td data-label="Metric"><strong>Failure Rate</strong></td>
-                                <td data-label="What It Means">Percentage tolerance per month</td>
+                                <td data-label="What It Means">Share of requests (or time) allowed to fail</td>
                                 <td data-label="Use Case">Understanding error rate</td>
                             </tr>
                         </tbody>
@@ -163,6 +168,11 @@
                     <h4>3. Progress Bar</h4>
                     <p>Visual representation of your SLO target (100% = perfect uptime)</p>
                 </div>
+
+                <div class="component-section">
+                    <h4>4. Burn Rate Check</h4>
+                    <p>Enter the downtime so far and how many days into the 30-day window you are. The calculator compares how fast you are spending the budget with the pace that would make it last the whole window.</p>
+                </div>
             </div>
         </section>
 
@@ -170,8 +180,8 @@
         <section class="section bg-light">
             <div class="container">
                 <h2>🔥 Burn Rate: The Critical Metric</h2>
-                <p class="section-intro"><strong>Burn Rate</strong> = How fast you're consuming your error budget</p>
-                
+                <p class="section-intro"><strong>Burn rate</strong> is how fast you are spending the error budget, compared with the pace that would use exactly all of it by the end of the window. At <strong>1×</strong> you finish the window exactly on target. At <strong>2×</strong> the budget is gone halfway through.</p>
+
                 <h3>Burn Rate Categories</h3>
                 <table class="info-table burn-rate-table">
                     <thead>
@@ -183,42 +193,47 @@
                     </thead>
                     <tbody>
                         <tr class="burn-slow">
-                            <td data-label="Burn Rate"><strong>&lt; 2%</strong></td>
-                            <td data-label="What It Means">Slow burn (healthy)</td>
-                            <td data-label="Action">✅ Safe to deploy and experiment</td>
+                            <td data-label="Burn Rate"><strong>1× or less</strong></td>
+                            <td data-label="What It Means">On pace: the budget lasts the whole window</td>
+                            <td data-label="Action">✅ Spend it on releases and experiments</td>
                         </tr>
                         <tr class="burn-medium">
-                            <td data-label="Burn Rate"><strong>2-5%</strong></td>
-                            <td data-label="What It Means">Medium burn (caution)</td>
-                            <td data-label="Action">⚠️ Be thoughtful about deployments</td>
+                            <td data-label="Burn Rate"><strong>Above 1×</strong></td>
+                            <td data-label="What It Means">Above pace: the budget runs out before the window ends</td>
+                            <td data-label="Action">⚠️ Find out what is consuming it</td>
                         </tr>
                         <tr class="burn-fast">
-                            <td data-label="Burn Rate"><strong>5% to &lt; 10%</strong></td>
-                            <td data-label="What It Means">Fast burn (alert)</td>
-                            <td data-label="Action">🔴 Minimize risky changes</td>
+                            <td data-label="Burn Rate"><strong>2× or more</strong></td>
+                            <td data-label="What It Means">Fast burn: the budget is gone by mid-window or sooner</td>
+                            <td data-label="Action">🔴 Alert, and slow risky releases</td>
                         </tr>
                         <tr class="burn-critical">
-                            <td data-label="Burn Rate"><strong>&ge; 10%</strong></td>
-                            <td data-label="What It Means">Critical (emergency)</td>
-                            <td data-label="Action">🚨 Focus on stability only</td>
+                            <td data-label="Burn Rate"><strong>Budget used up</strong></td>
+                            <td data-label="What It Means">Exhausted: the SLO is missed for this window</td>
+                            <td data-label="Action">🚨 Restrict or stop releases until back within SLO</td>
                         </tr>
                     </tbody>
                 </table>
+                <p class="source-note">Sources: the 1× baseline and the 2× alert come from Google Cloud's <a href="https://cloud.google.com/blog/products/management-tools/practical-guide-to-setting-slos" target="_blank" rel="noopener noreferrer">Learn how to set SLOs</a>. Slowing releases for an endangered SLO comes from <a href="https://cloud.google.com/blog/products/gcp/building-good-slos-cre-life-lessons" target="_blank" rel="noopener noreferrer">How we build good SLOs at Google</a>, and restricting them once the SLO is missed from <a href="https://cloud.google.com/blog/products/gcp/consequences-of-slo-violations-cre-life-lessons" target="_blank" rel="noopener noreferrer">What are the consequences of SLO violations</a>.</p>
 
                 <div class="formula-box">
                     <h4>How to Calculate Burn Rate</h4>
                     <div class="formula">
-                        Monthly Burn Rate = (Minutes Down This Month / Total Monthly Budget) × 100
+                        Burn Rate = Budget Used (%) ÷ Window Elapsed (%)<br>
+                        or, equivalently: Observed Error Rate ÷ Allowed Error Rate (100% − SLO)
                     </div>
                     <div class="example">
                         <h5>Example:</h5>
                         <ul>
-                            <li>Your SLO: 99.9% = 43.8 minutes/month budget</li>
-                            <li>Downtime this month: 5 minutes</li>
-                            <li>Burn Rate: (5 / 43.8) × 100 = <strong>11.4%</strong> (Critical Burn - focus on stability!)</li>
+                            <li>Your SLO: 99.9% = 43.2 minutes of budget per 30 days</li>
+                            <li>Day 10, with 5 minutes of downtime so far</li>
+                            <li>Budget used: 5 / 43.2 = 11.6%. Window elapsed: 10 / 30 = 33.3%</li>
+                            <li>Burn Rate: 11.6 / 33.3 = <strong>0.35×</strong> (on pace)</li>
+                            <li>The same 5 minutes by day 1 would be 11.6 / 3.3 = <strong>3.5×</strong>, and the budget would run out around day 9</li>
                         </ul>
                     </div>
                 </div>
+                <p class="source-note">The calculator averages the burn since the window started. Alerting also looks at shorter windows: Google's guidance is to page when a large amount of budget burns over a short window, and to open a ticket when the burn rate stays elevated over a longer one.</p>
             </div>
         </section>
 
@@ -230,42 +245,44 @@
                 <div class="decision-framework">
                     <h3>Decision Framework</h3>
                     <div class="framework-tree">
-                        <pre>Is Burn Rate Low? (&lt; 5%)
-├─ YES → Deploy frequently, experiment safely
-└─ NO → Hold off on risky changes, focus on stability</pre>
+                        <pre>Is the error budget used up?
+├─ YES → Restrict or stop risky releases until back within SLO
+└─ NO → Is the burn rate above 1×?
+         ├─ NO → On pace: deploy and experiment
+         └─ YES → Find the cause; at 2× or more, slow risky releases</pre>
                     </div>
                 </div>
 
                 <h3>Practical Examples</h3>
-                
+
                 <div class="scenario-cards">
                     <div class="scenario-card healthy">
-                        <h4>Scenario 1: Healthy Budget</h4>
+                        <h4>Scenario 1: On Pace</h4>
                         <ul>
-                            <li><strong>SLO:</strong> 99.9% (43.8 min/month)</li>
-                            <li><strong>Downtime this month:</strong> 2 minutes</li>
-                            <li><strong>Burn Rate:</strong> 4.6% (Medium Burn)</li>
-                            <li><strong>Decision:</strong> ✅ Okay to deploy, but be careful</li>
+                            <li><strong>SLO:</strong> 99.9% (43.2 min / 30 days)</li>
+                            <li><strong>So far:</strong> 10 minutes of downtime by day 15</li>
+                            <li><strong>Burn Rate:</strong> 23.1% used ÷ 50% elapsed = 0.46×</li>
+                            <li><strong>Decision:</strong> ✅ Keep shipping; the budget lasts the window</li>
                         </ul>
                     </div>
-                    
+
                     <div class="scenario-card exhausted">
                         <h4>Scenario 2: Budget Exhausted</h4>
                         <ul>
-                            <li><strong>SLO:</strong> 99.9% (43.8 min/month)</li>
-                            <li><strong>Downtime this month:</strong> 40 minutes</li>
-                            <li><strong>Burn Rate:</strong> 91% (Critical Burn)</li>
-                            <li><strong>Decision:</strong> 🚨 Stop deployments, focus on stability</li>
+                            <li><strong>SLO:</strong> 99.9% (43.2 min / 30 days)</li>
+                            <li><strong>So far:</strong> 45 minutes of downtime by day 20</li>
+                            <li><strong>Budget used:</strong> 104%, so the SLO is missed for this window</li>
+                            <li><strong>Decision:</strong> 🚨 Restrict or stop risky releases until back within SLO</li>
                         </ul>
                     </div>
-                    
+
                     <div class="scenario-card warning">
-                        <h4>Scenario 3: Budget Warning</h4>
+                        <h4>Scenario 3: Fast Burn</h4>
                         <ul>
-                            <li><strong>SLO:</strong> 99.99% (4.38 min/month)</li>
-                            <li><strong>Downtime this month:</strong> 0.5 minutes</li>
-                            <li><strong>Burn Rate:</strong> 11% (Critical Burn)</li>
-                            <li><strong>Decision:</strong> ⚠️ Reduce deployment frequency</li>
+                            <li><strong>SLO:</strong> 99.99% (4.32 min / 30 days)</li>
+                            <li><strong>So far:</strong> 1.5 minutes of downtime by day 3</li>
+                            <li><strong>Burn Rate:</strong> 34.7% used ÷ 10% elapsed = 3.5×</li>
+                            <li><strong>Decision:</strong> 🔴 At this pace the budget is gone around day 9; slow risky releases and find the cause</li>
                         </ul>
                     </div>
                 </div>
@@ -282,17 +299,22 @@
                     <div class="formula-box">
                         <div class="formula">
                             Error Rate = 100 - SLO<br>
-                            Minutes Per Month = (Error Rate / 100) × (365 × 24 × 60) / 12
+                            Budget Minutes = (Error Rate / 100) × Window Minutes<br>
+                            30-day window = 30 × 24 × 60 = 43,200 minutes
                         </div>
                         <div class="example">
                             <h5>Example: 99.9% SLO</h5>
                             <ul>
                                 <li>Error Rate: 100 - 99.9 = 0.1%</li>
-                                <li>Minutes Per Month: (0.1 / 100) × 525600 / 12 = <strong>43.8 minutes</strong></li>
+                                <li>Budget: (0.1 / 100) × 43,200 = <strong>43.2 minutes</strong> per 30 days</li>
                             </ul>
                         </div>
                     </div>
                 </div>
+
+                <h3>Which Window?</h3>
+                <p>Always say which window a budget covers. This site uses a rolling 30-day window. Some tools use 28 days or a calendar month, and an average month (one twelfth of a year, 730 hours) gives 43.8 minutes for the same 99.9% target. Google's SLO guidance notes that rolling windows are more closely aligned with user experience, while calendar windows line up with business targets and planning.</p>
+                <p class="source-note">Source: Google Cloud, <a href="https://cloud.google.com/blog/products/management-tools/practical-guide-to-setting-slos" target="_blank" rel="noopener noreferrer">Learn how to set SLOs</a>.</p>
 
                 <h3>Common SLO Reference Table</h3>
                 <table class="info-table reference-table">
@@ -300,7 +322,7 @@
                         <tr>
                             <th>SLO</th>
                             <th>Per Year</th>
-                            <th>Per Month</th>
+                            <th>Per 30 Days</th>
                             <th>Per Week</th>
                             <th>Per Day</th>
                         </tr>
@@ -309,43 +331,43 @@
                         <tr>
                             <td data-label="SLO"><strong>99%</strong></td>
                             <td data-label="Per Year">3.65 days</td>
-                            <td data-label="Per Month">7.3 hours</td>
-                            <td data-label="Per Week">1.7 hours</td>
-                            <td data-label="Per Day">1.44 min</td>
+                            <td data-label="Per 30 Days">7.2 hours</td>
+                            <td data-label="Per Week">1.68 hours</td>
+                            <td data-label="Per Day">14.4 min</td>
                         </tr>
                         <tr>
                             <td data-label="SLO"><strong>99.5%</strong></td>
                             <td data-label="Per Year">1.83 days</td>
-                            <td data-label="Per Month">3.65 hours</td>
-                            <td data-label="Per Week">51 min</td>
-                            <td data-label="Per Day">43 sec</td>
+                            <td data-label="Per 30 Days">3.6 hours</td>
+                            <td data-label="Per Week">50.4 min</td>
+                            <td data-label="Per Day">7.2 min</td>
                         </tr>
                         <tr>
                             <td data-label="SLO"><strong>99.9%</strong></td>
                             <td data-label="Per Year">8.76 hours</td>
-                            <td data-label="Per Month">43.8 min</td>
-                            <td data-label="Per Week">10 min</td>
-                            <td data-label="Per Day">86 sec</td>
+                            <td data-label="Per 30 Days">43.2 min</td>
+                            <td data-label="Per Week">10.1 min</td>
+                            <td data-label="Per Day">1.44 min</td>
                         </tr>
                         <tr>
                             <td data-label="SLO"><strong>99.95%</strong></td>
                             <td data-label="Per Year">4.38 hours</td>
-                            <td data-label="Per Month">21.9 min</td>
-                            <td data-label="Per Week">5 min</td>
-                            <td data-label="Per Day">43 sec</td>
+                            <td data-label="Per 30 Days">21.6 min</td>
+                            <td data-label="Per Week">5.04 min</td>
+                            <td data-label="Per Day">43.2 sec</td>
                         </tr>
                         <tr>
                             <td data-label="SLO"><strong>99.99%</strong></td>
                             <td data-label="Per Year">52.6 min</td>
-                            <td data-label="Per Month">4.38 min</td>
-                            <td data-label="Per Week">61 sec</td>
-                            <td data-label="Per Day">8.6 sec</td>
+                            <td data-label="Per 30 Days">4.32 min</td>
+                            <td data-label="Per Week">60.5 sec</td>
+                            <td data-label="Per Day">8.64 sec</td>
                         </tr>
                         <tr>
                             <td data-label="SLO"><strong>99.999%</strong></td>
                             <td data-label="Per Year">5.26 min</td>
-                            <td data-label="Per Month">26.3 sec</td>
-                            <td data-label="Per Week">6 sec</td>
+                            <td data-label="Per 30 Days">25.9 sec</td>
+                            <td data-label="Per Week">6.05 sec</td>
                             <td data-label="Per Day">0.86 sec</td>
                         </tr>
                     </tbody>
@@ -396,28 +418,28 @@
                         <tr>
                             <th>Service</th>
                             <th>SLO</th>
-                            <th>Budget/Month</th>
-                            <th>Typical Burn Rate</th>
+                            <th>Budget / 30 Days</th>
+                            <th>Budget per Day at 1×</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td data-label="Service">API</td>
                             <td data-label="SLO">99.99%</td>
-                            <td data-label="Budget/Month">4.38 min</td>
-                            <td data-label="Typical Burn Rate">Slow (1-2%)</td>
+                            <td data-label="Budget / 30 Days">4.32 min</td>
+                            <td data-label="Budget per Day at 1×">8.64 sec</td>
                         </tr>
                         <tr>
                             <td data-label="Service">Web UI</td>
                             <td data-label="SLO">99.9%</td>
-                            <td data-label="Budget/Month">43.8 min</td>
-                            <td data-label="Typical Burn Rate">Medium (5%)</td>
+                            <td data-label="Budget / 30 Days">43.2 min</td>
+                            <td data-label="Budget per Day at 1×">1.44 min</td>
                         </tr>
                         <tr>
                             <td data-label="Service">Background Jobs</td>
                             <td data-label="SLO">99%</td>
-                            <td data-label="Budget/Month">7.2 hrs</td>
-                            <td data-label="Typical Burn Rate">Fast (8-10%)</td>
+                            <td data-label="Budget / 30 Days">7.2 hrs</td>
+                            <td data-label="Budget per Day at 1×">14.4 min</td>
                         </tr>
                     </tbody>
                 </table>
@@ -491,8 +513,12 @@
                         <p>How fast we notice problems</p>
                     </div>
                     <div class="concept-card">
-                        <h4>MTTR (Mean Time To Recovery)</h4>
-                        <p>How fast we fix them</p>
+                        <h4>MTTM (Mean Time To Mitigation)</h4>
+                        <p>How fast user impact stops</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>MTTR (Mean Time To Repair)</h4>
+                        <p>How long the full fix takes</p>
                     </div>
                 </div>
             </div>
@@ -517,11 +543,11 @@
                     </div>
                     <div class="faq-item">
                         <h4>Q: How do we track burn rate?</h4>
-                        <p><strong>A:</strong> Calculate: (Downtime This Month / Monthly Budget) × 100. Display it on dashboards, Slack, or status pages.</p>
+                        <p><strong>A:</strong> Divide the share of the budget used by the share of the window elapsed (or the observed error rate by the allowed error rate). Display it on dashboards, Slack, or status pages.</p>
                     </div>
                     <div class="faq-item">
                         <h4>Q: What's a "good" burn rate?</h4>
-                        <p><strong>A:</strong> Ideally 0-5% per month. This means you have room to experiment while maintaining reliability.</p>
+                        <p><strong>A:</strong> Around 1× or below over the window. You meet the SLO and still use the budget for releases and experiments. Staying far below 1× for a long time can mean the target is stricter than users need, which means you are spending more on reliability than you need to.</p>
                     </div>
                 </div>
             </div>

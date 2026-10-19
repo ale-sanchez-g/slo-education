@@ -46,7 +46,7 @@
                         <h3>Core Principles</h3>
                         <ul>
                             <li><strong>Detect Fast:</strong> Mean Time To Detection (MTTD) matters</li>
-                            <li><strong>Respond Faster:</strong> Mean Time To Recovery (MTTR) is critical</li>
+                            <li><strong>Mitigate Fast:</strong> Mean Time To Mitigation (MTTM), how fast user impact stops, matters most. Mean Time To Repair (MTTR) covers the full fix</li>
                             <li><strong>Learn Always:</strong> Every incident is a learning opportunity</li>
                             <li><strong>Blameless Culture:</strong> Focus on systems, not individuals</li>
                         </ul>
@@ -76,7 +76,7 @@
 
                         <div class="practice-item">
                             <h4>2. Use Runbooks & Playbooks</h4>
-                            <p>Document common incident scenarios and response procedures. Runbooks reduce MTTR by providing step-by-step guidance for known issues.</p>
+                            <p>Document common incident scenarios and response procedures. Runbooks shorten mitigation and repair by providing step-by-step guidance for known issues.</p>
                         </div>
 
                         <div class="practice-item">
@@ -206,6 +206,7 @@
                         </tbody>
                     </table>
                     </div>
+                    <p class="severity-tip"><strong>Unsure between two levels?</strong> Treat it as the higher one and review the level in the post-mortem. Mid-incident is not the time to debate severity. Severity scales differ between organisations, and this P0&ndash;P3 scale is an example. Source: <a href="https://github.com/PagerDuty/incident-response-docs/blob/master/docs/before/severity_levels.md" target="_blank" rel="noopener noreferrer">PagerDuty Incident Response, Severity Levels</a>.</p>
                 </div>
             </div>
         </section>
@@ -590,13 +591,13 @@
                     </div>
 
                     <div class="faq-item">
-                        <h4>Q: How do we reduce MTTR?</h4>
+                        <h4>Q: How do we reduce time to mitigate (MTTM)?</h4>
                         <p><strong>A:</strong> Focus on: better monitoring/alerting (faster detection), runbooks for common issues, automated rollback capabilities, clear escalation paths, and regular incident response practice/drills.</p>
                     </div>
 
                     <div class="faq-item">
                         <h4>Q: What metrics should we track for incident management?</h4>
-                        <p><strong>A:</strong> Key metrics include: MTTD (Mean Time To Detection), MTTM (Mean Time To Mitigation), MTTR (Mean Time To Recovery), incident frequency by severity, and post-mortem action item completion rate.</p>
+                        <p><strong>A:</strong> Key metrics include: MTTD (Mean Time To Detection), MTTM (Mean Time To Mitigation), MTTR (Mean Time To Repair; some teams use it for recovery or restore, so say which you mean), incident frequency by severity, and post-mortem action item completion rate.</p>
                     </div>
                 </div>
             </div>

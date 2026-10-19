@@ -1,10 +1,31 @@
+// Error budgets are calculated over a rolling 30-day window
+// Formula: Budget Minutes = (Error Rate / 100) × (30 × 24 × 60)
+const WINDOW_DAYS = 30;
+
 // Calculate SLO metrics dynamically from a percentage value
-// Formula: Minutes Per Month = (Error Rate / 100) × (365 × 24 × 60) / 12
 function calculateSLOData(percentage) {
     const errorRate = 100 - percentage;
-    const minutesPerMonth = (errorRate / 100) * (365 * 24 * 60 / 12);
-    const hoursPerMonth = minutesPerMonth / 60;
-    return { percentage, errorRate, minutesPerMonth, hoursPerMonth };
+    const minutesPerWindow = (errorRate / 100) * (WINDOW_DAYS * 24 * 60);
+    const hoursPerWindow = minutesPerWindow / 60;
+    return { percentage, errorRate, minutesPerWindow, hoursPerWindow };
+}
+
+// Burn rate compares how fast the budget is being spent with the pace that
+// would use exactly all of it by the end of the window: 1× ends on target.
+// Formula: Burn Rate = Budget Used ÷ Window Elapsed
+function calculateBurn(budgetMinutes, downtimeMinutes, daysElapsed) {
+    const budgetUsed = downtimeMinutes / budgetMinutes;
+    const windowElapsed = daysElapsed / WINDOW_DAYS;
+    const burnRate = budgetUsed / windowElapsed;
+    return { budgetUsed, windowElapsed, burnRate, exhaustionDay: WINDOW_DAYS / burnRate };
+}
+
+// Display budgets under a minute in seconds, otherwise in minutes
+function formatBudget(minutes) {
+    if (minutes < 1) {
+        return parseFloat((minutes * 60).toPrecision(3)) + ' sec';
+    }
+    return parseFloat(minutes.toPrecision(3)) + ' min';
 }
 
 // Initialize calculator
@@ -17,10 +38,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const downtimeHours = document.getElementById('downtime-hours');
     const failureRate = document.getElementById('failure-rate');
     const actualDowntimeInput = document.getElementById('actual-downtime');
+    const daysElapsedInput = document.getElementById('days-elapsed');
     const calculateBurnBtn = document.getElementById('calculate-burn');
     const burnRateResult = document.getElementById('burn-rate-result');
     const burnRatePlaceholder = document.getElementById('burn-rate-placeholder');
     const burnRateValue = document.getElementById('burn-rate-value');
+    const burnRateDetail = document.getElementById('burn-rate-detail');
     const burnRateStatus = document.getElementById('burn-rate-status');
 
     // Update calculator as the user types a new SLO value
@@ -29,11 +52,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Calculate burn rate when button is clicked
     calculateBurnBtn.addEventListener('click', calculateBurnRate);
 
-    // Allow Enter key to trigger calculation
-    actualDowntimeInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            calculateBurnRate();
-        }
+    // Allow Enter key to trigger calculation from either burn rate input
+    [actualDowntimeInput, daysElapsedInput].forEach(function(input) {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateBurnRate();
+            }
+        });
     });
 
     // Initialize with default value
@@ -60,16 +85,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Display downtime in seconds when less than 1 minute, otherwise in minutes
-        if (data.minutesPerMonth < 1) {
-            const seconds = data.minutesPerMonth * 60;
+        if (data.minutesPerWindow < 1) {
+            const seconds = data.minutesPerWindow * 60;
             downtimeMinutes.textContent = seconds.toFixed(1);
-            downtimeMinutesUnit.textContent = 'sec / mo';
+            downtimeMinutesUnit.textContent = 'sec / 30 days';
         } else {
-            downtimeMinutes.textContent = data.minutesPerMonth.toFixed(1);
-            downtimeMinutesUnit.textContent = 'min / mo';
+            downtimeMinutes.textContent = data.minutesPerWindow.toFixed(1);
+            downtimeMinutesUnit.textContent = 'min / 30 days';
         }
 
-        downtimeHours.textContent = parseFloat(data.hoursPerMonth.toPrecision(4)).toString();
+        downtimeHours.textContent = parseFloat(data.hoursPerWindow.toPrecision(4)).toString();
         failureRate.textContent = parseFloat(data.errorRate.toPrecision(4)).toString() + '%';
 
         // Hide burn rate result when SLO changes
@@ -87,38 +112,47 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const data = calculateSLOData(sloVal);
         const actualDowntime = parseFloat(actualDowntimeInput.value);
+        const daysElapsed = parseFloat(daysElapsedInput.value);
 
         if (!actualDowntimeInput.value.trim() || isNaN(actualDowntime) || actualDowntime < 0) {
             alert('Please enter a valid downtime value (0 or greater)');
             return;
         }
 
-        // Calculate burn rate
-        const burnRate = (actualDowntime / data.minutesPerMonth) * 100;
+        if (!daysElapsedInput.value.trim() || isNaN(daysElapsed) || daysElapsed <= 0 || daysElapsed > WINDOW_DAYS) {
+            alert('Please enter the days elapsed in the window (more than 0, up to ' + WINDOW_DAYS + ')');
+            return;
+        }
+
+        const burn = calculateBurn(data.minutesPerWindow, actualDowntime, daysElapsed);
 
         // Update display
-        burnRateValue.textContent = burnRate.toFixed(1) + '%';
+        burnRateValue.textContent = burn.burnRate.toFixed(burn.burnRate < 10 ? 2 : 0) + '×';
+        burnRateDetail.textContent = (burn.budgetUsed * 100).toFixed(1) + '% of the ' +
+            formatBudget(data.minutesPerWindow) + ' budget used, ' +
+            (burn.windowElapsed * 100).toFixed(1) + '% of the window elapsed';
 
         // Determine status and styling
+        const runsOutBy = 'At this pace the budget runs out around day ' + Math.round(burn.exhaustionDay) + '.';
         let statusText = '';
         let statusClass = '';
 
-        if (burnRate < 2) {
-            statusText = '✅ Slow Burn (Healthy) - Safe to deploy and experiment';
-            statusClass = 'slow';
-            burnRateValue.style.color = 'var(--color-success)';
-        } else if (burnRate >= 2 && burnRate < 5) {
-            statusText = '⚠️ Medium Burn (Caution) - Be thoughtful about deployments';
-            statusClass = 'medium';
-            burnRateValue.style.color = 'var(--color-caution)';
-        } else if (burnRate >= 5 && burnRate < 10) {
-            statusText = '🔴 Fast Burn (Alert) - Minimize risky changes';
-            statusClass = 'fast';
-            burnRateValue.style.color = 'var(--color-caution)';
-        } else {
-            statusText = '🚨 Critical Burn (Emergency) - Focus on stability only';
+        if (burn.budgetUsed >= 1) {
+            statusText = '🚨 Budget Exhausted - The SLO is missed for this window. Restrict or stop releases until the service is back within its SLO.';
             statusClass = 'critical';
             burnRateValue.style.color = 'var(--color-risk)';
+        } else if (burn.burnRate >= 2) {
+            statusText = '🔴 Fast Burn - ' + runsOutBy + ' Alert-worthy: slow risky releases and find the cause.';
+            statusClass = 'fast';
+            burnRateValue.style.color = 'var(--color-risk)';
+        } else if (burn.burnRate > 1) {
+            statusText = '⚠️ Above Pace - ' + runsOutBy + ' Find out what is consuming it.';
+            statusClass = 'medium';
+            burnRateValue.style.color = 'var(--color-caution)';
+        } else {
+            statusText = '✅ On Pace - The budget lasts the window. Spend it on releases and experiments.';
+            statusClass = 'slow';
+            burnRateValue.style.color = 'var(--color-success)';
         }
 
         burnRateStatus.textContent = statusText;

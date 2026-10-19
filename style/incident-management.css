@@ -258,6 +258,16 @@
     margin-bottom: 1.5rem;
 }
 
+.severity-tip {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+}
+
+.severity-tip a {
+    color: var(--color-primary-mid);
+}
+
 .severity-table {
     width: 100%;
     border-collapse: collapse;

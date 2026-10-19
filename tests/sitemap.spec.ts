@@ -7,6 +7,7 @@ const EXPECTED_URLS = [
   `${SITE_DOMAIN}/cuj-sli-slo-error-budget`,
   `${SITE_DOMAIN}/error-budget-calculator`,
   `${SITE_DOMAIN}/incident-management`,
+  `${SITE_DOMAIN}/certification`,
   `${SITE_DOMAIN}/privacy-policy`,
   `${SITE_DOMAIN}/blog/`,
 ];

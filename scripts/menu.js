@@ -19,6 +19,7 @@
                 { text: 'Incident Management', href: '/incident-management' },
                 { text: 'AI SLOs', href: '/ai-slo-error-budget' },
                 { text: 'Blog', href: '/blog/' },
+                { text: 'Certification', href: '/certification' },
                 { text: 'SRE Games', href: 'https://cafe.slo-education.com.au/', target: '_blank' },
                 { text: 'Privacy', href: '/privacy-policy' }
             ]
@@ -31,6 +32,7 @@
                 { text: 'Incident Management', href: '/incident-management' },
                 { text: 'AI SLOs', href: '/ai-slo-error-budget' },
                 { text: 'Blog', href: '/blog/' },
+                { text: 'Certification', href: '/certification' },
                 { text: 'SRE Games', href: 'https://cafe.slo-education.com.au/', target: '_blank' },
                 { text: 'Privacy', href: '/privacy-policy' }
             ]
@@ -43,6 +45,7 @@
                 { text: 'Incident Management', href: '/incident-management' },
                 { text: 'AI SLOs', href: '/ai-slo-error-budget' },
                 { text: 'Blog', href: '/blog/' },
+                { text: 'Certification', href: '/certification' },
                 { text: 'SRE Games', href: 'https://cafe.slo-education.com.au/', target: '_blank' },
                 { text: 'Privacy', href: '/privacy-policy' }
             ]
@@ -93,6 +96,7 @@
         if (path.includes('cuj-sli-slo-error-budget')) return 'cuj-sli-slo-error-budget';
         if (path.includes('incident-management')) return 'incident-management';
         if (path.includes('ai-slo-error-budget')) return 'ai-slo-error-budget';
+        if (path.includes('certification')) return 'certification';
         if (path.includes('privacy-policy')) return 'privacy-policy';
         if (path.includes('/blog/')) return 'blog';
         return 'home';

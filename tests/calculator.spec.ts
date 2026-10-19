@@ -32,7 +32,8 @@ test.describe('Error Budget Calculator Page', () => {
   test('should display metrics for default SLO', async ({ page }) => {
     // Check downtime minutes
     const downtimeMinutes = page.locator('#downtime-minutes');
-    await expect(downtimeMinutes).toContainText('43.8');
+    await expect(downtimeMinutes).toContainText('43.2');
+    await expect(page.locator('#downtime-minutes-unit')).toContainText('30 days');
     
     // Check downtime hours
     const downtimeHours = page.locator('#downtime-hours');
@@ -52,19 +53,21 @@ test.describe('Error Budget Calculator Page', () => {
     
     // Check updated values
     const downtimeMinutes = page.locator('#downtime-minutes');
-    await expect(downtimeMinutes).toContainText('438');
+    await expect(downtimeMinutes).toContainText('432');
     
     const failureRate = page.locator('#failure-rate');
     await expect(failureRate).toContainText('1');
   });
 
   test('should calculate burn rate correctly', async ({ page }) => {
-    // Use default 99.9% SLO (43.8 minutes budget)
+    // Use default 99.9% SLO (43.2 minutes budget per 30 days)
     const actualDowntimeInput = page.locator('#actual-downtime');
+    const daysElapsedInput = page.locator('#days-elapsed');
     const calculateBtn = page.locator('#calculate-burn');
     
-    // Enter 5 minutes of downtime
+    // 5 minutes of downtime by day 10
     await actualDowntimeInput.fill('5');
+    await daysElapsedInput.fill('10');
     await calculateBtn.click();
     
     // Wait for result
@@ -74,13 +77,14 @@ test.describe('Error Budget Calculator Page', () => {
     const burnRateResult = page.locator('#burn-rate-result');
     await expect(burnRateResult).toBeVisible();
     
-    // Check burn rate value (5/43.8 * 100 ≈ 11.4%)
+    // Budget used 5/43.2 = 11.6%, window elapsed 10/30 = 33.3%, burn rate ≈ 0.35×
     const burnRateValue = page.locator('#burn-rate-value');
-    await expect(burnRateValue).toContainText('11.4%');
+    await expect(burnRateValue).toContainText('0.35×');
+    await expect(page.locator('#burn-rate-detail')).toContainText('11.6% of the 43.2 min budget used');
     
-    // Check status is "Critical Burn" (11.4% is >= 10%)
+    // Under 1× the budget lasts the window
     const burnRateStatus = page.locator('#burn-rate-status');
-    await expect(burnRateStatus).toContainText('Critical Burn');
+    await expect(burnRateStatus).toContainText('On Pace');
   });
 
   test('should display correct burn rate status for different rates', async ({ page }) => {
@@ -88,29 +92,55 @@ test.describe('Error Budget Calculator Page', () => {
     const calculateBtn = page.locator('#calculate-burn');
     const burnRateStatus = page.locator('#burn-rate-status');
     
-    // Test slow burn (< 2%)
-    await actualDowntimeInput.fill('0.5');
-    await calculateBtn.click();
-    await page.waitForTimeout(500);
-    await expect(burnRateStatus).toContainText('Slow Burn');
-    
-    // Test medium burn (2-5%)
+    const daysElapsedInput = page.locator('#days-elapsed');
+    const burnRateValue = page.locator('#burn-rate-value');
+
+    // On pace (≤ 1×): 2 min by day 30 → 0.05×
     await actualDowntimeInput.fill('2');
+    await daysElapsedInput.fill('30');
     await calculateBtn.click();
     await page.waitForTimeout(500);
-    await expect(burnRateStatus).toContainText('Medium Burn');
+    await expect(burnRateStatus).toContainText('On Pace');
     
-    // Test fast burn (5-10%)
-    await actualDowntimeInput.fill('3');
+    // Above pace (1×–2×): 30 min by day 15 → 1.39×
+    await actualDowntimeInput.fill('30');
+    await daysElapsedInput.fill('15');
     await calculateBtn.click();
     await page.waitForTimeout(500);
-    await expect(burnRateStatus).toContainText('Fast Burn');
+    await expect(burnRateValue).toContainText('1.39×');
+    await expect(burnRateStatus).toContainText('Above Pace');
+    await expect(burnRateStatus).toContainText('around day 22');
     
-    // Test critical burn (>= 10%)
+    // Fast burn (≥ 2×): 10 min by day 2 → 3.47×
     await actualDowntimeInput.fill('10');
+    await daysElapsedInput.fill('2');
     await calculateBtn.click();
     await page.waitForTimeout(500);
-    await expect(burnRateStatus).toContainText('Critical Burn');
+    await expect(burnRateValue).toContainText('3.47×');
+    await expect(burnRateStatus).toContainText('Fast Burn');
+    await expect(burnRateStatus).toContainText('around day 9');
+    
+    // Exhausted: 50 min by day 25 is more than the 43.2 min budget
+    await actualDowntimeInput.fill('50');
+    await daysElapsedInput.fill('25');
+    await calculateBtn.click();
+    await page.waitForTimeout(500);
+    await expect(burnRateStatus).toContainText('Budget Exhausted');
+  });
+
+  test('should require days elapsed to calculate burn rate', async ({ page }) => {
+    let dialogMessage = '';
+    page.on('dialog', async dialog => {
+      dialogMessage = dialog.message();
+      await dialog.dismiss();
+    });
+
+    await page.locator('#actual-downtime').fill('5');
+    await page.locator('#calculate-burn').click();
+    await page.waitForTimeout(300);
+
+    expect(dialogMessage).toContain('days elapsed');
+    await expect(page.locator('#burn-rate-result')).toBeHidden();
   });
 
   test('should have progress bar that updates with SLO', async ({ page }) => {
@@ -207,8 +237,9 @@ test.describe('Error Budget Calculator Page', () => {
   test('should handle Enter key for burn rate calculation', async ({ page }) => {
     const actualDowntimeInput = page.locator('#actual-downtime');
     
-    // Enter value and press Enter
+    // Enter values and press Enter
     await actualDowntimeInput.fill('5');
+    await page.locator('#days-elapsed').fill('10');
     await actualDowntimeInput.press('Enter');
     
     // Wait for result
