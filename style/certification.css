@@ -210,6 +210,14 @@
 .exam-review strong { display: block; color: var(--color-text); }
 .exam-review a { color: var(--color-primary-mid); font-weight: 600; }
 
+.exam-review .exam-source {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+}
+
+.exam-review .exam-source a { font-weight: 400; }
+
 .exam-panel button.exam-retake {
     display: block;
     margin-top: 1.5rem;

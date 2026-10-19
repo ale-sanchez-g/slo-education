@@ -20,8 +20,53 @@
     var STORAGE_KEY = 'slo-education-foundation-cert';
 
     /**
+     * Sources the questions are checked against. Each question quotes the
+     * passage that supports its answer, verbatim, with " … " marking a gap.
+     * Blog posts, including this site's own, are opinions and never a source.
+     */
+    var SOURCES = {
+        sreFundamentals: {
+            title: 'Google Cloud: SRE fundamentals: SLIs, SLAs and SLOs',
+            url: 'https://cloud.google.com/blog/products/devops-sre/sre-fundamentals-slis-slas-and-slos'
+        },
+        settingSlos: {
+            title: 'Google Cloud: Learn how to set SLOs',
+            url: 'https://cloud.google.com/blog/products/management-tools/practical-guide-to-setting-slos'
+        },
+        goodSlos: {
+            title: 'Google Cloud: How we build good SLOs at Google',
+            url: 'https://cloud.google.com/blog/products/gcp/building-good-slos-cre-life-lessons'
+        },
+        incidentImpact: {
+            title: 'Google Cloud: Shrinking the impact of production incidents using SRE principles',
+            url: 'https://cloud.google.com/blog/products/devops-sre/shrinking-the-impact-of-production-incidents-using-sre-principles-cre-life-lessons'
+        },
+        mitigation: {
+            title: 'Google Cloud: How Google SREs use Gemini CLI to solve real-world outages',
+            url: 'https://cloud.google.com/blog/topics/developers-practitioners/how-google-sres-use-gemini-cli-to-solve-real-world-outages'
+        },
+        mlops: {
+            title: 'Google Cloud: Applying SRE principles to your MLOps pipelines',
+            url: 'https://cloud.google.com/blog/products/devops-sre/applying-sre-principles-to-your-mlops-pipelines'
+        },
+        incidentCommander: {
+            title: 'PagerDuty Incident Response: Incident Commander training',
+            url: 'https://github.com/PagerDuty/incident-response-docs/blob/master/docs/training/incident_commander.md'
+        },
+        severityLevels: {
+            title: 'PagerDuty Incident Response: Severity Levels',
+            url: 'https://github.com/PagerDuty/incident-response-docs/blob/master/docs/before/severity_levels.md'
+        }
+    };
+
+    function cite(ref, quote) {
+        return { title: ref.title, url: ref.url, quote: quote };
+    }
+
+    /**
      * Question pool. The first option is always the correct one; options are
-     * shuffled at render time. `study` points back to the page that teaches it.
+     * shuffled at render time. `study` points back to the page that teaches it,
+     * and `source` to the public reference that confirms the answer.
      */
     var POOL = [
         {
@@ -32,8 +77,9 @@
                 'Lists the people who are on call this week',
                 'Defines how long a post-incident review should take'
             ],
-            why: 'An SLI is the measurement. The SLO is the target set against it.',
-            study: { text: 'Introduction to SLIs and SLOs', href: '/#what-are-slos' }
+            why: 'An SLI is the measurement. The SLO is the target set against it, and a penalty belongs to an SLA.',
+            study: { text: 'Introduction to SLIs and SLOs', href: '/#what-are-slos' },
+            source: cite(SOURCES.sreFundamentals, 'We also have a direct measurement of a service’s behavior: the frequency of successful probes of our system. This is a Service-Level Indicator (SLI).')
         },
         {
             q: '"99.9% of requests succeed over a 30-day rolling window" is an example of which concept?',
@@ -44,7 +90,8 @@
                 'A runbook'
             ],
             why: 'It states a target for a measure over a window, which is an SLO.',
-            study: { text: 'Introduction to SLIs and SLOs', href: '/#what-are-slos' }
+            study: { text: 'Introduction to SLIs and SLOs', href: '/#what-are-slos' },
+            source: cite(SOURCES.settingSlos, 'Service-level objectives are a target of service-level indicators during a specified time window.')
         },
         {
             q: 'Which is the correct order of the reliability pipeline?',
@@ -55,7 +102,8 @@
                 'SLI → Error Budget → CUJ → SLO'
             ],
             why: 'Start from what users need (CUJ), measure it (SLI), set a target (SLO), then the target creates a budget.',
-            study: { text: 'CUJ → SLI → SLO → Error Budget', href: '/cuj-sli-slo-error-budget' }
+            study: { text: 'CUJ → SLI → SLO → Error Budget', href: '/cuj-sli-slo-error-budget' },
+            source: cite(SOURCES.settingSlos, 'Step 1: List out critical user journeys and order them by business impact … Step 2: Determine which metrics to use as SLIs to most accurately track the user experience … Step 3: Determine SLO target goals and SLO measurement period')
         },
         {
             q: 'What is a Critical User Journey (CUJ)?',
@@ -66,7 +114,8 @@
                 'An incident that affects all users'
             ],
             why: 'CUJs describe what users must be able to do, which keeps SLIs tied to user experience.',
-            study: { text: 'CUJ → SLI → SLO → Error Budget', href: '/cuj-sli-slo-error-budget' }
+            study: { text: 'CUJ → SLI → SLO → Error Budget', href: '/cuj-sli-slo-error-budget' },
+            source: cite(SOURCES.settingSlos, 'A critical user journey describes a set of interactions a user has with a service to achieve some end result.')
         },
         {
             q: 'Which of these is the best CUJ for a flight booking service?',
@@ -77,7 +126,8 @@
                 'The database cluster stays online'
             ],
             why: '"Use the app" is too broad, "sort by price" is too narrow, and a database is not a user goal.',
-            study: { text: 'How to identify CUJs', href: '/cuj-sli-slo-error-budget' }
+            study: { text: 'How to identify CUJs', href: '/cuj-sli-slo-error-budget' },
+            source: cite(SOURCES.settingSlos, 'The first step in SLO creation is listing critical user journeys for this business. A critical user journey describes a set of interactions a user has with a service to achieve some end result.')
         },
         {
             q: 'Which principle makes a good SLI?',
@@ -87,19 +137,21 @@
                 'It is chosen by the team that is easiest to measure',
                 'It never changes, even when user needs do'
             ],
-            why: 'Good SLIs are user-focused, ratio-based, bounded and actionable.',
-            study: { text: 'Good SLI design principles', href: '/cuj-sli-slo-error-budget' }
+            why: 'Good SLIs track the user experience. They are also ratio-based, bounded and actionable.',
+            study: { text: 'Good SLI design principles', href: '/cuj-sli-slo-error-budget' },
+            source: cite(SOURCES.settingSlos, 'The next step is to figure out which metrics to use as SLIs that will most accurately track the user experience.')
         },
         {
             q: 'Why are SLIs usually expressed as a ratio, such as good events divided by total events?',
             options: [
-                'A ratio has a clear 0–100% range and stays comparable as traffic changes',
+                'It keeps every SLI in the same unit and 0–100% range, so targets stay consistent and easy to understand',
                 'Ratios are cheaper to store than counts',
                 'Ratios can never go below the SLO',
                 'Monitoring tools can only graph percentages'
             ],
-            why: 'A bounded ratio is comparable day to day and maps directly onto an SLO percentage.',
-            study: { text: 'Good SLI design principles', href: '/cuj-sli-slo-error-budget' }
+            why: 'Good events divided by valid events gives a uniform percentage, so every SLO shares the same unit and range.',
+            study: { text: 'Good SLI design principles', href: '/cuj-sli-slo-error-budget' },
+            source: cite(SOURCES.goodSlos, 'This keeps SLOs consistent and easy to understand, because they all have the same unit and the same range.')
         },
         {
             q: 'What is an error budget?',
@@ -109,41 +161,45 @@
                 'The number of engineers assigned to incidents',
                 'The maximum number of alerts a team may receive'
             ],
-            why: 'Budget = 100% minus the SLO target. It answers "how much failure can we afford?"',
-            study: { text: 'Error Budget Calculator', href: '/error-budget-calculator' }
+            why: 'The budget is the inverse of the SLO target: 100% minus the target. It answers "how much failure can we afford?"',
+            study: { text: 'Error Budget Calculator', href: '/error-budget-calculator' },
+            source: cite(SOURCES.goodSlos, 'the inverse of your SLO target is your error budget, and if your SLO target is 100% that means you have no error budget!')
         },
         {
-            q: 'A service has a 99.9% availability SLO over a month. Roughly how much downtime does that allow?',
+            q: 'Over a 30-day window, how much downtime does a 99.9% availability SLO allow?',
             options: [
-                'About 43.8 minutes',
-                'About 7.3 hours',
-                'About 4.4 minutes',
+                'About 43.2 minutes',
+                'About 7.2 hours',
+                'About 4.3 minutes',
                 'About 8.76 hours'
             ],
-            why: '0.1% of a 730-hour month is about 43.8 minutes. 7.3 hours is a 99% SLO.',
-            study: { text: 'Error Budget Calculator', href: '/error-budget-calculator' }
+            why: 'The budget is the inverse of the target: 0.1% of 43,200 minutes is 43.2 minutes. 8.76 hours is the same target over a whole year.',
+            study: { text: 'Error Budget Calculator', href: '/error-budget-calculator' },
+            source: cite(SOURCES.goodSlos, 'the inverse of your SLO target is your error budget')
         },
         {
-            q: 'Roughly how much downtime per month does a 99.99% SLO allow?',
+            q: 'Over a 30-day window, roughly how much downtime does a 99.99% SLO allow?',
             options: [
-                'About 4.4 minutes',
-                'About 43.8 minutes',
+                'About 4.3 minutes',
+                'About 43.2 minutes',
                 'About 26 seconds',
-                'About 7.3 hours'
+                'About 7.2 hours'
             ],
-            why: 'Each extra nine cuts the budget by a factor of ten: 99.9% is ~43.8 min, 99.99% is ~4.4 min.',
-            study: { text: 'SLO reference table', href: '/error-budget-calculator' }
+            why: '0.01% of 43,200 minutes is 4.32 minutes. Each extra nine divides the budget by ten.',
+            study: { text: 'SLO reference table', href: '/error-budget-calculator' },
+            source: cite(SOURCES.goodSlos, 'the inverse of your SLO target is your error budget')
         },
         {
-            q: 'A 99.9% SLO gives a monthly budget of 43.8 minutes. After 21.9 minutes of downtime, how much of the budget has been consumed?',
+            q: 'What does a burn rate of 1× mean?',
             options: [
-                '50%',
-                '21.9%',
-                '2%',
-                '99.9%'
+                'The error budget is being used at exactly the pace that would use all of it by the end of the window',
+                '1% of the error budget has been used',
+                'The service has had one incident in this window',
+                'The budget has run out and releases must stop'
             ],
-            why: 'Burn = downtime / budget = 21.9 / 43.8 = 50%.',
-            study: { text: 'Burn rate', href: '/error-budget-calculator' }
+            why: 'Burn rate compares how fast the budget is being spent with that baseline pace. At 2× the budget is gone halfway through the window. The share of the budget used is a different number.',
+            study: { text: 'Burn rate', href: '/error-budget-calculator' },
+            source: cite(SOURCES.settingSlos, 'Here, we set a burn rate alert that will notify us when we burn our error budget at 2x the baseline rate, where the baseline is the error rate that, if consistent throughout the compliance period, would exactly use up the allotted error budget.')
         },
         {
             q: 'A team has nearly exhausted its error budget. What does the error budget approach recommend?',
@@ -153,30 +209,33 @@
                 'Raise the SLO target so the budget looks larger',
                 'Stop measuring until next month'
             ],
-            why: 'The budget turns reliability into a decision rule: healthy budget means deploy freely, exhausted means stabilise.',
-            study: { text: 'Using error budgets for deployment decisions', href: '/error-budget-calculator' }
+            why: 'An endangered SLO is defended by releasing more slowly and putting reliability work ahead of features.',
+            study: { text: 'Using error budgets for deployment decisions', href: '/error-budget-calculator' },
+            source: cite(SOURCES.goodSlos, 'Your business needs to be able to defend an endangered SLO by reducing the frequency of outages, or reducing the impact of outages when they occur. Some ways to do this might include: slowing down the rate at which you release new versions, or by implementing reliability improvements instead of features.')
         },
         {
-            q: 'A team never uses any of its error budget and runs at 100% for a year. What does the site suggest this means?',
+            q: 'A service with a 99.9% SLO has run at 100% for a year, and the team has never spent its error budget. What does that most likely indicate?',
             options: [
-                'They may be leaving productivity on the table by being too cautious',
-                'Their SLO is perfectly set',
-                'They can safely skip incident reviews',
-                'Their users are happier than any other team’s'
+                'The team is spending more on reliability than it needs to, budget that could fund releases and experiments',
+                'The SLO is set perfectly',
+                'The team can safely skip incident reviews',
+                'Users are noticeably happier than they would be at 99.9%'
             ],
-            why: 'The budget exists to be spent on change. Saving all of it usually means the SLO is too strict or releases too slow.',
-            study: { text: 'Best practices for error budgets', href: '/error-budget-calculator' }
+            why: 'Above the SLO, users become increasingly indifferent to extra reliability. The unspent budget could pay for releases, experiments and stress tests.',
+            study: { text: 'Best practices for error budgets', href: '/error-budget-calculator' },
+            source: cite(SOURCES.incidentImpact, 'If you’re too far above your SLO, though, it indicates that you are spending more on reliability than you need to.')
         },
         {
-            q: 'What does MTTR measure?',
+            q: 'As Google SREs use the terms, what is the difference between MTTM and MTTR?',
             options: [
-                'The average time taken to recover from an incident',
-                'The maximum time a team may spend on one ticket',
-                'The time between two deployments',
-                'The average time before an alert is created'
+                'MTTM measures how fast user impact is stopped; MTTR (repair) measures how long the full fix takes',
+                'They are two names for the same metric',
+                'MTTM measures how fast a problem is detected; MTTR measures how fast someone is paged',
+                'MTTR measures the time between incidents'
             ],
-            why: 'MTTR is Mean Time To Recovery. MTTD (detection) covers how fast you notice.',
-            study: { text: 'Incident management', href: '/incident-management' }
+            why: 'Mitigation stops the pain, often before anyone knows why it broke. Repair is the full fix. MTTR is also used for "recovery" and "restore", so say which one you mean.',
+            study: { text: 'Incident management', href: '/incident-management' },
+            source: cite(SOURCES.mitigation, 'Unlike Mean Time to Repair (MTTR), which focuses on the full fix, MTTM is about speed: how fast can we stop the pain?')
         },
         {
             q: 'During an active incident, what should the team do first?',
@@ -186,8 +245,9 @@
                 'Assign blame so the right person fixes it',
                 'Wait for the monthly review'
             ],
-            why: 'Mitigation first: users care about service being restored, the "why" can follow.',
-            study: { text: 'Best practices for incident response', href: '/incident-management' }
+            why: 'Mitigation first: users care about service being restored, and the "why" can follow.',
+            study: { text: 'Best practices for incident response', href: '/incident-management' },
+            source: cite(SOURCES.mitigation, 'Our first priority isn\'t to fix the code—it\'s to mitigate the impact on users.')
         },
         {
             q: 'Which role leads an incident response and makes the decisions?',
@@ -197,8 +257,9 @@
                 'Technical Lead',
                 'Product Owner'
             ],
-            why: 'The Incident Commander coordinates and decides. The Technical Lead drives remediation and the Communications Lead updates stakeholders.',
-            study: { text: 'Establish clear roles', href: '/incident-management' }
+            why: 'The Incident Commander coordinates and decides. Others drive remediation and update stakeholders.',
+            study: { text: 'Establish clear roles', href: '/incident-management' },
+            source: cite(SOURCES.incidentCommander, 'The Incident Commander is the decision maker during a major incident; Delegating tasks and listening to input from subject matter experts in order to bring the incident to resolution.')
         },
         {
             q: 'What is the purpose of a blameless post-mortem?',
@@ -209,51 +270,56 @@
                 'To decide who is on call next'
             ],
             why: 'Blamelessness keeps people honest about what happened, which is what makes fixes possible.',
-            study: { text: 'Incident management', href: '/incident-management' }
+            study: { text: 'Incident management', href: '/incident-management' },
+            source: cite(SOURCES.incidentImpact, 'If a person’s actions initiated a production incident, or worsened an existing one, we should not blame the person. Rather we should seek to make improvements in the system to positively influence the person’s actions during the next emergency.')
         },
         {
-            q: 'An incident has complete service outage, all users affected and revenue at risk. Which severity fits best?',
+            q: 'During an incident, the team cannot agree whether it is the highest or the second-highest severity. What does PagerDuty’s incident response guidance recommend?',
             options: [
-                'P0 (critical)',
-                'P1 (high)',
-                'P2 (medium)',
-                'P3 (low)'
+                'Treat it as the higher severity now and review the level in the post-mortem',
+                'Pause the response until everyone agrees on the level',
+                'Choose the lower severity to avoid alarming customers',
+                'Let the most senior engineer decide once the incident is over'
             ],
-            why: 'P0 is for all or most users unable to use core features, with an immediate 24/7 response.',
-            study: { text: 'Severity level reference', href: '/incident-management' }
+            why: 'Mid-incident is not the time to debate severity. Assume the higher level, respond, and correct the classification afterwards.',
+            study: { text: 'Severity level reference', href: '/incident-management' },
+            source: cite(SOURCES.severityLevels, 'If you are unsure which level an incident is (e.g. not sure if SEV-2 or SEV-1), treat it as the higher one. During an incident is not the time to discuss or litigate severities, just assume the highest and review during a postmortem.')
         },
         {
-            q: 'Why do AI systems need a different approach to SLOs than traditional services?',
+            q: 'Why does Google recommend a data freshness SLO for machine learning pipelines?',
             options: [
-                'Outputs are probabilistic, so "good enough" is a spectrum rather than success or failure',
-                'AI systems do not have latency',
-                'AI systems cannot be monitored',
-                'AI systems must always be 100% accurate'
+                'Stale data can lead to lower-quality inferences and worse outcomes for users',
+                'Fresh data makes the model respond faster',
+                'A freshness SLO replaces the need for an availability SLO',
+                'Models must be retrained every day by law'
             ],
-            why: 'You define what "good enough" means, measure how often you achieve it, and budget for the rest.',
-            study: { text: 'AI SLOs & error budgets', href: '/ai-slo-error-budget' }
+            why: 'Freshness measures how recently the model got the data it uses to produce an inference. Stale data lowers the quality of what users get.',
+            study: { text: 'AI service level indicators', href: '/ai-slo-error-budget' },
+            source: cite(SOURCES.mlops, 'Understanding freshness provides an important measure of an ML system’s health, as data that becomes stale may lead to lower-quality inferences and sub-optimal outcomes for the user.')
         },
         {
-            q: 'Which is an AI-specific SLI dimension beyond availability and latency?',
+            q: 'A team wants an SLI for the answer quality of its AI assistant. Which form follows the standard SLI equation?',
             options: [
-                'Quality or accuracy of responses',
-                'Number of GPUs purchased',
-                'Size of the training team',
-                'Colour of the user interface'
+                'Responses that meet the quality bar ÷ all valid responses evaluated, as a percentage',
+                'The average quality score across all responses',
+                'The number of bad responses this month',
+                'The model’s benchmark score at launch'
             ],
-            why: 'AI services add quality, safety, freshness and cost on top of the traditional SLIs.',
-            study: { text: 'AI service level indicators', href: '/ai-slo-error-budget' }
+            why: 'An SLI is the number of good events divided by valid events, as a percentage. For quality, a good event is a response that meets the bar.',
+            study: { text: 'AI service level indicators', href: '/ai-slo-error-budget' },
+            source: cite(SOURCES.settingSlos, 'The SLI equation is the number of good events divided by the total number of valid events, multiplied by 100 to keep it a uniform percentage.')
         },
         {
-            q: 'For an AI feature, why should quality, latency and safety each have their own error budget?',
+            q: 'A service has one SLO for availability and another for latency. How do their error budgets relate?',
             options: [
-                'A quality regression should not silently consume the latency budget',
-                'It makes the dashboard look more complete',
-                'Regulators require exactly three budgets',
-                'Separate budgets are cheaper to calculate'
+                'Each SLO has its own budget, so a latency problem does not use up the availability budget',
+                'They share one combined budget',
+                'Only the stricter SLO has a budget',
+                'Latency SLOs do not have error budgets'
             ],
-            why: 'Independent budgets show which dimension is failing so the right action is taken.',
-            study: { text: 'Error budgets for AI systems', href: '/ai-slo-error-budget' }
+            why: 'Each SLO has its own target, and the budget is the inverse of the target, so each SLO has its own budget. Tracking them separately shows which one is failing.',
+            study: { text: 'Separate budgets per SLI dimension', href: '/ai-slo-error-budget' },
+            source: cite(SOURCES.goodSlos, 'Each SLO will likely have different availability and latency targets. … the inverse of your SLO target is your error budget')
         },
         {
             q: 'An AI quality SLO is 90%. What is the error budget?',
@@ -264,29 +330,32 @@
                 'There is no budget for quality SLOs'
             ],
             why: 'Budget = 100% minus the SLO target, the same as for any other SLO.',
-            study: { text: 'Error budgets for AI systems', href: '/ai-slo-error-budget' }
+            study: { text: 'Error budgets for AI systems', href: '/ai-slo-error-budget' },
+            source: cite(SOURCES.goodSlos, 'the inverse of your SLO target is your error budget')
         },
         {
-            q: 'Why does the site recommend a rolling window, such as 28 days, for AI quality SLOs?',
+            q: 'Why does Google’s SLO guidance favour a rolling window (for example, the last 30 days) over a calendar month?',
             options: [
-                'Quality can shift with model updates or data drift, and a rolling window captures the trend',
-                'Rolling windows never need to be reset',
+                'Rolling windows are more closely aligned with what users experience',
                 'Rolling windows make the SLO easier to meet',
-                'AI vendors only publish 28-day reports'
+                'Calendar windows cannot be used for SLOs',
+                'Rolling windows never need any data to be stored'
             ],
-            why: 'Rolling windows reflect recent behaviour, which matters when quality changes without code changes.',
-            study: { text: 'Error budgets for AI systems', href: '/ai-slo-error-budget' }
+            why: 'Rolling windows are more closely aligned with user experience. Calendar windows are still valid when you want monitoring to match business targets and planning.',
+            study: { text: 'Which window?', href: '/error-budget-calculator' },
+            source: cite(SOURCES.settingSlos, 'Rolling windows are more closely aligned with user experience, but you can use calendar windows if you want your monitoring to align with your business targets and planning.')
         },
         {
-            q: 'An AI error budget is breached (under 10% remaining). What does the site recommend?',
+            q: 'An AI feature’s quality SLO starts failing right after a new model version ships. What is the best first response?',
             options: [
-                'Freeze model deployments and consider rolling back to the last stable model',
-                'Run more A/B experiments to find a fix',
-                'Lower the quality bar until the budget recovers',
-                'Ignore it until the next measurement window'
+                'Roll back to the previous model version to stop the impact, then investigate',
+                'Fine-tune the new model in production until quality recovers',
+                'Lower the quality target until the budget recovers',
+                'Run more A/B experiments on live users to find a fix'
             ],
-            why: 'A breached budget means quality has fallen below acceptable levels, so changes stop until it is restored.',
-            study: { text: 'Error budget states & actions', href: '/ai-slo-error-budget' }
+            why: 'Mitigate first. Rollback is one of the standard mitigations, and it stops the impact before anyone knows the root cause.',
+            study: { text: 'Error budget states & actions', href: '/ai-slo-error-budget' },
+            source: cite(SOURCES.mitigation, 'Our first priority isn\'t to fix the code—it\'s to mitigate the impact on users. Thanks to the extensive work on Generic Mitigations by Google SREs, we have a defined, closed, set of standard classes of mitigations (e.g., drain traffic, rollback, restart, add capacity).')
         },
         {
             q: 'Where should an SLO target come from?',
@@ -296,8 +365,9 @@
                 'Whatever the monitoring tool defaults to',
                 'The number competitors advertise'
             ],
-            why: '100% is neither achievable nor useful. Targets should be defensible and revised once real traffic tells you if they were right.',
-            study: { text: 'Three steps, in order', href: '/#get-started' }
+            why: 'Start from what users accept today, measured on real traffic, and adjust from there. A target of 100% is impossible and rarely necessary.',
+            study: { text: 'Three steps, in order', href: '/#get-started' },
+            source: cite(SOURCES.settingSlos, 'Normally, when choosing an SLO, it’s best to start from historical trends and assume if enough people are happy with the service now, you’re probably doing OK.')
         }
     ];
 
@@ -481,7 +551,11 @@
                 list.appendChild(el('li', {}, [
                     el('strong', { text: entry.item.q }),
                     el('span', { text: ' ' + entry.item.why + ' ' }),
-                    el('a', { href: entry.item.study.href, text: 'Study: ' + entry.item.study.text })
+                    el('a', { href: entry.item.study.href, text: 'Study: ' + entry.item.study.text }),
+                    el('span', { class: 'exam-source' }, [
+                        document.createTextNode('Source: '),
+                        el('a', { href: entry.item.source.url, target: '_blank', rel: 'noopener noreferrer', text: entry.item.source.title })
+                    ])
                 ]));
             });
             box.appendChild(el('h4', { text: 'Questions to revisit' }));

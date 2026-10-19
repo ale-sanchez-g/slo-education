@@ -43,6 +43,28 @@ test.describe('Certification page', () => {
     await expect(page.locator('.exam-score')).toContainText('/ 20');
     await expect(page.locator('.exam-review a').first()).toBeVisible();
     await expect(page.locator('#make-certificate')).toHaveCount(0);
+
+    // Every reviewed question links to the public source behind its answer
+    const items = page.locator('.exam-review li');
+    const sources = page.locator('.exam-review li .exam-source a');
+    await expect(sources).toHaveCount(await items.count());
+    for (const href of await sources.evaluateAll(links => links.map(a => a.getAttribute('href')))) {
+      expect(href).toMatch(/^https:\/\//);
+    }
+  });
+
+  test('every question in the pool cites a public source with a quote', async ({ request }) => {
+    const js = await (await request.get('/scripts/certification.js')).text();
+    const questions = js.match(/^\s+q: '/gm) ?? [];
+    const citations = js.match(/^\s+source: cite\(SOURCES\.\w+, '.+'\)$/gm) ?? [];
+    expect(questions.length).toBeGreaterThan(0);
+    expect(citations.length).toBe(questions.length);
+
+    // Sources are external references, never this site's own blog
+    for (const [, url] of js.matchAll(/url: '([^']+)'/g)) {
+      expect(url).toMatch(/^https:\/\//);
+      expect(url).not.toContain('slo-education.com.au');
+    }
   });
 
   test('passing attempt requires a name, then renders a certificate with share options', async ({ page }) => {
