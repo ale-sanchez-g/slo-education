@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style/inter.css">
     <link rel="stylesheet" href="style/styles.css">
     <link rel="stylesheet" href="style/ai-slo-error-budget.css">
+    <link rel="stylesheet" href="style/icons.css">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <script src="scripts/grafana.js" defer></script>
 </head>
@@ -39,7 +40,7 @@
                 <div class="comparison-grid">
                     <div class="comparison-card traditional">
                         <div class="comparison-header">
-                            <span class="comparison-icon">⚙️</span>
+                            <span class="comparison-icon"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#gear"></use></svg></span></span>
                             <h3>Traditional Systems</h3>
                         </div>
                         <ul>
@@ -52,7 +53,7 @@
                     </div>
                     <div class="comparison-card ai-ml">
                         <div class="comparison-header">
-                            <span class="comparison-icon">🤖</span>
+                            <span class="comparison-icon"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#robot"></use></svg></span></span>
                             <h3>AI/ML Systems</h3>
                         </div>
                         <ul>
@@ -66,7 +67,7 @@
                 </div>
 
                 <div class="insight-banner">
-                    <div class="insight-icon">💡</div>
+                    <div class="insight-icon"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#lightbulb"></use></svg></span></div>
                     <div class="insight-content">
                         <strong>The Core Insight:</strong> For AI systems, you don't aim for perfection — you define what "good enough" means, measure how often you achieve it, and budget for the times you don't. The question shifts from "did it work?" to "was it good enough?"
                     </div>
@@ -82,7 +83,7 @@
 
                 <div class="sli-grid">
                     <div class="sli-card">
-                        <div class="sli-icon">🎯</div>
+                        <div class="sli-icon"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#target"></use></svg></span></div>
                         <h3>Quality / Accuracy</h3>
                         <p>Measures how often the AI output meets an acceptable quality bar. Requires human evaluation, automated scoring, or proxy metrics.</p>
                         <div class="sli-examples">
@@ -97,7 +98,7 @@
                     </div>
 
                     <div class="sli-card">
-                        <div class="sli-icon">⚡</div>
+                        <div class="sli-icon"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#bolt"></use></svg></span></div>
                         <h3>Latency</h3>
                         <p>Time-to-first-token (TTFT) and total generation time. AI latency is often higher and more variable than traditional APIs.</p>
                         <div class="sli-examples">
@@ -112,7 +113,7 @@
                     </div>
 
                     <div class="sli-card">
-                        <div class="sli-icon">✅</div>
+                        <div class="sli-icon"><span class="slo-icon-tile tone-success"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#check-circle"></use></svg></span></div>
                         <h3>Availability</h3>
                         <p>The proportion of requests that receive any valid response. Includes model endpoint availability and inference infrastructure uptime.</p>
                         <div class="sli-examples">
@@ -127,7 +128,7 @@
                     </div>
 
                     <div class="sli-card">
-                        <div class="sli-icon">🛡️</div>
+                        <div class="sli-icon"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#shield"></use></svg></span></div>
                         <h3>Safety &amp; Alignment</h3>
                         <p>Measures how often the AI produces harmful, off-topic, or policy-violating outputs. Critical for user-facing AI products.</p>
                         <div class="sli-examples">
@@ -142,7 +143,7 @@
                     </div>
 
                     <div class="sli-card">
-                        <div class="sli-icon">📊</div>
+                        <div class="sli-icon"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#chart-bars"></use></svg></span></div>
                         <h3>Freshness / Relevance</h3>
                         <p>For RAG and knowledge-based systems, measures how up-to-date and contextually relevant the AI's knowledge base is.</p>
                         <div class="sli-examples">
@@ -157,7 +158,7 @@
                     </div>
 
                     <div class="sli-card">
-                        <div class="sli-icon">💸</div>
+                        <div class="sli-icon"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#cost"></use></svg></span></div>
                         <h3>Cost Efficiency</h3>
                         <p>Token and compute costs per successful output. Helps balance quality improvements against infrastructure spend.</p>
                         <div class="sli-examples">
@@ -498,7 +499,7 @@
 
                 <div class="drift-types">
                     <div class="drift-card">
-                        <div class="drift-icon">📉</div>
+                        <div class="drift-icon"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#trend-down"></use></svg></span></div>
                         <h3>Data Drift</h3>
                         <p>Input distributions shift over time (e.g., users ask different types of questions). The model wasn't trained on the new patterns.</p>
                         <div class="drift-detection">
@@ -506,7 +507,7 @@
                         </div>
                     </div>
                     <div class="drift-card">
-                        <div class="drift-icon">🎯</div>
+                        <div class="drift-icon"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#target"></use></svg></span></div>
                         <h3>Concept Drift</h3>
                         <p>The relationship between inputs and "correct" outputs changes (e.g., new product features change what a "good" support response looks like).</p>
                         <div class="drift-detection">
@@ -514,7 +515,7 @@
                         </div>
                     </div>
                     <div class="drift-card">
-                        <div class="drift-icon">🔄</div>
+                        <div class="drift-icon"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#refresh"></use></svg></span></div>
                         <h3>Model Staleness</h3>
                         <p>The world changes but the model doesn't. Knowledge cutoffs, outdated product information, or changed regulations can make old responses wrong.</p>
                         <div class="drift-detection">

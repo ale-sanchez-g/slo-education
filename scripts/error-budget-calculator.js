@@ -135,27 +135,39 @@ document.addEventListener('DOMContentLoaded', function() {
         // Determine status and styling
         const runsOutBy = 'At this pace the budget runs out around day ' + Math.round(burn.exhaustionDay) + '.';
         let statusText = '';
+        let statusIcon = '';
         let statusClass = '';
 
         if (burn.budgetUsed >= 1) {
-            statusText = '🚨 Budget Exhausted - The SLO is missed for this window. Restrict or stop releases until the service is back within its SLO.';
+            statusIcon = 'siren';
+            statusText = 'Budget Exhausted - The SLO is missed for this window. Restrict or stop releases until the service is back within its SLO.';
             statusClass = 'critical';
             burnRateValue.style.color = 'var(--color-risk)';
         } else if (burn.burnRate >= 2) {
-            statusText = '🔴 Fast Burn - ' + runsOutBy + ' Alert-worthy: slow risky releases and find the cause.';
+            statusIcon = 'alert-circle';
+            statusText = 'Fast Burn - ' + runsOutBy + ' Alert-worthy: slow risky releases and find the cause.';
             statusClass = 'fast';
             burnRateValue.style.color = 'var(--color-risk)';
         } else if (burn.burnRate > 1) {
-            statusText = '⚠️ Above Pace - ' + runsOutBy + ' Find out what is consuming it.';
+            statusIcon = 'alert-triangle';
+            statusText = 'Above Pace - ' + runsOutBy + ' Find out what is consuming it.';
             statusClass = 'medium';
             burnRateValue.style.color = 'var(--color-caution)';
         } else {
-            statusText = '✅ On Pace - The budget lasts the window. Spend it on releases and experiments.';
+            statusIcon = 'check-circle';
+            statusText = 'On Pace - The budget lasts the window. Spend it on releases and experiments.';
             statusClass = 'slow';
             burnRateValue.style.color = 'var(--color-success)';
         }
 
-        burnRateStatus.textContent = statusText;
+        burnRateStatus.textContent = '';
+        const statusSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        statusSvg.setAttribute('class', 'slo-icon icon-inline');
+        statusSvg.setAttribute('aria-hidden', 'true');
+        const statusUse = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+        statusUse.setAttribute('href', '/icons/slo-icons.svg#' + statusIcon);
+        statusSvg.appendChild(statusUse);
+        burnRateStatus.append(statusSvg, statusText);
         burnRateStatus.className = 'burn-rate-status ' + statusClass;
 
         // Show result, hide placeholder
