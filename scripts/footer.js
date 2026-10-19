@@ -38,6 +38,7 @@
             '        <li><a href="/incident-management">Incident Management</a></li>',
             '        <li><a href="/ai-slo-error-budget">AI SLOs</a></li>',
             '        <li><a href="/blog/">Blog</a></li>',
+            '        <li><a href="/certification">Certification</a></li>',
             '      </ul>',
             '    </div>',
             '    <div class="footer-section">',

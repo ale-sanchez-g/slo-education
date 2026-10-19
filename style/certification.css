@@ -1,0 +1,269 @@
+/* Certification page styles. Uses the brand tokens from styles.css. */
+
+/* ── Pathway tiers ─────────────────────────────────────────────────────── */
+.tier-cards {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.tier-card {
+    position: relative;
+}
+
+.tier-badge {
+    display: inline-block;
+    margin-bottom: 0.9rem;
+    padding: 0.2rem 0.75rem;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.tier-available { border-top: 4px solid var(--color-primary-mid); }
+.tier-available .tier-badge {
+    background: var(--color-success-bg);
+    color: var(--color-primary);
+}
+
+.tier-soon { border-top: 4px solid var(--color-border); }
+.tier-soon .tier-badge {
+    background: var(--color-caution-bg);
+    color: var(--color-caution);
+}
+
+.tier-list {
+    margin: 0.9rem 0 0 1.2rem;
+    color: var(--color-text-muted);
+    font-size: 0.97rem;
+}
+
+.tier-list li { margin-bottom: 0.3rem; }
+
+.tier-follow {
+    margin-top: 1rem;
+    font-size: 0.93rem;
+}
+
+.tier-follow a {
+    color: var(--color-primary-mid);
+    font-weight: 600;
+}
+
+/* ── Exam ──────────────────────────────────────────────────────────────── */
+.exam-container { max-width: 820px; }
+
+.exam-panel {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.exam-intro h3,
+.exam-result h3,
+.cert-result h3 {
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+}
+
+.exam-facts {
+    margin: 0 0 1.5rem 1.2rem;
+    color: var(--color-text-muted);
+}
+
+.exam-facts li { margin-bottom: 0.35rem; }
+
+.exam-note {
+    margin: 0 0 1.25rem;
+    color: var(--color-text-muted);
+    font-size: 0.93rem;
+}
+
+.exam-counter {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.exam-progress {
+    height: 6px;
+    border-radius: var(--radius-pill);
+    background: var(--color-border);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.exam-progress-bar {
+    height: 100%;
+    background: var(--color-primary-mid);
+    transition: width var(--transition);
+}
+
+.exam-question {
+    border: 0;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    min-width: 0;
+}
+
+.exam-question legend {
+    color: var(--color-primary);
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.45;
+    margin-bottom: 1rem;
+    padding: 0;
+}
+
+.exam-question legend:focus { outline: none; }
+
+.exam-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.6rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: border-color var(--transition), background-color var(--transition);
+}
+
+.exam-option:hover { border-color: var(--color-hover); }
+
+.exam-option input {
+    margin-top: 0.3rem;
+    accent-color: var(--color-primary-mid);
+    flex-shrink: 0;
+}
+
+.exam-option:has(input:checked) {
+    border-color: var(--color-primary-mid);
+    background: var(--color-success-bg);
+}
+
+.exam-option:has(input:focus-visible) {
+    outline: 3px solid var(--color-hover);
+    outline-offset: 2px;
+}
+
+.exam-panel button.cta-button { border: 0; cursor: pointer; font-family: inherit; }
+
+.exam-panel button.cta-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ── Result ────────────────────────────────────────────────────────────── */
+.exam-result:focus { outline: none; }
+
+.exam-score {
+    font-family: var(--font-mono);
+    font-size: 1.4rem;
+    margin-bottom: 0.25rem;
+}
+
+.exam-result.passed .exam-score { color: var(--color-primary-mid); }
+.exam-result.failed .exam-score { color: var(--color-risk); }
+
+.cert-name-label {
+    display: block;
+    margin: 1.25rem 0 0.4rem;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+.cert-name-input {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    margin-bottom: 1rem;
+    padding: 0.7rem 0.9rem;
+    font: inherit;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+}
+
+.cert-name-input:focus-visible {
+    outline: 3px solid var(--color-hover);
+    outline-offset: 1px;
+}
+
+.cert-name-input[aria-invalid="true"] { border-color: var(--color-risk); }
+
+.exam-result h4 {
+    margin: 1.75rem 0 0.75rem;
+    color: var(--color-primary);
+}
+
+.exam-review {
+    margin: 0 0 1rem 1.2rem;
+    color: var(--color-text-muted);
+}
+
+.exam-review li { margin-bottom: 0.9rem; }
+.exam-review strong { display: block; color: var(--color-text); }
+.exam-review a { color: var(--color-primary-mid); font-weight: 600; }
+
+.exam-panel button.exam-retake {
+    display: block;
+    margin-top: 1.5rem;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+/* ── Certificate ───────────────────────────────────────────────────────── */
+.cert-canvas-wrap {
+    margin: 1rem 0 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.cert-canvas-wrap canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.cert-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.share-btn {
+    display: inline-block;
+    padding: 0.7rem 1.2rem;
+    background: var(--color-surface);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary-mid);
+    border-radius: var(--radius-pill);
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.93rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--transition), color var(--transition);
+}
+
+.share-btn:hover,
+.share-btn:focus-visible {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+}
+
+@media (max-width: 600px) {
+    .exam-panel { padding: 1.25rem; }
+    .cert-actions > * { flex: 1 1 100%; text-align: center; }
+}
