@@ -2,7 +2,7 @@
 (function () {
     // Emoji each icon replaced on this site, shown as a migration reference.
     var REPLACES = {
-        'target': '🎯', 'bolt': '⚡', 'check-circle': '✅', 'shield': '🛡️', 'chart-bars': '📊',
+        'user': '👤', 'plane': '✈️', 'plane-takeoff': '🛫', 'ticket': '🎫', 'wrench': '🔧', 'trend-up': '📈', 'target': '🎯', 'bolt': '⚡', 'check-circle': '✅', 'shield': '🛡️', 'chart-bars': '📊',
         'cost': '💸', 'trend-down': '📉', 'refresh': '🔄', 'clock': '🕐', 'flame': '🔥',
         'alert-triangle': '⚠️', 'alert-circle': '🔴', 'x-circle': '❌', 'siren': '🚨',
         'calculator': '🧮', 'graduation-cap': '🎓', 'rocket': '🚀', 'clipboard-check': '📋',
@@ -23,7 +23,7 @@
         'flask': 'Chaos, experiments', 'sprout': 'Growth, maturity', 'award': 'Certification',
         'search': 'Investigate', 'dashboard': 'Dashboards', 'code': 'SLOs as code',
         'hourglass': 'Duration, remaining', 'ban': 'Freeze, restrict releases', 'sparkles': 'AI-generated',
-        'percent': 'Targets like 99.9%'
+        'percent': 'Targets like 99.9%', 'user': 'User, CUJ actor', 'plane': 'Flight demo', 'plane-takeoff': 'Operations demo', 'ticket': 'Booking, check-in', 'wrench': 'Fix, tooling'
     };
 
     var grid = document.getElementById('icon-grid');

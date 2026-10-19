@@ -124,7 +124,14 @@
         badgeEl.textContent = journey.slo.target + '%';
 
         var isMet = journey.sli.value >= journey.slo.target;
-        statusEl.textContent = isMet ? '\u2705 SLO Met' : '\u274C SLO Breached';
+        var statusSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        statusSvg.setAttribute('class', 'slo-icon icon-inline');
+        statusSvg.setAttribute('aria-hidden', 'true');
+        var statusUse = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+        statusUse.setAttribute('href', '/icons/slo-icons.svg#' + (isMet ? 'check-circle' : 'x-circle'));
+        statusSvg.appendChild(statusUse);
+        statusEl.textContent = '';
+        statusEl.append(statusSvg, isMet ? 'SLO Met' : 'SLO Breached');
         statusEl.className = 'slo-status ' + (isMet ? 'slo-met' : 'slo-breached');
 
         explanationEl.textContent = 'Target: ' + journey.slo.target + '% success rate over ' + journey.slo.window;
