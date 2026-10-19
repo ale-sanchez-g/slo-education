@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style/inter.css">
     <link rel="stylesheet" href="style/styles.css">
     <link rel="stylesheet" href="style/error-budget-calculator.css">
+    <link rel="stylesheet" href="style/icons.css">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <script src="scripts/grafana.js" defer></script>
 </head>
@@ -91,7 +92,7 @@
                             <div class="burn-rate-status" id="burn-rate-status"></div>
                         </div>
                         <div id="burn-rate-placeholder" class="burn-rate-placeholder">
-                            <span>🕐 Enter the downtime so far and how many days into the window you are, then click Calculate.</span>
+                            <span><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#clock"></use></svg>Enter the downtime so far and how many days into the window you are, then click Calculate.</span>
                         </div>
                     </div>
                 </div>
@@ -101,7 +102,7 @@
         <!-- What is Error Budget Section -->
         <section class="section bg-light">
             <div class="container">
-                <h2>🎯 What is an Error Budget?</h2>
+                <h2><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#target"></use></svg>What is an Error Budget?</h2>
                 <p class="section-intro">An <strong>error budget</strong> is the acceptable amount of downtime your service can have while still meeting your Service Level Objective (SLO). It answers the question: <strong>"How much failure can we afford?"</strong></p>
                 
                 <div class="key-concept">
@@ -118,7 +119,7 @@
         <!-- Understanding the Calculator Section -->
         <section class="section">
             <div class="container">
-                <h2>📊 Understanding the Calculator</h2>
+                <h2><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#chart-bars"></use></svg>Understanding the Calculator</h2>
                 
                 <h3>Main Components</h3>
                 
@@ -179,7 +180,7 @@
         <!-- Burn Rate Section -->
         <section class="section bg-light">
             <div class="container">
-                <h2>🔥 Burn Rate: The Critical Metric</h2>
+                <h2><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#flame"></use></svg>Burn Rate: The Critical Metric</h2>
                 <p class="section-intro"><strong>Burn rate</strong> is how fast you are spending the error budget, compared with the pace that would use exactly all of it by the end of the window. At <strong>1×</strong> you finish the window exactly on target. At <strong>2×</strong> the budget is gone halfway through.</p>
 
                 <h3>Burn Rate Categories</h3>
@@ -195,22 +196,22 @@
                         <tr class="burn-slow">
                             <td data-label="Burn Rate"><strong>1× or less</strong></td>
                             <td data-label="What It Means">On pace: the budget lasts the whole window</td>
-                            <td data-label="Action">✅ Spend it on releases and experiments</td>
+                            <td data-label="Action"><svg class="slo-icon icon-inline tone-success" aria-hidden="true"><use href="/icons/slo-icons.svg#check-circle"></use></svg>Spend it on releases and experiments</td>
                         </tr>
                         <tr class="burn-medium">
                             <td data-label="Burn Rate"><strong>Above 1×</strong></td>
                             <td data-label="What It Means">Above pace: the budget runs out before the window ends</td>
-                            <td data-label="Action">⚠️ Find out what is consuming it</td>
+                            <td data-label="Action"><svg class="slo-icon icon-inline tone-caution" aria-hidden="true"><use href="/icons/slo-icons.svg#alert-triangle"></use></svg>Find out what is consuming it</td>
                         </tr>
                         <tr class="burn-fast">
                             <td data-label="Burn Rate"><strong>2× or more</strong></td>
                             <td data-label="What It Means">Fast burn: the budget is gone by mid-window or sooner</td>
-                            <td data-label="Action">🔴 Alert, and slow risky releases</td>
+                            <td data-label="Action"><svg class="slo-icon icon-inline tone-risk" aria-hidden="true"><use href="/icons/slo-icons.svg#alert-circle"></use></svg>Alert, and slow risky releases</td>
                         </tr>
                         <tr class="burn-critical">
                             <td data-label="Burn Rate"><strong>Budget used up</strong></td>
                             <td data-label="What It Means">Exhausted: the SLO is missed for this window</td>
-                            <td data-label="Action">🚨 Restrict or stop releases until back within SLO</td>
+                            <td data-label="Action"><svg class="slo-icon icon-inline tone-risk" aria-hidden="true"><use href="/icons/slo-icons.svg#siren"></use></svg>Restrict or stop releases until back within SLO</td>
                         </tr>
                     </tbody>
                 </table>
@@ -240,7 +241,7 @@
         <!-- Deployment Decisions Section -->
         <section class="section">
             <div class="container">
-                <h2>💡 Using Error Budgets for Deployment Decisions</h2>
+                <h2><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#lightbulb"></use></svg>Using Error Budgets for Deployment Decisions</h2>
                 
                 <div class="decision-framework">
                     <h3>Decision Framework</h3>
@@ -262,7 +263,7 @@
                             <li><strong>SLO:</strong> 99.9% (43.2 min / 30 days)</li>
                             <li><strong>So far:</strong> 10 minutes of downtime by day 15</li>
                             <li><strong>Burn Rate:</strong> 23.1% used ÷ 50% elapsed = 0.46×</li>
-                            <li><strong>Decision:</strong> ✅ Keep shipping; the budget lasts the window</li>
+                            <li><strong>Decision:</strong> <svg class="slo-icon icon-inline tone-success" aria-hidden="true"><use href="/icons/slo-icons.svg#check-circle"></use></svg>Keep shipping; the budget lasts the window</li>
                         </ul>
                     </div>
 
@@ -272,7 +273,7 @@
                             <li><strong>SLO:</strong> 99.9% (43.2 min / 30 days)</li>
                             <li><strong>So far:</strong> 45 minutes of downtime by day 20</li>
                             <li><strong>Budget used:</strong> 104%, so the SLO is missed for this window</li>
-                            <li><strong>Decision:</strong> 🚨 Restrict or stop risky releases until back within SLO</li>
+                            <li><strong>Decision:</strong> <svg class="slo-icon icon-inline tone-risk" aria-hidden="true"><use href="/icons/slo-icons.svg#siren"></use></svg>Restrict or stop risky releases until back within SLO</li>
                         </ul>
                     </div>
 
@@ -282,7 +283,7 @@
                             <li><strong>SLO:</strong> 99.99% (4.32 min / 30 days)</li>
                             <li><strong>So far:</strong> 1.5 minutes of downtime by day 3</li>
                             <li><strong>Burn Rate:</strong> 34.7% used ÷ 10% elapsed = 3.5×</li>
-                            <li><strong>Decision:</strong> 🔴 At this pace the budget is gone around day 9; slow risky releases and find the cause</li>
+                            <li><strong>Decision:</strong> <svg class="slo-icon icon-inline tone-risk" aria-hidden="true"><use href="/icons/slo-icons.svg#alert-circle"></use></svg>At this pace the budget is gone around day 9; slow risky releases and find the cause</li>
                         </ul>
                     </div>
                 </div>
@@ -292,7 +293,7 @@
         <!-- The Math Behind It Section -->
         <section class="section bg-light">
             <div class="container">
-                <h2>🧮 The Math Behind It</h2>
+                <h2><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#calculator"></use></svg>The Math Behind It</h2>
                 
                 <div class="math-section">
                     <h3>Calculate Downtime from SLO</h3>
@@ -378,11 +379,11 @@
         <!-- Best Practices Section -->
         <section class="section">
             <div class="container">
-                <h2>🎓 Best Practices</h2>
+                <h2><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#graduation-cap"></use></svg>Best Practices</h2>
                 
                 <div class="best-practices-grid">
                     <div class="practices-column do-column">
-                        <h3>✅ DO</h3>
+                        <h3><svg class="slo-icon icon-inline tone-success" aria-hidden="true"><use href="/icons/slo-icons.svg#check-circle"></use></svg>DO</h3>
                         <ul>
                             <li><strong>Track burn rate daily</strong> - Make it visible to the team</li>
                             <li><strong>Use budget wisely</strong> - Spend on meaningful improvements</li>
@@ -393,7 +394,7 @@
                     </div>
                     
                     <div class="practices-column dont-column">
-                        <h3>❌ DON'T</h3>
+                        <h3><svg class="slo-icon icon-inline tone-risk" aria-hidden="true"><use href="/icons/slo-icons.svg#x-circle"></use></svg>DON'T</h3>
                         <ul>
                             <li><strong>Ignore your budget</strong> - It exists for a reason</li>
                             <li><strong>Save the entire budget</strong> - You're leaving productivity on the table</li>
@@ -409,7 +410,7 @@
         <!-- Advanced Usage Section -->
         <section class="section bg-light">
             <div class="container">
-                <h2>🚀 Advanced Usage</h2>
+                <h2><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#rocket"></use></svg>Advanced Usage</h2>
                 
                 <h3>Multi-Service Strategy</h3>
                 <p>If you have multiple services:</p>
@@ -477,7 +478,7 @@
         <!-- Implementation Checklist Section -->
         <section class="section">
             <div class="container">
-                <h2>📋 Implementation Checklist</h2>
+                <h2><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#clipboard-check"></use></svg>Implementation Checklist</h2>
                 <div class="checklist">
                     <label><input type="checkbox"> Choose appropriate SLO for each service</label>
                     <label><input type="checkbox"> Calculate monthly error budget</label>
@@ -494,7 +495,7 @@
         <!-- Related Concepts Section -->
         <section class="section bg-light">
             <div class="container">
-                <h2>🔗 Related Concepts</h2>
+                <h2><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#link"></use></svg>Related Concepts</h2>
                 <div class="concepts-grid">
                     <div class="concept-card">
                         <h4>SLO (Service Level Objective)</h4>
@@ -527,7 +528,7 @@
         <!-- FAQ Section -->
         <section class="section">
             <div class="container">
-                <h2>💬 Common Questions</h2>
+                <h2><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#chat"></use></svg>Common Questions</h2>
                 <div class="faq">
                     <div class="faq-item">
                         <h4>Q: Should we always target 99.99%?</h4>

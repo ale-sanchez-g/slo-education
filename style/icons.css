@@ -1,0 +1,151 @@
+/* =========================================================
+   SLO Education Hub — Icon set
+
+   Usage:  <svg class="slo-icon" aria-hidden="true">
+               <use href="/icons/slo-icons.svg#target"></use>
+           </svg>
+
+   Every icon is a 24px line drawing that inherits `color`, so it
+   follows the surrounding text unless told otherwise. Customise
+   per icon, per section or site-wide with these properties:
+
+     --icon-size       default 1em
+     --icon-stroke     default 1.6   (1.25 light … 2.25 bold)
+     --icon-color      default currentColor
+
+   Wrap in .slo-icon-tile for the pebble tile, and add a tone
+   (.tone-success / -info / -caution / -risk) or .tile-solid.
+   Tile properties: --tile-size, --tile-tint, --tile-ring.
+   ========================================================= */
+
+.slo-icon {
+    width: var(--icon-size, 1em);
+    height: var(--icon-size, 1em);
+    flex-shrink: 0;
+    fill: none;
+    stroke: var(--icon-color, currentColor);
+    stroke-width: var(--icon-stroke, 1.6);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vertical-align: -0.125em;
+}
+
+/* Sizes */
+.slo-icon.icon-sm { --icon-size: 1rem; }
+.slo-icon.icon-md { --icon-size: 1.5rem; }
+.slo-icon.icon-lg { --icon-size: 2rem; }
+.slo-icon.icon-xl { --icon-size: 3rem; }
+
+/* Inline with text: leaves a gap before the label. */
+.slo-icon.icon-inline { margin-right: 0.4em; }
+
+/* Tones: functional colours from the design system. */
+.slo-icon.tone-success, .slo-icon-tile.tone-success { --icon-color: var(--color-success); --tile-tint: var(--color-success-bg); --tile-ring: var(--color-accent-light); }
+.slo-icon.tone-info,    .slo-icon-tile.tone-info    { --icon-color: var(--color-info);    --tile-tint: var(--color-info-bg);    --tile-ring: #B8D0E2; }
+.slo-icon.tone-caution, .slo-icon-tile.tone-caution { --icon-color: var(--color-caution); --tile-tint: var(--color-caution-bg); --tile-ring: #E6CFA8; }
+.slo-icon.tone-risk,    .slo-icon-tile.tone-risk    { --icon-color: var(--color-risk);    --tile-tint: var(--color-risk-bg);    --tile-ring: #E3B9B5; }
+
+/* Pebble tile: a soft, slightly irregular rounded shape. */
+.slo-icon-tile {
+    --tile-size: 3rem;
+    --tile-tint: var(--color-success-bg);
+    --tile-ring: var(--color-accent-light);
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: var(--tile-size);
+    height: var(--tile-size);
+    border-radius: 58% 42% 54% 46% / 50% 56% 44% 50%;
+    border: 1.5px solid var(--tile-ring);
+    background: linear-gradient(150deg, var(--color-surface) 0%, var(--tile-tint) 100%);
+    box-shadow: 0 3px 6px -2px rgba(27, 67, 50, 0.25);
+    color: var(--icon-color, var(--color-primary-mid));
+}
+
+.slo-icon-tile .slo-icon {
+    --icon-size: 58%;
+}
+
+/* Solid tile: dark green with the pale mint glyph. */
+.slo-icon-tile.tile-solid {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-on-primary);
+    box-shadow: none;
+}
+
+/* Tile sizes */
+.slo-icon-tile.tile-sm { --tile-size: 2rem; }
+.slo-icon-tile.tile-lg { --tile-size: 4rem; }
+.slo-icon-tile.tile-xl { --tile-size: 6rem; }
+
+/* =========================================================
+   Gallery page (icons.html)
+   ========================================================= */
+
+.icon-lab {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    align-items: end;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.icon-lab label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.icon-lab input[type="color"] { width: 3rem; height: 2.25rem; padding: 0; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: none; }
+.icon-lab select { padding: 0.45rem 0.6rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font: inherit; background: var(--color-surface); }
+
+.icon-lab-output {
+    flex: 1 1 100%;
+    margin: 0;
+    padding: 0.75rem 1rem;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    background: var(--color-bg);
+    border-radius: var(--radius-sm);
+}
+
+.icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.icon-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 0.75rem 1rem;
+    text-align: center;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.icon-card .slo-icon-tile { --tile-size: var(--lab-tile, 4.5rem); }
+.icon-card .slo-icon { --icon-size: var(--lab-size, 58%); --icon-stroke: var(--lab-stroke, 1.6); }
+
+.icon-card code { font-size: 0.85rem; font-weight: 600; color: var(--color-primary); }
+.icon-card small { min-height: 1.1em; color: var(--color-text-muted); }
+
+.icon-card .icon-sizes { display: flex; align-items: center; gap: 0.6rem; }
+.icon-card .icon-sizes .slo-icon { --icon-size: 1rem; }
+.icon-card .icon-sizes .slo-icon:nth-child(2) { --icon-size: 1.5rem; }
+.icon-card .icon-sizes .slo-icon:nth-child(3) { --icon-size: 2rem; }

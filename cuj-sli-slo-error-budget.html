@@ -7,6 +7,7 @@
     <title>CUJ → SLI → SLO → Error Budget - SLO Education Hub</title>
     <link rel="stylesheet" href="style/inter.css">
     <link rel="stylesheet" href="style/styles.css">
+    <link rel="stylesheet" href="style/icons.css">
     <link rel="stylesheet" href="style/cuj-sli-slo-error-budget.css">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <script src="scripts/grafana.js" defer></script>
@@ -49,30 +50,30 @@
         <!-- Flow Overview -->
         <section class="section" id="flow-overview">
             <div class="container">
-                <h2>&#128279; The Reliability Pipeline</h2>
+                <h2><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#link"></use></svg>The Reliability Pipeline</h2>
                 <p class="section-intro">Every reliability practice starts with understanding your users. Here's how the pipeline connects — from what users care about, to how you measure it, to the targets you set, and the budget you earn.</p>
 
                 <div class="flow-diagram" aria-label="Reliability pipeline: CUJ to SLI to SLO to Error Budget">
                     <div class="flow-step">
-                        <div class="flow-icon" aria-hidden="true">&#128100;</div>
+                        <div class="flow-icon" aria-hidden="true"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#user"></use></svg></span></div>
                         <div class="flow-label">CUJ</div>
                         <div class="flow-desc">Critical User Journey — what users care about</div>
                     </div>
                     <div class="flow-arrow" aria-hidden="true">&#8594;</div>
                     <div class="flow-step">
-                        <div class="flow-icon" aria-hidden="true">&#128202;</div>
+                        <div class="flow-icon" aria-hidden="true"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#chart-bars"></use></svg></span></div>
                         <div class="flow-label">SLI</div>
                         <div class="flow-desc">Service Level Indicator — how we measure it</div>
                     </div>
                     <div class="flow-arrow" aria-hidden="true">&#8594;</div>
                     <div class="flow-step">
-                        <div class="flow-icon" aria-hidden="true">&#127919;</div>
+                        <div class="flow-icon" aria-hidden="true"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#target"></use></svg></span></div>
                         <div class="flow-label">SLO</div>
                         <div class="flow-desc">Service Level Objective — our target</div>
                     </div>
                     <div class="flow-arrow" aria-hidden="true">&#8594;</div>
                     <div class="flow-step">
-                        <div class="flow-icon" aria-hidden="true">&#128200;</div>
+                        <div class="flow-icon" aria-hidden="true"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#trend-up"></use></svg></span></div>
                         <div class="flow-label">Error Budget</div>
                         <div class="flow-desc">How much failure we can afford</div>
                     </div>
@@ -83,7 +84,7 @@
         <!-- CUJ Deep Dive -->
         <section class="section bg-light" id="what-is-cuj">
             <div class="container">
-                <h2>&#128100; What is a Critical User Journey?</h2>
+                <h2><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#user"></use></svg>What is a Critical User Journey?</h2>
                 <p class="section-intro">A CUJ is a sequence of steps a user takes to accomplish a key goal. It defines <strong>what matters</strong> for your users — and therefore for your service reliability.</p>
 
                 <div class="cuj-grid">
@@ -99,11 +100,11 @@
                     <div class="cuj-card">
                         <h3>Good CUJ Examples</h3>
                         <ul>
-                            <li>&#9989; User can search and book a flight</li>
-                            <li>&#9989; User can complete airport check-in</li>
-                            <li>&#9989; User receives real-time flight updates</li>
-                            <li>&#10060; Too broad: "User can use the app"</li>
-                            <li>&#10060; Too narrow: "User can sort results by price"</li>
+                            <li><svg class="slo-icon icon-inline tone-success" aria-hidden="true"><use href="/icons/slo-icons.svg#check-circle"></use></svg>User can search and book a flight</li>
+                            <li><svg class="slo-icon icon-inline tone-success" aria-hidden="true"><use href="/icons/slo-icons.svg#check-circle"></use></svg>User can complete airport check-in</li>
+                            <li><svg class="slo-icon icon-inline tone-success" aria-hidden="true"><use href="/icons/slo-icons.svg#check-circle"></use></svg>User receives real-time flight updates</li>
+                            <li><svg class="slo-icon icon-inline tone-risk" aria-hidden="true"><use href="/icons/slo-icons.svg#x-circle"></use></svg>Too broad: "User can use the app"</li>
+                            <li><svg class="slo-icon icon-inline tone-risk" aria-hidden="true"><use href="/icons/slo-icons.svg#x-circle"></use></svg>Too narrow: "User can sort results by price"</li>
                         </ul>
                     </div>
                     <div class="cuj-card">
@@ -118,7 +119,7 @@
         <!-- Interactive Demo Section -->
         <section class="section" id="interactive-demo">
             <div class="container">
-                <h2>&#9992; Interactive Demo: Airport Reliability Pipeline</h2>
+                <h2><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#plane"></use></svg>Interactive Demo: Airport Reliability Pipeline</h2>
                 <p class="section-intro">Select a Critical User Journey below to see how it drives SLI measurement, SLO targets, and Error Budget management.</p>
 
                 <!-- Step 1: CUJ Selection -->
@@ -130,17 +131,17 @@
 
                     <div class="journey-cards" role="group" aria-label="Select a Critical User Journey">
                         <button class="journey-card" data-journey="booking" aria-pressed="false">
-                            <span class="journey-emoji" aria-hidden="true">&#9992;</span>
+                            <span class="journey-emoji" aria-hidden="true"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#plane"></use></svg></span></span>
                             <strong class="journey-name">Flight Booking</strong>
                             <span class="journey-tagline">Online booking system</span>
                         </button>
                         <button class="journey-card" data-journey="checkin" aria-pressed="false">
-                            <span class="journey-emoji" aria-hidden="true">&#127915;</span>
+                            <span class="journey-emoji" aria-hidden="true"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#ticket"></use></svg></span></span>
                             <strong class="journey-name">Airport Check-in</strong>
                             <span class="journey-tagline">Online &amp; kiosk check-in</span>
                         </button>
                         <button class="journey-card" data-journey="operations" aria-pressed="false">
-                            <span class="journey-emoji" aria-hidden="true">&#128747;</span>
+                            <span class="journey-emoji" aria-hidden="true"><span class="slo-icon-tile"><svg class="slo-icon" aria-hidden="true"><use href="/icons/slo-icons.svg#plane-takeoff"></use></svg></span></span>
                             <strong class="journey-name">Flight Operations</strong>
                             <span class="journey-tagline">Real-time flight data</span>
                         </button>
@@ -216,15 +217,15 @@
 
                         <div class="budget-controls">
                             <button class="simulate-btn" id="simulate-incident" disabled>
-                                &#9889; Simulate Incident
+                                <svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#bolt"></use></svg>Simulate Incident
                             </button>
                             <button class="reset-btn" id="reset-budget" disabled>
-                                &#128260; Reset Budget
+                                <svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#refresh"></use></svg>Reset Budget
                             </button>
                         </div>
 
                         <div class="budget-decision" id="budget-decision">
-                            <h4 class="decision-title">&#128161; Team Decision</h4>
+                            <h4 class="decision-title"><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#lightbulb"></use></svg>Team Decision</h4>
                             <p class="decision-text" id="decision-text">Select a journey above to see the recommended team action.</p>
                         </div>
                     </div>
@@ -235,7 +236,7 @@
         <!-- SLI Deep Dive -->
         <section class="section bg-light" id="about-sli">
             <div class="container">
-                <h2>&#128202; Understanding SLIs</h2>
+                <h2><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#chart-bars"></use></svg>Understanding SLIs</h2>
                 <p class="section-intro">A <strong>Service Level Indicator</strong> is a quantitative measure of your service's behaviour from the user's perspective. It answers: "How well is the service performing right now?"</p>
 
                 <h3>Common SLI Types</h3>
@@ -278,7 +279,7 @@
         <!-- Putting It Together Section -->
         <section class="section" id="putting-together">
             <div class="container">
-                <h2>&#128295; Putting It All Together</h2>
+                <h2><svg class="slo-icon icon-inline" aria-hidden="true"><use href="/icons/slo-icons.svg#wrench"></use></svg>Putting It All Together</h2>
                 <p class="section-intro">Here's the complete pipeline in action — from user need to engineering decision.</p>
 
                 <div class="pipeline-steps">

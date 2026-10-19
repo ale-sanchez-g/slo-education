@@ -31,7 +31,6 @@
 }
 
 .comparison-icon {
-    font-size: 1.8rem;
     line-height: 1;
 }
 
@@ -66,7 +65,6 @@
 }
 
 .insight-icon {
-    font-size: 1.5rem;
     flex-shrink: 0;
     margin-top: 0.1rem;
 }
@@ -96,7 +94,6 @@
 }
 
 .sli-icon {
-    font-size: 2rem;
     line-height: 1;
 }
 
@@ -737,7 +734,7 @@
 }
 
 .drift-icon {
-    font-size: 2rem;
+    line-height: 1;
     margin-bottom: 0.75rem;
 }
 

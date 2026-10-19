@@ -30,7 +30,8 @@
 }
 
 .flow-icon {
-    font-size: 2rem;
+    display: flex;
+    justify-content: center;
     margin-bottom: 0.5rem;
 }
 
@@ -170,7 +171,6 @@
 }
 
 .journey-emoji {
-    font-size: 2rem;
     line-height: 1;
 }
 
